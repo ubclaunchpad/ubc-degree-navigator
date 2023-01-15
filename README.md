@@ -4,7 +4,7 @@
 
 _I've split up the setup process into smaller chunks with goals and checks. Hopefully this helps!_
 
-Goal: Download Go on your machine
+### Goal: Download Go on your machine
 
 - For Ubuntu: [Look here](https://www.linode.com/docs/development/go/install-go-on-ubuntu/)
 - For MacOS: [Look here](http://sourabhbajaj.com/mac-setup/Go/README.html)
@@ -16,9 +16,7 @@ Check: Running the following command on terminal in the root directory should te
 $  go version
 ```
 
-<hr/>
-
-Goal: Set up Go modules
+### Goal: Set up Go modules
 
 - Go modules commonly consist of one project or library and contain a collection of Go packages that are then released together.
   - aka. All your code (across projects) goes into one folder: `project\go`
@@ -33,13 +31,13 @@ $  go mod init github.com/[username]/ubc-degree-navigator
 #  Module name: github.com/[username]ubc-degree-navigator
 #  You're free to choose any UNIQUE module name
 #  It's better to be a URL: so it can be go-gettable
+
+$  go mod tidy
 ```
 
 Check: You would see files `go.mod` (and maybe `go.sum` as well) created in your root directory.
 
-<hr/>
-
-Goal: Download required packages
+### Goal: Download required packages
 
 - Installing third party packages; use `go get`. An example:
 
@@ -56,11 +54,29 @@ $  go get -u -v github.com/jinzhu/gorm/dialects/sqlite
 $  go get -u -v github.com/gin-contrib/cors
 ```
 
-Check: Running the following command will list all the packages installed in the project
+Check: You would see `go.mod` file and `go.sum` file populated with the required packages
+
+### Goal: Run the web server in Go
+
+- Travel to `\go\src`
+
+- Usually, to run a program:-
 
 ```bash
-$  go list ./...
+$  go run file.go
 ```
+
+- So, run the following command to start up a Go web server:
+
+```bash
+$  go run web_server.go
+```
+
+Check: You would not see `404 not found` page and see "Hello World" when you goto [http://localhost:8080/](http://localhost:8080/).
+
+> Yay! Now you're done setting up a Go server used in this project!
+
+<hr/>
 
 ## Basics
 
@@ -73,12 +89,6 @@ $  go list ./...
 
   - Functions inside a package must start with a capital letter. Or else they won't be accessible outside the package.
   - Each package must consist of a directory along with a .go file of the same name inside the directory.
-
-- To run a program:-
-
-```bash
-              go run file.go
-```
 
 ## Building the server
 
@@ -124,37 +134,71 @@ go install github.com/gin-gonic/gin@latest
 
 ## Setting up
 
-- First, install node. Then install yarn (because npm is not very nice)
+_I've split up the setup process into smaller chunks with goals and checks. Hopefully this helps!_
+
+### Goal: Download Node.js and yarn on your machine, in the root directory
+
 - Ubuntu:
 
 ```bash
-              curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-              sudo apt-get install -y nodejs
-              npm install -g yarn
-              yarn global add create-react-app
+$  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+$  sudo apt-get install -y nodejs
+$  npm install -g yarn
 ```
 
 - MacOS:
 
 ```bash
-              brew install node
-              npm install -g yarn
-              yarn global add create-react-app
+$  brew install node
+$  npm install -g yarn
 ```
 
-- Then, create a new React application by running the following:
+- Windows:
+  - Download Node here: https://nodejs.org/en/download/
 
 ```bash
-              create-react-app name_of_app
+$  npm install -g yarn
 ```
 
-- You can run the app by running `yarn start`
-- `node_modules` contains all your external packages.
-- `package.json` is a json file that contains all the environment requirements of your project. It is similar to the `requirements.txt` file we saw for python.
-- `public` stores some static content. The `index.html` file is going to render whatever code you write. You will need to change that based on your application's design.
-- `bash yarn build ` builds your code into a production ready application. The contents are stored in the `build` directory.
-- `src` contains all of your code. This should follow a good directory structure. Read more into it over [here](https://daveceddia.com/react-project-structure/).
-- Alternate structure to follow can be found [here](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1)
+Check: You would see the respective Node and yarn versions once you run the following command:
+
+```bash
+$  npm --version
+$  yarn --version
+```
+
+### Install required packages
+
+- Navigate to `\react-app` directory that contains all the codes for the frontend.
+  - `node_modules` contains all your external packages.
+  - `package.json` is a json file that contains all the environment requirements of your project. It is similar to the `requirements.txt` file we saw for python.
+  - `public` stores some static content. The `index.html` file is going to render whatever code you write. You will need to change that based on your application's design.
+  - `bash yarn build ` builds your code into a production ready application. The contents are stored in the `build` directory.
+  - `src` contains all of your code. This should follow a good directory structure. Read more into it over [here](https://daveceddia.com/react-project-structure/).
+  - Alternate structure to follow can be found [here](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1)
+- Run the following code to install all the defined required package
+
+```bash
+$  yarn install
+```
+
+Check: You would see the list of installed yarn packages once you run the following command:
+
+```bash
+$  yarn list
+```
+
+### Run the web app
+
+- You can run the app by running the following command, still in the `react-app` directory:
+
+```bash
+$  yarn start
+```
+
+Check: You would not see `404 not found` page and see the frontend react web application when you goto [http://localhost:3000/](http://localhost:3000/).
+
+> Yay! Now you're done setting up a React app used in this project!
 
 ## Basics
 
