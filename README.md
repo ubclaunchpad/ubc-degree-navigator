@@ -2,16 +2,65 @@
 
 ## Setting up
 
+_I've split up the setup process into smaller chunks with goals and checks. Hopefully this helps!_
+
+Goal: Download Go on your machine
+
 - For Ubuntu: [Look here](https://www.linode.com/docs/development/go/install-go-on-ubuntu/)
 - For MacOS: [Look here](http://sourabhbajaj.com/mac-setup/Go/README.html)
-- Apart from above tutorial, add the following to your .bashrc:
+- For Windows: [Look here](https://go.dev/doc/install)
+
+Check: Running the following command on terminal in the root directory should tell you the version of go you've installed
 
 ```bash
-              export GOBIN=$GOPATH/bin
+$  go version
 ```
 
-- All your code (across projects) goes into one folder. So have your environment variables set up specific to where your code is.
-- `bin` stores executables, `pkg` stores external packages, `src` has all your source code.
+<hr/>
+
+Goal: Set up Go modules
+
+- Go modules commonly consist of one project or library and contain a collection of Go packages that are then released together.
+  - aka. All your code (across projects) goes into one folder: `project\go`
+  - `bin` stores executables, `pkg` stores external packages, `src` has all your source code.
+- Go modules solve many problems with GOPATH , the original system, by allowing users to put their project code in their chosen directory and specify versions of dependencies for each module.
+
+- Run the following command on terminal in the root directory.
+
+```bash
+$  go mod init github.com/[username]/ubc-degree-navigator
+#  It creates Go module
+#  Module name: github.com/[username]ubc-degree-navigator
+#  You're free to choose any UNIQUE module name
+#  It's better to be a URL: so it can be go-gettable
+```
+
+Check: You would see files `go.mod` (and maybe `go.sum` as well) created in your root directory.
+
+<hr/>
+
+Goal: Download required packages
+
+- Installing third party packages; use `go get`. An example:
+
+```bash
+$  go get -u -v gopkg.in/mgo.v2
+```
+
+- Install packages used in this project by running the following sequence of commands:
+
+```bash
+$  go get -u -v github.com/gin-gonic/gin
+$  go get -u -v github.com/jinzhu/gorm
+$  go get -u -v github.com/jinzhu/gorm/dialects/sqlite
+$  go get -u -v github.com/gin-contrib/cors
+```
+
+Check: Running the following command will list all the packages installed in the project
+
+```bash
+$  go list ./...
+```
 
 ## Basics
 
@@ -21,22 +70,9 @@
 - All referred code is up on [this repository](https://github.com/dheerajpreddy/Go-React-Boilerplate).
 - [Hello world program](https://github.com/dheerajpreddy/Go-React-Boilerplate/blob/master/go/src/1%20-%20Hello%20world.go)
 - [Defining packages](https://github.com/dheerajpreddy/Go-React-Boilerplate/blob/master/go/src/2%20-%20Using%20packages.go)
+
   - Functions inside a package must start with a capital letter. Or else they won't be accessible outside the package.
   - Each package must consist of a directory along with a .go file of the same name inside the directory.
-- Installing third party packages; use `go get`. An example:-
-
-```bash
-        go get -u -v gopkg.in/mgo.v2
-```
-
-- Packages used in this tutorial -
-
-```bash
-              go get -u -v github.com/gin-gonic/gin
-              go get -u -v github.com/jinzhu/gorm
-              go get -u -v github.com/jinzhu/gorm/dialects/sqlite
-              go get -u -v github.com/gin-contrib/cors
-```
 
 - To run a program:-
 

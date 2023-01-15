@@ -1,4 +1,5 @@
 // Naming this package
+
 package mymath
 
 // Go is strongly typed (Unlike Python, and like C). Notice types are declared after variable names.

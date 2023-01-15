@@ -1,11 +1,12 @@
 package main
 
 import (
-   "fmt"
-   "github.com/gin-contrib/cors"                        // Why do we need this package?
-   "github.com/gin-gonic/gin"
-   "github.com/jinzhu/gorm"
-   _ "github.com/jinzhu/gorm/dialects/sqlite"           // If you want to use mysql or any other db, replace this line
+	"fmt"
+
+	"github.com/gin-contrib/cors" // Why do we need this package?
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite" // If you want to use mysql or any other db, replace this line
 )
 
 var db *gorm.DB                                         // declaring the db globally
@@ -18,7 +19,7 @@ type Person struct {
    City string `json:"city"`
 }
 
-func main() {
+func main5() {
    db, err = gorm.Open("sqlite3", "./gorm.db")
    if err != nil {
       fmt.Println(err)
