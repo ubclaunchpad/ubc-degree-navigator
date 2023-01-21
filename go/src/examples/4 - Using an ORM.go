@@ -14,6 +14,36 @@ type Persono struct {
   LastName string `json:"lastname"`
 }
 
+type User struct {
+  Username string `json:"username"`
+  Email string `json:"email"`
+  Password string `json:"password"`
+  Year uint `json:"year"`
+  Courses []Course `json:"courses"`
+  TransferCourses []TransferCourse `json:"transfercourses"`
+}
+
+type Course struct {
+  Faculty string `json:"faculty"`
+  CourseNum uint `json:"coursenum"`
+  Credits uint `json:"credits"`
+  Requirements []Requirement `json:"requirements"`
+}
+
+type Program struct {
+  Faculty string `json:"faculty"`
+  ProgramName string `json:"programname"`
+  Requirements []Requirement `json:"requirements"`
+  TotalCredits uint `json:"totalcredits"`
+}
+
+type Requirement struct {
+  ID string `json:"id"`
+  Courese []Course `json:"course"`
+  Credits uint `json:"credits"`
+  Type string `json:"type"`
+}
+
 func main4() {
    db, _ := gorm.Open("sqlite3", "./gorm.db")             // Creates an SQLite database, stores it in the file.
    defer db.Close()                                       // defer basically tells it to execute at the end of the main function's scope
