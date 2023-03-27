@@ -3,7 +3,12 @@ import UploadIcon from "../../../assets/upload-cloud.svg";
 import ManualIcon from "../../../assets/playlist_add.svg";
 import theme from "../../../theme";
 
-const ChooseMethod = ({ methodSelected, setMethodSelected }) => {
+const ChooseMethod = ({
+	methodSelected,
+	setMethodSelected,
+	setShowButton,
+	setStep,
+}) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
@@ -83,7 +88,11 @@ const ChooseMethod = ({ methodSelected, setMethodSelected }) => {
 				}}
 				onMouseEnter={handleMouseEnter2}
 				onMouseLeave={handleMouseLeave2}
-				onClick={() => setMethodSelected("manual")}
+				onClick={() => {
+					setStep(0.5);
+					setShowButton(true);
+					setMethodSelected("manual");
+				}}
 			>
 				<div style={{ ...icon, padding: 25 }}>
 					<img src={ManualIcon} alt="manual icon" />

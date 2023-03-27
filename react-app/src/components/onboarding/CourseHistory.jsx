@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import theme from "../../theme";
 import ChooseMethod from "./courseHistory/ChooseMethod";
+import EditHistory from "./courseHistory/EditHistory";
 import UploadTranscript from "./courseHistory/UploadTranscript";
 
-const CourseHistory = ({ data, setData, setStep }) => {
+const CourseHistory = ({ data, setData, setStep, setShowButton }) => {
 	const [methodSelected, setMethodSelected] = useState();
 
 	return (
@@ -12,13 +12,26 @@ const CourseHistory = ({ data, setData, setStep }) => {
 				<ChooseMethod
 					methodSelected={methodSelected}
 					setMethodSelected={setMethodSelected}
+					setShowButton={setShowButton}
+					setStep={setStep}
 				/>
 			) : (
 				<div>
 					{methodSelected === "upload" ? (
-						<UploadTranscript data={data} setData={setData} />
+						<UploadTranscript
+							data={data}
+							setData={setData}
+							setShowButton={setShowButton}
+							setStep={setStep}
+							setMethodSelected={setMethodSelected}
+						/>
 					) : (
-						<div>asdf</div>
+						<EditHistory
+							data={data}
+							setData={setData}
+							setShowButton={setShowButton}
+							setStep={setStep}
+						/>
 					)}
 				</div>
 			)}

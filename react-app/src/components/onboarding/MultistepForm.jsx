@@ -7,6 +7,7 @@ import Review from "./Review";
 import TransferCredits from "./TransferCredits";
 import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
+import EditHistory from "./courseHistory/EditHistory";
 
 const MultistepForm = () => {
 	const [step, setStep] = useState(0);
@@ -17,6 +18,7 @@ const MultistepForm = () => {
 		program: "",
 		major: "",
 	});
+	const [showButton, setShowButton] = useState(false);
 
 	const StepTitles = [
 		"Course history",
@@ -30,8 +32,15 @@ const MultistepForm = () => {
 		switch (step) {
 			case 0:
 				return (
-					<CourseHistory data={data} setData={setData} setStep={setStep} />
+					<CourseHistory
+						data={data}
+						setData={setData}
+						setStep={setStep}
+						setShowButton={setShowButton}
+					/>
 				);
+			case 0.5:
+				return <EditHistory />;
 			case 1:
 				return <TransferCredits data={data} setData={setData} />;
 			case 2:
@@ -86,29 +95,32 @@ const MultistepForm = () => {
 			</div>
 			<div className="content" style={content}>
 				<div className="content-step">{StepDisplay()}</div>
-
-				<div className="buttons" style={buttons}>
-					<button
-						style={step === 0 || step === 4 ? invisibleButton : prevButton}
-						onClick={() => {
-							console.log(step);
-							if (step !== 0) {
-								setStep((currStep) => currStep - 1);
-							}
-						}}
-					>
-						Previous Step
-					</button>
-					<button
-						style={step === 4 ? invisibleButton : nextButton}
-						onClick={() => {
-							console.log(step);
-							setStep((currStep) => currStep + 1);
-						}}
-					>
-						Next Step →
-					</button>
-				</div>
+				{showButton ? (
+					<div className="buttons" style={buttons}>
+						<button
+							style={step === 0 || step === 4 ? invisibleButton : prevButton}
+							onClick={() => {
+								console.log(step);
+								if (step !== 0) {
+									setStep((currStep) => currStep - 0.5);
+								}
+							}}
+						>
+							Previous Step
+						</button>
+						<button
+							style={step === 4 ? invisibleButton : nextButton}
+							onClick={() => {
+								console.log(step);
+								setStep((currStep) => currStep + 0.5);
+							}}
+						>
+							Next Step →
+						</button>
+					</div>
+				) : (
+					<div></div>
+				)}
 			</div>
 		</div>
 	);

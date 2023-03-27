@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";
-import { height } from "@mui/system";
 
-const UploadTranscript = ({ data, setData }) => {
+const UploadTranscript = ({
+	data,
+	setData,
+	setShowButton,
+	setStep,
+	setMethodSelected,
+}) => {
+	setShowButton(true);
+
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
