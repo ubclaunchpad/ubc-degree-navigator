@@ -6,9 +6,6 @@ import theme from "./theme";
 const App = () => {
 	return (
 		<div className="App" style={app}>
-			<NewComponent
-				text={"This text comes from another component called newComponent.js"}
-			/>
 			<MultistepForm></MultistepForm>
 		</div>
 	);

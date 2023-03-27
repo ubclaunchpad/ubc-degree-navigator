@@ -5,6 +5,8 @@ import CourseHistory from "./CourseHistory";
 import Results from "./Results";
 import Review from "./Review";
 import TransferCredits from "./TransferCredits";
+import CheckIcon from "@mui/icons-material/Check";
+import NavIllustration from "../../assets/navIllustration.svg";
 
 const MultistepForm = () => {
 	const [step, setStep] = useState(0);
@@ -26,70 +28,83 @@ const MultistepForm = () => {
 	const StepDisplay = () => {
 		switch (step) {
 			case 0:
-				return <CourseHistory />;
+				return <CourseHistory data={data} setData={setData} />;
 			case 1:
-				return <TransferCredits />;
+				return <TransferCredits data={data} setData={setData} />;
 			case 2:
-				return <AdditionalInformation />;
+				return <AdditionalInformation data={data} setData={setData} />;
 			case 3:
-				return <Review />;
+				return <Review data={data} setData={setData} />;
 			case 4:
-				return <Results />;
+				return <Results data={data} setData={setData} />;
 			default:
-				return <CourseHistory />;
+				return <CourseHistory data={data} setData={setData} />;
 		}
 	};
 
 	return (
 		<div className="body" style={body}>
-			<div className="container" style={container}>
-				<div className="navbar" style={navbar}>
-					<h1 style={logoText}>BlueNav</h1>
+			<div className="progress" style={progress}>
+				<h1 style={logoText}>BlueNav</h1>
 
-					<div className="navbarsteps" style={navbarsteps}>
-						{StepTitles.map((object, i) => {
-							return (
-								/* TODO: add styles like { done ? done : todo } */
-								<div className="" style={navstep} key={i}>
-									<h1>{i + 1}</h1>
-									<p>{object}</p>
-								</div>
-							);
-						})}
-					</div>
-					<img
-						src="https://via.placeholder.com/100?text=My+Logo"
-						alt="Beautification illustration"
-					></img>
+				<div className="navbarsteps" style={navbarsteps}>
+					{StepTitles.map((object, i) => {
+						return (
+							<div
+								className="navstep"
+								style={{
+									...navstep,
+									...(i === step ? selected : todo),
+								}}
+								key={i}
+							>
+								<p
+									className="navnum"
+									style={{ ...navnum, ...(i < step ? finishedCheckbox : "") }}
+								>
+									{i < step ? <CheckIcon /> : i + 1}
+								</p>
+								<p
+									className="navname"
+									style={{ ...navname, ...(i < step ? finishedName : "") }}
+								>
+									{object}
+								</p>
+							</div>
+						);
+					})}
 				</div>
 
-				<div>{StepDisplay()}</div>
+				<img
+					src={NavIllustration}
+					alt="navBar illustration"
+					style={Illustration}
+				/>
+			</div>
+			<div className="content" style={content}>
+				<div className="content-step">{StepDisplay()}</div>
 
-				<div className="content" style={content}>
-					<div className="multistep-form" style={multistepFormStyle}>
-						<div className="step step-2">
-							<button
-								style={step == 0 || step == 4 ? invisibleButton : prevButton}
-								onClick={() => {
-									console.log(step);
-									if (step != 0) {
-										setStep((currStep) => currStep - 1);
-									}
-								}}
-							>
-								Previous Step
-							</button>
-							<button
-								style={step == 4 ? invisibleButton : nextButton}
-								onClick={() => {
-									console.log(step);
-									setStep((currStep) => currStep + 1);
-								}}
-							>
-								Next Step
-							</button>
-						</div>
-					</div>
+				<div className="buttons" style={buttons}>
+					<button
+						style={step === 0 || step === 4 ? invisibleButton : prevButton}
+						onClick={() => {
+							console.log(step);
+							if (step !== 0) {
+								setStep((currStep) => currStep - 1);
+							}
+						}}
+					>
+						Previous Step
+					</button>
+					<button
+						style={step === 4 ? invisibleButton : nextButton}
+						onClick={() => {
+							console.log(step);
+							setStep((currStep) => currStep + 1);
+						}}
+					>
+						Next Step
+					</button>
 				</div>
 			</div>
 		</div>
@@ -98,8 +113,19 @@ const MultistepForm = () => {
 
 const body = {
 	fontFamily: "Montserrat",
-	fontSize: "16px",
-	lineHeight: 1.5,
+	margin: 16,
+	display: "flex",
+	flexDirection: "row",
+};
+
+const progress = {
+	width: "26.455%",
+	height: "100%",
+	display: "flex",
+	flexDirection: "column",
+	boxShadow: "none",
+	borderRadius: 10,
+	backgroundColor: theme.colors.primaryLightBackground,
 };
 
 const logoText = {
@@ -107,52 +133,82 @@ const logoText = {
 	color: theme.colors.primaryDark,
 	fontWeight: 700,
 	fontSize: 20,
-};
-
-const container = {
-	maxWidth: 1200,
-	marginTop: 0,
-	padding: "2rem",
-	display: "flex",
-};
-
-/*Navbar styling*/
-const navbar = {
-	display: "flex",
-	flexDirection: "column",
-	alignItems: "center",
-	backgroundColor: theme.colors.primaryLightBackground,
-	padding: "2rem",
+	margin: 48,
 };
 
 const navbarsteps = {
 	display: "flex",
 	flexDirection: "column",
-	justifyContent: "space-between",
-	padding: "1rem",
+	marginLeft: 36,
+	marginBottom: 36,
+	fontFamily: theme.fonts.headerThreeMedium,
+	weight: theme.fonts.headerThreeMedium,
 };
 
 const navstep = {
 	display: "flex",
+	flexDirection: "row",
 	alignItems: "center",
+	marginTop: 0,
+	marginBottom: 36,
+};
+
+const navnum = {
+	width: 35,
+	height: 35,
+	marginRight: 25,
+	paddingTop: 6,
+	borderStyle: "solid",
+	borderWidth: 1,
+	borderRadius: 6,
+	textAlign: "center",
+	fontSize: 16,
+};
+
+const finishedCheckbox = {
+	backgroundColor: theme.colors.primaryMedium,
+	color: theme.colors.textLight,
+};
+
+const navname = {
+	font: theme.fonts.headerThreeMedium,
+	weight: theme.fonts.headerThreeMedium,
+};
+
+const finishedName = {
+	color: "#ABBED1",
+};
+
+const selected = {
+	color: theme.colors.primary,
+};
+
+const todo = {
+	color: theme.colors.textGrey,
+};
+
+const Illustration = {
+	width: 367,
+	height: 334.32,
 };
 
 const content = {
 	display: "flex",
+	flexDirection: "column",
 	justifyContent: "space-between",
-	alignItems: "flex-end",
-};
-
-const multistepFormStyle = {
-	display: "flex",
-	flexDirection: "row",
-	height: "100vh",
-	padding: "20px",
-	alignItems: "flex-end",
+	margin: 92,
+	width: "73.545%",
 };
 
 const invisibleButton = {
-	display: "none",
+	opacity: 0,
+	pointerEvents: "none",
+};
+
+const buttons = {
+	display: "flex",
+	flexDirection: "row",
+	justifyContent: "space-between",
 };
 
 const prevButton = {
@@ -173,10 +229,6 @@ const nextButton = {
 	backgroundColor: "#ccc",
 	color: "#fff",
 	cursor: "pointer",
-};
-
-const buttonHover = {
-	backgroundColor: "#aaa",
 };
 
 export default MultistepForm;

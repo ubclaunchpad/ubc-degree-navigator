@@ -8,6 +8,7 @@ const theme = {
 		primaryLightBackground: "#FFFFFF",
 		textDark: "#272A30",
 		textLight: "#FFFFFF",
+		textGrey: "#6A7181",
 	},
 
 	fonts: {
