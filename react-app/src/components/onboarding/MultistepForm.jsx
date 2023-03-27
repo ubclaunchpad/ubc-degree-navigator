@@ -103,7 +103,7 @@ const MultistepForm = () => {
 							setStep((currStep) => currStep + 1);
 						}}
 					>
-						Next Step
+						Next Step →
 					</button>
 				</div>
 			</div>
@@ -209,24 +209,27 @@ const buttons = {
 	display: "flex",
 	flexDirection: "row",
 	justifyContent: "space-between",
+	fontFamily: theme.fonts.buttons,
+	fontWeight: theme.fontWeights.buttons,
 };
 
 const prevButton = {
-	marginRight: "10px",
 	border: "none",
-	borderRadius: "5px",
-	padding: "10px",
-	backgroundColor: "#ccc",
-	color: "#fff",
+	padding: "10",
+	backgroundColor: "rgba(0,0,0,0)",
+	color: "#256AF4",
 	cursor: "pointer",
 };
 
 const nextButton = {
-	marginRight: "10px",
 	border: "none",
 	borderRadius: "5px",
-	padding: "10px",
-	backgroundColor: "#ccc",
+	//margin: "12px, 25.5px",
+	paddingLeft: "25.5px",
+	paddingRight: "25.5px",
+	paddingTop: "12px",
+	paddingBottom: "12px",
+	backgroundColor: theme.colors.primaryDark,
 	color: "#fff",
 	cursor: "pointer",
 };
