@@ -1,0 +1,31 @@
+/* Define global styles */
+
+
+.navbarsteps {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.step {
+  display: none;
+}
+
+.step-1 {
+  display: flex;
+}
+
+button {
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #ccc;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #aaa;
+}

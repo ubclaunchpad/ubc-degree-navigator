@@ -1,0 +1,234 @@
+import React, { useState } from "react";
+import theme from "../../theme";
+import AdditionalInformation from "./AdditionalInformation";
+import CourseHistory from "./CourseHistory";
+import Results from "./Results";
+import Review from "./Review";
+import TransferCredits from "./TransferCredits";
+import CheckIcon from "@mui/icons-material/Check";
+import NavIllustration from "../../assets/navIllustration.svg";
+
+const MultistepForm = () => {
+	const [step, setStep] = useState(0);
+	const [data, setData] = useState({
+		courses: [],
+		transferCredits: [],
+		program: "",
+		major: "",
+	});
+
+	const StepTitles = [
+		"Course history",
+		"Transfer credits",
+		"Degree information",
+		"Review",
+		"Results!",
+	];
+
+	const StepDisplay = () => {
+		switch (step) {
+			case 0:
+				return <CourseHistory data={data} setData={setData} />;
+			case 1:
+				return <TransferCredits data={data} setData={setData} />;
+			case 2:
+				return <AdditionalInformation data={data} setData={setData} />;
+			case 3:
+				return <Review data={data} setData={setData} />;
+			case 4:
+				return <Results data={data} setData={setData} />;
+			default:
+				return <CourseHistory data={data} setData={setData} />;
+		}
+	};
+
+	return (
+		<div className="body" style={body}>
+			<div className="progress" style={progress}>
+				<h1 style={logoText}>BlueNav</h1>
+
+				<div className="navbarsteps" style={navbarsteps}>
+					{StepTitles.map((object, i) => {
+						return (
+							<div
+								className="navstep"
+								style={{
+									...navstep,
+									...(i === step ? selected : todo),
+								}}
+								key={i}
+							>
+								<p
+									className="navnum"
+									style={{ ...navnum, ...(i < step ? finishedCheckbox : "") }}
+								>
+									{i < step ? <CheckIcon /> : i + 1}
+								</p>
+								<p
+									className="navname"
+									style={{ ...navname, ...(i < step ? finishedName : "") }}
+								>
+									{object}
+								</p>
+							</div>
+						);
+					})}
+				</div>
+
+				<img
+					src={NavIllustration}
+					alt="navBar illustration"
+					style={Illustration}
+				/>
+			</div>
+			<div className="content" style={content}>
+				<div className="content-step">{StepDisplay()}</div>
+
+				<div className="buttons" style={buttons}>
+					<button
+						style={step === 0 || step === 4 ? invisibleButton : prevButton}
+						onClick={() => {
+							console.log(step);
+							if (step !== 0) {
+								setStep((currStep) => currStep - 1);
+							}
+						}}
+					>
+						Previous Step
+					</button>
+					<button
+						style={step === 4 ? invisibleButton : nextButton}
+						onClick={() => {
+							console.log(step);
+							setStep((currStep) => currStep + 1);
+						}}
+					>
+						Next Step
+					</button>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+const body = {
+	fontFamily: "Montserrat",
+	margin: 16,
+	display: "flex",
+	flexDirection: "row",
+};
+
+const progress = {
+	width: "26.455%",
+	height: "100%",
+	display: "flex",
+	flexDirection: "column",
+	boxShadow: "none",
+	borderRadius: 10,
+	backgroundColor: theme.colors.primaryLightBackground,
+};
+
+const logoText = {
+	fontFamily: theme.fonts.headerOne,
+	color: theme.colors.primaryDark,
+	fontWeight: 700,
+	fontSize: 20,
+	margin: 48,
+};
+
+const navbarsteps = {
+	display: "flex",
+	flexDirection: "column",
+	marginLeft: 36,
+	marginBottom: 36,
+	fontFamily: theme.fonts.headerThreeMedium,
+	weight: theme.fonts.headerThreeMedium,
+};
+
+const navstep = {
+	display: "flex",
+	flexDirection: "row",
+	alignItems: "center",
+	marginTop: 0,
+	marginBottom: 36,
+};
+
+const navnum = {
+	width: 35,
+	height: 35,
+	marginRight: 25,
+	paddingTop: 6,
+	borderStyle: "solid",
+	borderWidth: 1,
+	borderRadius: 6,
+	textAlign: "center",
+	fontSize: 16,
+};
+
+const finishedCheckbox = {
+	backgroundColor: theme.colors.primaryMedium,
+	color: theme.colors.textLight,
+};
+
+const navname = {
+	font: theme.fonts.headerThreeMedium,
+	weight: theme.fonts.headerThreeMedium,
+};
+
+const finishedName = {
+	color: "#ABBED1",
+};
+
+const selected = {
+	color: theme.colors.primary,
+};
+
+const todo = {
+	color: theme.colors.textGrey,
+};
+
+const Illustration = {
+	width: 367,
+	height: 334.32,
+};
+
+const content = {
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "space-between",
+	margin: 92,
+	width: "73.545%",
+};
+
+const invisibleButton = {
+	opacity: 0,
+	pointerEvents: "none",
+};
+
+const buttons = {
+	display: "flex",
+	flexDirection: "row",
+	justifyContent: "space-between",
+};
+
+const prevButton = {
+	marginRight: "10px",
+	border: "none",
+	borderRadius: "5px",
+	padding: "10px",
+	backgroundColor: "#ccc",
+	color: "#fff",
+	cursor: "pointer",
+};
+
+const nextButton = {
+	marginRight: "10px",
+	border: "none",
+	borderRadius: "5px",
+	padding: "10px",
+	backgroundColor: "#ccc",
+	color: "#fff",
+	cursor: "pointer",
+};
+
+export default MultistepForm;
