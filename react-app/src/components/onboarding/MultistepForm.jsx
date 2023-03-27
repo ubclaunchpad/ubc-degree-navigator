@@ -10,6 +10,7 @@ import NavIllustration from "../../assets/navIllustration.svg";
 
 const MultistepForm = () => {
 	const [step, setStep] = useState(0);
+	// const [button, setButton] = useState(false);
 	const [data, setData] = useState({
 		courses: [],
 		transferCredits: [],
@@ -28,7 +29,9 @@ const MultistepForm = () => {
 	const StepDisplay = () => {
 		switch (step) {
 			case 0:
-				return <CourseHistory data={data} setData={setData} />;
+				return (
+					<CourseHistory data={data} setData={setData} setStep={setStep} />
+				);
 			case 1:
 				return <TransferCredits data={data} setData={setData} />;
 			case 2:
@@ -224,7 +227,6 @@ const prevButton = {
 const nextButton = {
 	border: "none",
 	borderRadius: "5px",
-	//margin: "12px, 25.5px",
 	paddingLeft: "25.5px",
 	paddingRight: "25.5px",
 	paddingTop: "12px",
