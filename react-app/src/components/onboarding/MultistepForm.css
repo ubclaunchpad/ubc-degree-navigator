@@ -1,33 +1,5 @@
-
-/* Reset default browser styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 /* Define global styles */
-body {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-}
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  display: flex;
-}
-
-/*Navbar styling*/
-.navbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f7f7f784;
-  padding: 2rem;
-}
 
 .navbarsteps {
   display: flex;
@@ -36,43 +8,24 @@ body {
   padding: 1rem;
 }
 
-.navstep {
-  display: flex;
-  align-items: center;
+.step {
+  display: none;
 }
 
-.content {
+.step-1 {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
 }
 
-.multistep-form {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  padding: 20px;
-  align-items: flex-end;
+button {
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #ccc;
+  color: #fff;
+  cursor: pointer;
 }
-  
-  .step {
-    display: none;
-  }
-  
-  .step-1 {
-    display: flex;
-  }
-  button {
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #ccc;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #aaa;
-  }
-  
+
+button:hover {
+  background-color: #aaa;
+}
