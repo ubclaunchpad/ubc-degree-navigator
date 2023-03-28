@@ -30,7 +30,14 @@ const MultistepForm = () => {
 			case 0:
 				return <CourseHistory data={data} setData={setData} />;
 			case 1:
-				return <TransferCredits data={data} setData={setData} />;
+				return (
+					<TransferCredits
+						data={data}
+						setData={setData}
+						step={step}
+						setStep={setStep}
+					/>
+				);
 			case 2:
 				return <AdditionalInformation data={data} setData={setData} />;
 			case 3:
@@ -88,7 +95,6 @@ const MultistepForm = () => {
 					<button
 						style={step === 0 || step === 4 ? invisibleButton : prevButton}
 						onClick={() => {
-							console.log(step);
 							if (step !== 0) {
 								setStep((currStep) => currStep - 1);
 							}
@@ -99,7 +105,6 @@ const MultistepForm = () => {
 					<button
 						style={step === 4 ? invisibleButton : nextButton}
 						onClick={() => {
-							console.log(step);
 							setStep((currStep) => currStep + 1);
 						}}
 					>
