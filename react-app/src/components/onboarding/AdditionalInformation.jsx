@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import theme from "../../theme";
-import { FormControl, FormLabel, InputLabel, Select, MenuItem } from '@mui/material';
+import { FormControl, FormLabel, Select, MenuItem } from '@mui/material';
 
 
 const AdditionalInformation = () => {
@@ -23,6 +23,149 @@ const AdditionalInformation = () => {
 			[e.target.name]: e.target.value,
 		});
 	};
+
+	const programs = [
+		{
+			key: "BASC",
+			name: "Applied Science"
+		},
+		{
+			key: "BA",
+			name: "Arts"
+		},
+		{
+			key: "BCOM",
+			name: "Commerce"
+		},
+		{
+			key: "BCS",
+			name: "Computer Science"
+		},
+		{
+			key: "BDSC",
+			name: "Dental Science"
+		},
+	]
+
+	const majors = [
+		{
+			key: "CHEM",
+			name: "Chemistry"
+		},
+		{
+			key: "CMS",
+			name: "Combined Major in Science"
+		},
+		{
+			key: "CS",
+			name: "Computer Science"
+		},
+		{
+			key: "MATH",
+			name: "Mathematics"
+		}
+	]
+
+	const minors = [
+		{
+			key: "CS",
+			name: "Computer Science"
+		},
+		{
+			key: "DS",
+			name: "Data Science"
+		},
+		{
+			key: "STAT",
+			name: "Statistics"
+		}
+	]
+
+	const specializations = [
+		{
+			key: "ACC",
+			name: "Accounting"
+		},
+		{
+			key: "BUCS",
+			name: "Business and Computer Science"
+		},
+		{
+			key: "BTM",
+			name: "Business Technology Management"
+		},
+		{
+			key: "ENT",
+			name: "Entrepreneurship"
+		},
+		{
+			key: "FIN",
+			name: "Finance"
+		},
+		{
+			key: "GBM",
+			name: "General Business Management"
+		},
+		{
+			key: "GSC",
+			name: "Global Supply Chain and Logistics Management"
+		},
+		{
+			key: "MAR",
+			name: "Marketing"
+		},
+		{
+			key: "OL",
+			name: "Operations and Logistics"
+		},
+		{
+			key: "OBHR",
+			name: "Organizational Behaviour and Human Resources"
+		},
+		{
+			key: "RE",
+			name: "Real Estate"
+		},
+	]
+
+	const concentrations = [
+		{
+			key: "BuA",
+			name: "Business Analytics"
+		},
+		{
+			key: "BL",
+			name: "Business Law"
+		},
+		{
+			key: "SSI",
+			name: "Sustainability and Social Impact"
+		},
+		{
+			key: "IB",
+			name: "International Business"
+		}
+	]
+
+	const listPrograms = programs.map((program) =>
+		<MenuItem value={program.key} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Bachelor of {program.name}</MenuItem>
+	);
+
+	const listMajors = majors.map((major) =>
+		<MenuItem value={major.key} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>{major.name}</MenuItem>
+	);
+
+	const listMinors = majors.map((minor) =>
+		<MenuItem value={minor.key} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>{minor.name}</MenuItem>
+	);
+
+	const listSpecializations = specializations.map((specialization) =>
+		<MenuItem value={specialization.key} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>{specialization.name}</MenuItem>
+	);
+
+	const listConcentrations = concentrations.map((concentration) =>
+		<MenuItem value={concentration.key} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>{concentration.name}</MenuItem>
+	);
 
 	return (
 		<div className="container" style={container}>
@@ -49,9 +192,7 @@ const AdditionalInformation = () => {
 					sx = {{ width: 800, backgroundColor: 'white', fontSize: '18px', fontFamily: 'Inter', color: 'black', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }, 
 					"&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0 }, "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0 } }}
 				>
-					<MenuItem value={10} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Ten</MenuItem>
-					<MenuItem value={20} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Twenty</MenuItem>
-					<MenuItem value={30} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Thirty</MenuItem>
+					{listPrograms}
 				</Select>
 				<FormLabel
 				sx = {{ fontSize: '18px', fontFamily: 'Inter', color: 'black', fontWeight: 500, marginTop: '24px' }}
@@ -72,9 +213,7 @@ const AdditionalInformation = () => {
 							sx = {{ width: 376, backgroundColor: 'white', fontSize: '18px', fontFamily: 'Inter', color: 'black', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }, 
 							"&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0 }, "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0 } }}
 						>
-							<MenuItem value={10} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Ten</MenuItem>
-							<MenuItem value={20} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Twenty</MenuItem>
-							<MenuItem value={30} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Thirty</MenuItem>
+							{listMajors}
 						</Select>
 					</div>
 					<div className="flex" style={flex}>
@@ -91,9 +230,7 @@ const AdditionalInformation = () => {
 							sx = {{ width: 376, backgroundColor: 'white', fontSize: '18px', fontFamily: 'Inter', color: 'black', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }, 
 							"&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0 }, "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0 } }}
 						>
-							<MenuItem value={10} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Ten</MenuItem>
-							<MenuItem value={20} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Twenty</MenuItem>
-							<MenuItem value={30} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Thirty</MenuItem>
+							{listMajors}
 						</Select>
 					</div>
 				</div>
@@ -110,9 +247,7 @@ const AdditionalInformation = () => {
 					sx = {{ width: 376, backgroundColor: 'white', fontSize: '18px', fontFamily: 'Inter', color: 'black', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }, 
 					"&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0 }, "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0 } }}
 				>
-					<MenuItem value={10} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Ten</MenuItem>
-					<MenuItem value={20} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Twenty</MenuItem>
-					<MenuItem value={30} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Thirty</MenuItem>
+					{listMinors}
 				</Select>
 				<FormLabel
 				sx = {{ fontSize: '18px', fontFamily: 'Inter', color: 'black', fontWeight: 500, marginTop: '24px' }}
@@ -132,9 +267,7 @@ const AdditionalInformation = () => {
 							sx = {{ width: 376, backgroundColor: 'white', fontSize: '18px', fontFamily: 'Inter', color: 'black', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }, 
 							"&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0 }, "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0 } }}
 						>
-							<MenuItem value={10} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Ten</MenuItem>
-							<MenuItem value={20} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Twenty</MenuItem>
-							<MenuItem value={30} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Thirty</MenuItem>
+							{listSpecializations}
 						</Select>
 					</div>
 					<div className="flex" style={flex}>
@@ -151,9 +284,7 @@ const AdditionalInformation = () => {
 							sx = {{ width: 376, backgroundColor: 'white', fontSize: '18px', fontFamily: 'Inter', color: 'black', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }, 
 							"&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0 }, "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0 } }}
 						>
-							<MenuItem value={10} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Ten</MenuItem>
-							<MenuItem value={20} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Twenty</MenuItem>
-							<MenuItem value={30} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Thirty</MenuItem>
+							{listSpecializations}
 						</Select>
 					</div>
 				</div>
@@ -170,9 +301,7 @@ const AdditionalInformation = () => {
 					sx = {{ width: 376, backgroundColor: 'white', fontSize: '18px', fontFamily: 'Inter', color: 'black', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }, 
 					"&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0 }, "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0 }, marginBottom: '32px' }}
 				>
-					<MenuItem value={10} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Ten</MenuItem>
-					<MenuItem value={20} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Twenty</MenuItem>
-					<MenuItem value={30} sx = {{ fontSize: '18px', fontFamily: 'Inter' }}>Thirty</MenuItem>
+					{listConcentrations}
 				</Select>
 			</FormControl>
 		</div>
