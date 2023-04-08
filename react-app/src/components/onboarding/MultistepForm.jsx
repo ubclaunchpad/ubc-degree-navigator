@@ -6,6 +6,7 @@ import EditHistory from "./courseHistory/EditHistory";
 import TransferCredits from "./transferCredits/TransferCredits";
 import ChooseRoute from "./transferCredits/ChooseRoute";
 import UploadTransferCredit from "./transferCredits/UploadTransferCredit";
+import EditTransferCredits from "./transferCredits/EditTransferCredits";
 import AdditionalInformation from "./AdditionalInformation";
 import Results from "./Results";
 import Review from "./Review";
@@ -97,7 +98,13 @@ const MultistepForm = () => {
 					/>
 				);
 			case "edit transfer credit":
-				return;
+				return (
+					<EditTransferCredits
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
 			case "additional information":
 				return <AdditionalInformation data={data} setData={setData} />;
 			case "review":
