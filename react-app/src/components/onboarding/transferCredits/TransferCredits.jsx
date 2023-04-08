@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import theme from "../../../theme";
 
-const ChooseRoute = ({ data, setData, selected, setSelected }) => {
+const TransferCredits = ({
+	transferCreditRoute,
+	setTransferCreditRoute,
+	setEnableButton,
+}) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
@@ -23,7 +26,7 @@ const ChooseRoute = ({ data, setData, selected, setSelected }) => {
 	const option = {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-between",
+		justifyContent: "center",
 		marginBottom: 24,
 		padding: 39,
 		borderRadius: 10,
@@ -50,7 +53,7 @@ const ChooseRoute = ({ data, setData, selected, setSelected }) => {
 					...option,
 					...{
 						backgroundColor:
-							selected === "yes" || isHover1
+							transferCreditRoute === "yes" || isHover1
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover1 ? 1 : 0,
@@ -58,11 +61,12 @@ const ChooseRoute = ({ data, setData, selected, setSelected }) => {
 				}}
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
-				onClick={() => setSelected("yes")}
+				onClick={() => {
+					setTransferCreditRoute("yes");
+					setEnableButton(true);
+				}}
 			>
-				<p></p>
 				<p style={text}>Yes</p>
-				<ArrowForwardIcon style={{ width: 20, height: 20 }} />
 			</div>
 
 			<div
@@ -71,7 +75,7 @@ const ChooseRoute = ({ data, setData, selected, setSelected }) => {
 					...option,
 					...{
 						backgroundColor:
-							selected === "no" || isHover2
+							transferCreditRoute === "no" || isHover2
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover2 ? 1 : 0,
@@ -79,11 +83,12 @@ const ChooseRoute = ({ data, setData, selected, setSelected }) => {
 				}}
 				onMouseEnter={handleMouseEnter2}
 				onMouseLeave={handleMouseLeave2}
-				onClick={() => setSelected("no")}
+				onClick={() => {
+					setTransferCreditRoute("no");
+					setEnableButton(true);
+				}}
 			>
-				<p></p>
 				<p style={text}>No</p>
-				<ArrowForwardIcon style={{ width: 20, height: 20 }} />
 			</div>
 		</div>
 	);
@@ -120,4 +125,4 @@ const text = {
 	fontSize: 18,
 };
 
-export default ChooseRoute;
+export default TransferCredits;

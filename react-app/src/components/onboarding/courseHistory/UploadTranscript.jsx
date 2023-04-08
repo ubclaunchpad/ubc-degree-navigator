@@ -1,17 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";
 
-const UploadTranscript = ({
-	data,
-	setData,
-	setShowButton,
-	setStep,
-	setMethodSelected,
-}) => {
-	setShowButton(true);
-
+const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
@@ -38,6 +30,12 @@ const UploadTranscript = ({
 	};
 
 	const [isUploaded, setIsUploaded] = useState(false);
+
+	/* TODO: Uncomment after implementing file upload
+  if (isUploaded) {
+    setEnableButton(true);
+  }
+  */
 
 	return (
 		<div className="container" style={container}>
@@ -71,7 +69,7 @@ const UploadTranscript = ({
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
 				onClick={() => {
-					console.log("clicked");
+					setEnableButton(true);
 				}}
 			>
 				<div style={icon}>

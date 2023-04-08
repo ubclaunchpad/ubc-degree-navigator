@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
 import ManualIcon from "../../../assets/playlist_add.svg";
 import theme from "../../../theme";
 
 const ChooseMethod = ({
-	methodSelected,
-	setMethodSelected,
-	setShowButton,
-	setStep,
+	transcriptMethod,
+	setTranscriptMethod,
+	setEnableButton,
 }) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
@@ -51,15 +50,19 @@ const ChooseMethod = ({
 				style={{
 					...method,
 					...{
-						backgroundColor: isHover1
-							? "#EBF2FF"
-							: theme.colors.primaryLightBackground,
+						backgroundColor:
+							isHover1 || transcriptMethod == "upload"
+								? "#EBF2FF"
+								: theme.colors.primaryLightBackground,
 						borderWidth: isHover1 ? 1 : 0,
 					},
 				}}
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
-				onClick={() => setMethodSelected("upload")}
+				onClick={() => {
+					setTranscriptMethod("upload");
+					setEnableButton(true);
+				}}
 			>
 				<div style={icon}>
 					<img src={UploadIcon} alt="upload icon" />
@@ -80,18 +83,18 @@ const ChooseMethod = ({
 				style={{
 					...method,
 					...{
-						backgroundColor: isHover2
-							? "#EBF2FF"
-							: theme.colors.primaryLightBackground,
+						backgroundColor:
+							isHover2 || transcriptMethod == "manual"
+								? "#EBF2FF"
+								: theme.colors.primaryLightBackground,
 						borderWidth: isHover2 ? 1 : 0,
 					},
 				}}
 				onMouseEnter={handleMouseEnter2}
 				onMouseLeave={handleMouseLeave2}
 				onClick={() => {
-					setStep(0.5);
-					setShowButton(true);
-					setMethodSelected("manual");
+					setTranscriptMethod("manual");
+					setEnableButton(true);
 				}}
 			>
 				<div style={{ ...icon, padding: 25 }}>

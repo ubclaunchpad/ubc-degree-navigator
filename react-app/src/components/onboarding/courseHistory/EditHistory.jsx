@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import theme from "../../../theme";
 
-const EditHistory = ({ data, setData, setShowButton, setStep }) => {
+const EditHistory = ({ data, setData, setEnableButton }) => {
+	useEffect(() => {
+		setEnableButton(true);
+	});
+
 	return (
 		<div className="container" style={container}>
 			<div className="header" style={header}>
