@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
-import ManualIcon from "../../../assets/playlist_add.svg";
+import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";
 
-const ChooseMethod = ({
-	transcriptMethod,
-	setTranscriptMethod,
-	setEnableButton,
-}) => {
+const UploadTransferCredit = ({ data, setData, setEnableButton }) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
@@ -23,7 +19,6 @@ const ChooseMethod = ({
 	};
 
 	const [isHover1, handleMouseEnter1, handleMouseLeave1] = useHover();
-	const [isHover2, handleMouseEnter2, handleMouseLeave2] = useHover();
 
 	const method = {
 		display: "flex",
@@ -34,14 +29,28 @@ const ChooseMethod = ({
 		borderColor: theme.colors.primaryDark,
 	};
 
+	const [isUploaded, setIsUploaded] = useState(false);
+
+	/* TODO: Uncomment after implementing file upload
+  if (isUploaded) {
+    setEnableButton(true);
+  }
+  */
+
 	return (
 		<div className="container" style={container}>
 			<div className="header" style={header}>
 				<h1 className="title" style={title}>
-					Choose a way to get started
+					Upload your transfer credits
 				</h1>
 				<p className="subTitle" style={subTitle}>
-					First, we will need your course history.
+					Please upload a screenshot of your transfer credits that can be found
+					under "Grades & Records" &lt; “Transfer Credits” on the{" "}
+					<a href="https://ssc.adm.ubc.ca/">Student Service Centre website</a>.{" "}
+					<br />
+					<br />
+					After selecting your campus location, take a screenshot of the table
+					that incldues your transfer credits. Here is an example!
 				</p>
 			</div>
 
@@ -50,17 +59,15 @@ const ChooseMethod = ({
 				style={{
 					...method,
 					...{
-						backgroundColor:
-							isHover1 || transcriptMethod === "upload"
-								? "#EBF2FF"
-								: theme.colors.primaryLightBackground,
+						backgroundColor: isHover1
+							? "#EBF2FF"
+							: theme.colors.primaryLightBackground,
 						borderWidth: isHover1 ? 1 : 0,
 					},
 				}}
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
 				onClick={() => {
-					setTranscriptMethod("upload");
 					setEnableButton(true);
 				}}
 			>
@@ -68,43 +75,14 @@ const ChooseMethod = ({
 					<img src={UploadIcon} alt="upload icon" />
 				</div>
 				<div className="description" style={description}>
-					<p className="subTitle" style={subTitle}>
-						Upload transcript (Recommended)
-					</p>
-					<p style={subSub}>
-						Upload a screenshot of transcript — you can still manually edit your
-						courses later.
-					</p>
-				</div>
-			</div>
+					<div style={topper}>
+						<p className="subTitle" style={subTitle}>
+							File Upload
+						</p>
+						{isUploaded ? <CheckIcon style={check} /> : <br />}
+					</div>
 
-			<div
-				className="method"
-				style={{
-					...method,
-					...{
-						backgroundColor:
-							isHover2 || transcriptMethod === "manual"
-								? "#EBF2FF"
-								: theme.colors.primaryLightBackground,
-						borderWidth: isHover2 ? 1 : 0,
-					},
-				}}
-				onMouseEnter={handleMouseEnter2}
-				onMouseLeave={handleMouseLeave2}
-				onClick={() => {
-					setTranscriptMethod("manual");
-					setEnableButton(true);
-				}}
-			>
-				<div style={{ ...icon, padding: 25 }}>
-					<img src={ManualIcon} alt="manual icon" />
-				</div>
-				<div className="description" style={description}>
-					<p className="subTitle" style={subTitle}>
-						Add courses manually
-					</p>
-					<p style={subSub}>This option will take longer!</p>
+					<p style={subSub}>Accepted formats: JPEG, JPG, PNG.</p>
 				</div>
 			</div>
 		</div>
@@ -144,6 +122,22 @@ const icon = {
 	borderRadius: 20,
 };
 
+const topper = {
+	display: "flex",
+	flexDirection: "row",
+};
+
+const check = {
+	width: 20,
+	height: 20,
+	marginTop: 2,
+	marginLeft: 8,
+	padding: 2,
+	backgroundColor: theme.colors.primaryDark,
+	color: theme.colors.textLight,
+	borderRadius: 10,
+};
+
 const description = {
 	display: "flex",
 	flexDirection: "column",
@@ -158,5 +152,4 @@ const subSub = {
 	fontSize: 16,
 	marginBottom: 0,
 };
-
-export default ChooseMethod;
+export default UploadTransferCredit;

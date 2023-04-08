@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import theme from "../../../theme";
 
-const EditHistory = ({ data, setData, setEnableButton }) => {
+const EditTransferCredits = ({ data, setData, setEnableButton }) => {
 	useEffect(() => {
 		setEnableButton(true);
 	});
@@ -10,11 +10,11 @@ const EditHistory = ({ data, setData, setEnableButton }) => {
 		<div className="container" style={container}>
 			<div className="header" style={header}>
 				<h1 className="title" style={title}>
-					Your course history
+					Your transfer credits
 				</h1>
 				<p className="subTitle" style={subTitle}>
-					Here are your courses based on your transcript. Add, edit, or remove
-					courses.
+					Here are your transfer credits based on the screenshot you uploaded.
+					Add, edit, or remove credits.
 				</p>
 			</div>
 		</div>
@@ -45,4 +45,4 @@ const subTitle = {
 	fontSize: 18,
 };
 
-export default EditHistory;
+export default EditTransferCredits;
