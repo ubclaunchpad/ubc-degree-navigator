@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";

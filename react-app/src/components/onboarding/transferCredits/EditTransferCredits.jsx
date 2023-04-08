@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import theme from "../../../theme";
 
 const EditTransferCredits = ({ data, setData, setEnableButton }) => {

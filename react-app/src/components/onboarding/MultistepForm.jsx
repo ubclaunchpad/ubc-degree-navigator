@@ -106,7 +106,13 @@ const MultistepForm = () => {
 					/>
 				);
 			case "additional information":
-				return <AdditionalInformation data={data} setData={setData} />;
+				return (
+					<AdditionalInformation
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
 			case "review":
 				return <Review data={data} setData={setData} />;
 			case "results":
@@ -120,7 +126,7 @@ const MultistepForm = () => {
 		if (step === "edit course history" && transcriptMethod === "manual") {
 			setStep("course history");
 		}
-		if (step === "additional information" && hasTransferCredit == "no") {
+		if (step === "additional information" && hasTransferCredit === "no") {
 			setStep("transfer credits");
 		}
 		if (step === "edit transfer credit" && transferCreditRoute === "manual") {
@@ -131,15 +137,6 @@ const MultistepForm = () => {
 				setStep(steps[index - 1]);
 			}
 		}
-		/*
-		let dec = 1;
-		if (step !== 0) {
-			if (step === 1) {
-				dec = 0.5;
-			}
-			setStep((currStep) => currStep - dec);
-		}
-    */
 	};
 
 	const goForward = () => {
@@ -158,13 +155,7 @@ const MultistepForm = () => {
 			}
 		}
 		setEnableButton(false);
-		/*
-		let inc = 1;
-		if (step === 1) {
-			inc = 0.5;
-		}
-		setStep((currStep) => currStep + inc);
-    */
+		console.log(step);
 	};
 
 	return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
 import ManualIcon from "../../../assets/playlist_add.svg";
 import theme from "../../../theme";
@@ -51,7 +51,7 @@ const ChooseMethod = ({
 					...method,
 					...{
 						backgroundColor:
-							isHover1 || transcriptMethod == "upload"
+							isHover1 || transcriptMethod === "upload"
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover1 ? 1 : 0,
@@ -84,7 +84,7 @@ const ChooseMethod = ({
 					...method,
 					...{
 						backgroundColor:
-							isHover2 || transcriptMethod == "manual"
+							isHover2 || transcriptMethod === "manual"
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover2 ? 1 : 0,
