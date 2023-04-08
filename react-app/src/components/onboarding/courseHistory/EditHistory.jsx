@@ -13,9 +13,10 @@ const EditHistory = ({ data, setData, setEnableButton }) => {
 		setYears(
 			years.concat(
 				<CourseComponent
+					key={years.length}
 					data={data}
 					setData={setData}
-					key={years.length}
+					indexKey={years.length}
 				></CourseComponent>
 			)
 		);

@@ -14,7 +14,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
 
 const MultistepForm = () => {
-	const [step, setStep] = useState("additional information"); // TODO: edit this back to "course history"
+	const [step, setStep] = useState("edit course history"); // TODO: edit this back to "course history"
 	const [data, setData] = useState({
 		courses: [],
 		transferCredits: [],
