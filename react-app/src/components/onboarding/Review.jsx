@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
-const Review = () => {
+const Review = ({ data, setData, setEnableButton }) => {
+	useEffect(() => {
+		setEnableButton(true);
+	});
+
 	return <h1>REVIEW COMPONENT</h1>;
 };
 

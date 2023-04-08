@@ -1,26 +1,45 @@
 import React, { useState } from "react";
 import theme from "../../theme";
+import ChooseMethod from "./courseHistory/ChooseMethod";
+import UploadTranscript from "./courseHistory/UploadTranscript";
+import EditHistory from "./courseHistory/EditHistory";
+import TransferCredits from "./transferCredits/TransferCredits";
+import ChooseRoute from "./transferCredits/ChooseRoute";
+import UploadTransferCredit from "./transferCredits/UploadTransferCredit";
+import EditTransferCredits from "./transferCredits/EditTransferCredits";
 import AdditionalInformation from "./AdditionalInformation";
-import CourseHistory from "./CourseHistory";
 import Results from "./Results";
 import Review from "./Review";
-import TransferCredits from "./TransferCredits";
 import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
-import EditHistory from "./courseHistory/EditHistory";
 
 const MultistepForm = () => {
-	const [step, setStep] = useState(0);
-	// const [button, setButton] = useState(false);
+	const [step, setStep] = useState("additional information"); // TODO: edit this back to "course history"
 	const [data, setData] = useState({
 		courses: [],
 		transferCredits: [],
 		program: "",
 		major: "",
 	});
-	const [showButton, setShowButton] = useState(false);
+	const [enableButton, setEnableButton] = useState(false);
+	const [transcriptMethod, setTranscriptMethod] = useState("");
+	const [hasTransferCredit, setHasTransferCredit] = useState("");
+	const [transferCreditRoute, setTransferCreditRoute] = useState("");
 
-	const StepTitles = [
+	const steps = [
+		"course history", // 0
+		"upload transcript", // 1
+		"edit course history", // 2
+		"transfer credits", // 3
+		"choose route", // 4
+		"upload transfer credit", // 5
+		"edit transfer credit", // 6
+		"additional information", // 7
+		"review", // 8
+		"results", // 9
+	];
+
+	const stepTitles = [
 		"Course history",
 		"Transfer credits",
 		"Degree information",
@@ -28,30 +47,121 @@ const MultistepForm = () => {
 		"Results!",
 	];
 
-	const StepDisplay = () => {
+	const DisplayStep = () => {
 		switch (step) {
-			case 0:
+			case "course history":
 				return (
-					<CourseHistory
-						data={data}
-						setData={setData}
-						setStep={setStep}
-						setShowButton={setShowButton}
+					<ChooseMethod
+						transcriptMethod={transcriptMethod}
+						setTranscriptMethod={setTranscriptMethod}
+						setEnableButton={setEnableButton}
 					/>
 				);
-			case 0.5:
-				return <EditHistory />;
-			case 1:
-				return <TransferCredits data={data} setData={setData} />;
-			case 2:
-				return <AdditionalInformation data={data} setData={setData} />;
-			case 3:
-				return <Review data={data} setData={setData} />;
-			case 4:
+			case "upload transcript":
+				return (
+					<UploadTranscript
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "edit course history":
+				return (
+					<EditHistory
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "transfer credits":
+				return (
+					<TransferCredits
+						hasTransferCredit={hasTransferCredit}
+						setHasTransferCredit={setHasTransferCredit}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "choose route":
+				return (
+					<ChooseRoute
+						transferCreditRoute={transferCreditRoute}
+						setTransferCreditRoute={setTransferCreditRoute}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "upload transfer credit":
+				return (
+					<UploadTransferCredit
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "edit transfer credit":
+				return (
+					<EditTransferCredits
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "additional information":
+				return (
+					<AdditionalInformation
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "review":
+				return (
+					<Review
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
+			case "results":
 				return <Results data={data} setData={setData} />;
 			default:
-				return <CourseHistory data={data} setData={setData} />;
+				return;
 		}
+	};
+
+	const goBack = () => {
+		if (step === "edit course history" && transcriptMethod === "manual") {
+			setStep("course history");
+		}
+		if (step === "additional information" && hasTransferCredit === "no") {
+			setStep("transfer credits");
+		}
+		if (step === "edit transfer credit" && transferCreditRoute === "manual") {
+			setStep("choose route");
+		} else {
+			let index = steps.indexOf(step);
+			if (index !== 0) {
+				setStep(steps[index - 1]);
+			}
+		}
+	};
+
+	const goForward = () => {
+		if (step === "course history" && transcriptMethod === "manual") {
+			setStep("edit course history");
+		}
+		if (step === "transfer credits" && hasTransferCredit === "no") {
+			setStep("additional information");
+		}
+		if (step === "choose route" && transferCreditRoute === "manual") {
+			setStep("edit transfer credit");
+		} else {
+			let index = steps.indexOf(step);
+			if (index !== steps.length) {
+				setStep(steps[index + 1]);
+			}
+		}
+		setEnableButton(false);
+		console.log(steps[steps.indexOf(step) + 1]);
 	};
 
 	return (
@@ -60,25 +170,34 @@ const MultistepForm = () => {
 				<h1 style={logoText}>BlueNav</h1>
 
 				<div className="navbarsteps" style={navbarsteps}>
-					{StepTitles.map((object, i) => {
+					{stepTitles.map((object, i) => {
+						let currIndex = steps.indexOf(step);
+						let mapToTitleIndex =
+							currIndex < 3 ? 0 : currIndex < 7 ? 1 : currIndex - 5;
 						return (
 							<div
 								className="navstep"
 								style={{
 									...navstep,
-									...(i === step ? selected : todo),
+									...(i === mapToTitleIndex ? selected : todo),
 								}}
 								key={i}
 							>
 								<p
 									className="navnum"
-									style={{ ...navnum, ...(i < step ? finishedCheckbox : "") }}
+									style={{
+										...navnum,
+										...(i < mapToTitleIndex ? finishedCheckbox : ""),
+									}}
 								>
 									{i < step ? <CheckIcon /> : i + 1}
 								</p>
 								<p
 									className="navname"
-									style={{ ...navname, ...(i < step ? finishedName : "") }}
+									style={{
+										...navname,
+										...(i < mapToTitleIndex ? finishedName : ""),
+									}}
 								>
 									{object}
 								</p>
@@ -94,33 +213,36 @@ const MultistepForm = () => {
 				/>
 			</div>
 			<div className="content" style={content}>
-				<div className="content-step">{StepDisplay()}</div>
-				{showButton ? (
-					<div className="buttons" style={buttons}>
-						<button
-							style={step === 0 || step === 4 ? invisibleButton : prevButton}
-							onClick={() => {
-								console.log(step);
-								if (step !== 0) {
-									setStep((currStep) => currStep - 0.5);
-								}
-							}}
-						>
-							Previous Step
-						</button>
-						<button
-							style={step === 4 ? invisibleButton : nextButton}
-							onClick={() => {
-								console.log(step);
-								setStep((currStep) => currStep + 0.5);
-							}}
-						>
-							Next Step →
-						</button>
-					</div>
-				) : (
-					<div></div>
-				)}
+				<div className="content-step">{DisplayStep()}</div>
+				<div className="buttons" style={buttons}>
+					<button
+						style={
+							step === "course history" ||
+							steps.indexOf(step) === steps.length - 1
+								? invisibleButton
+								: prevButton
+						}
+						onClick={() => {
+							goBack();
+						}}
+					>
+						Previous Step
+					</button>
+					<button
+						style={
+							steps.indexOf(step) === steps.length - 1
+								? invisibleButton
+								: enableButton
+								? nextButton
+								: disabledButton
+						}
+						onClick={() => {
+							goForward();
+						}}
+					>
+						Next Step →
+					</button>
+				</div>
 			</div>
 		</div>
 	);
@@ -234,6 +356,19 @@ const prevButton = {
 	backgroundColor: "rgba(0,0,0,0)",
 	color: "#256AF4",
 	cursor: "pointer",
+};
+
+const disabledButton = {
+	border: "none",
+	borderRadius: "5px",
+	paddingLeft: "25.5px",
+	paddingRight: "25.5px",
+	paddingTop: "12px",
+	paddingBottom: "12px",
+	backgroundColor: theme.colors.primaryDark,
+	color: "#fff",
+	opacity: "0.5",
+	pointerEvents: "none",
 };
 
 const nextButton = {

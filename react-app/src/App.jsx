@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import NewComponent from "./components/NewComponent";
+import React from "react";
 import MultistepForm from "./components/onboarding/MultistepForm.jsx";
 import theme from "./theme";
 

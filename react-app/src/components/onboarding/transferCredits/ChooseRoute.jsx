@@ -3,9 +3,9 @@ import UploadIcon from "../../../assets/upload-cloud.svg";
 import ManualIcon from "../../../assets/playlist_add.svg";
 import theme from "../../../theme";
 
-const ChooseMethod = ({
-	transcriptMethod,
-	setTranscriptMethod,
+const ChooseRoute = ({
+	transferCreditRoute,
+	setTransferCreditRoute,
 	setEnableButton,
 }) => {
 	const useHover = () => {
@@ -38,11 +38,8 @@ const ChooseMethod = ({
 		<div className="container" style={container}>
 			<div className="header" style={header}>
 				<h1 className="title" style={title}>
-					Choose a way to get started
+					How would you like to add your transfer credits?
 				</h1>
-				<p className="subTitle" style={subTitle}>
-					First, we will need your course history.
-				</p>
 			</div>
 
 			<div
@@ -51,7 +48,7 @@ const ChooseMethod = ({
 					...method,
 					...{
 						backgroundColor:
-							isHover1 || transcriptMethod === "upload"
+							isHover1 || transferCreditRoute === "upload"
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover1 ? 1 : 0,
@@ -60,7 +57,7 @@ const ChooseMethod = ({
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
 				onClick={() => {
-					setTranscriptMethod("upload");
+					setTransferCreditRoute("upload");
 					setEnableButton(true);
 				}}
 			>
@@ -69,11 +66,11 @@ const ChooseMethod = ({
 				</div>
 				<div className="description" style={description}>
 					<p className="subTitle" style={subTitle}>
-						Upload transcript (Recommended)
+						Upload transfer credit (Recommended)
 					</p>
 					<p style={subSub}>
-						Upload a screenshot of transcript — you can still manually edit your
-						courses later.
+						Upload a screenshot of transfer credits — you can still manually
+						edit later.
 					</p>
 				</div>
 			</div>
@@ -84,7 +81,7 @@ const ChooseMethod = ({
 					...method,
 					...{
 						backgroundColor:
-							isHover2 || transcriptMethod === "manual"
+							isHover2 || transferCreditRoute === "manual"
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover2 ? 1 : 0,
@@ -93,7 +90,7 @@ const ChooseMethod = ({
 				onMouseEnter={handleMouseEnter2}
 				onMouseLeave={handleMouseLeave2}
 				onClick={() => {
-					setTranscriptMethod("manual");
+					setTransferCreditRoute("manual");
 					setEnableButton(true);
 				}}
 			>
@@ -102,7 +99,7 @@ const ChooseMethod = ({
 				</div>
 				<div className="description" style={description}>
 					<p className="subTitle" style={subTitle}>
-						Add courses manually
+						Add transfer credits manually
 					</p>
 					<p style={subSub}>This option will take longer!</p>
 				</div>
@@ -159,4 +156,4 @@ const subSub = {
 	marginBottom: 0,
 };
 
-export default ChooseMethod;
+export default ChooseRoute;

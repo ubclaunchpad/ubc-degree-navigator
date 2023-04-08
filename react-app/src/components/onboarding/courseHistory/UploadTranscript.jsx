@@ -3,15 +3,7 @@ import UploadIcon from "../../../assets/upload-cloud.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";
 
-const UploadTranscript = ({
-	data,
-	setData,
-	setShowButton,
-	setStep,
-	setMethodSelected,
-}) => {
-	setShowButton(true);
-
+const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
@@ -39,6 +31,12 @@ const UploadTranscript = ({
 
 	const [isUploaded, setIsUploaded] = useState(false);
 
+	/* TODO: Uncomment after implementing file upload
+  if (isUploaded) {
+    setEnableButton(true);
+  }
+  */
+
 	return (
 		<div className="container" style={container}>
 			<div className="header" style={header}>
@@ -46,7 +44,7 @@ const UploadTranscript = ({
 					Upload your transcript
 				</h1>
 				<p className="subTitle" style={subTitle}>
-					Please upload a screenshot of your transcript that be be found under
+					Please upload a screenshot of your transcript that can be found under
 					“Your Grade Summary” on the{" "}
 					<a href="https://ssc.adm.ubc.ca/">Student Service Centre website</a>.{" "}
 					<br />
@@ -71,7 +69,7 @@ const UploadTranscript = ({
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
 				onClick={() => {
-					console.log("clicked");
+					setEnableButton(true);
 				}}
 			>
 				<div style={icon}>

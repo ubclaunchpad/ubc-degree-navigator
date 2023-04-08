@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import theme from "../../theme";
 import { FormControl, FormLabel, Select, MenuItem } from '@mui/material';
 
+const AdditionalInformation = ({ data, setData, setEnableButton }) => {
 
-const AdditionalInformation = () => {
-
+  useEffect(() => {
+		setEnableButton(true);
+	});
+  
 	const initialFormData = Object.freeze({
         program: "",
         primary: "",

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import UploadIcon from "../../../assets/upload-cloud.svg";
-import ManualIcon from "../../../assets/playlist_add.svg";
 import theme from "../../../theme";
 
-const ChooseMethod = ({
-	transcriptMethod,
-	setTranscriptMethod,
+const TransferCredits = ({
+	hasTransferCredit,
+	setHasTransferCredit,
 	setEnableButton,
 }) => {
 	const useHover = () => {
@@ -25,33 +23,37 @@ const ChooseMethod = ({
 	const [isHover1, handleMouseEnter1, handleMouseLeave1] = useHover();
 	const [isHover2, handleMouseEnter2, handleMouseLeave2] = useHover();
 
-	const method = {
+	const option = {
 		display: "flex",
 		flexDirection: "row",
+		justifyContent: "center",
 		marginBottom: 24,
 		padding: 39,
 		borderRadius: 10,
 		borderColor: theme.colors.primaryDark,
+		width: "50%",
 	};
 
 	return (
 		<div className="container" style={container}>
 			<div className="header" style={header}>
 				<h1 className="title" style={title}>
-					Choose a way to get started
+					Add your transfer credits
 				</h1>
 				<p className="subTitle" style={subTitle}>
-					First, we will need your course history.
+					Do you have any Transfer credits from high school (AP, IB, or A-level
+					courses) or another post-secondary institution, including studying
+					aboard?
 				</p>
 			</div>
 
 			<div
-				className="method"
+				className="option"
 				style={{
-					...method,
+					...option,
 					...{
 						backgroundColor:
-							isHover1 || transcriptMethod === "upload"
+							hasTransferCredit === "yes" || isHover1
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover1 ? 1 : 0,
@@ -60,31 +62,20 @@ const ChooseMethod = ({
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
 				onClick={() => {
-					setTranscriptMethod("upload");
+					setHasTransferCredit("yes");
 					setEnableButton(true);
 				}}
 			>
-				<div style={icon}>
-					<img src={UploadIcon} alt="upload icon" />
-				</div>
-				<div className="description" style={description}>
-					<p className="subTitle" style={subTitle}>
-						Upload transcript (Recommended)
-					</p>
-					<p style={subSub}>
-						Upload a screenshot of transcript — you can still manually edit your
-						courses later.
-					</p>
-				</div>
+				<p style={text}>Yes</p>
 			</div>
 
 			<div
-				className="method"
+				className="option"
 				style={{
-					...method,
+					...option,
 					...{
 						backgroundColor:
-							isHover2 || transcriptMethod === "manual"
+							hasTransferCredit === "no" || isHover2
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover2 ? 1 : 0,
@@ -93,19 +84,11 @@ const ChooseMethod = ({
 				onMouseEnter={handleMouseEnter2}
 				onMouseLeave={handleMouseLeave2}
 				onClick={() => {
-					setTranscriptMethod("manual");
+					setHasTransferCredit("no");
 					setEnableButton(true);
 				}}
 			>
-				<div style={{ ...icon, padding: 25 }}>
-					<img src={ManualIcon} alt="manual icon" />
-				</div>
-				<div className="description" style={description}>
-					<p className="subTitle" style={subTitle}>
-						Add courses manually
-					</p>
-					<p style={subSub}>This option will take longer!</p>
-				</div>
+				<p style={text}>No</p>
 			</div>
 		</div>
 	);
@@ -135,28 +118,11 @@ const subTitle = {
 	fontSize: 18,
 };
 
-const icon = {
-	width: 72,
-	height: 72,
-	backgroundColor: theme.colors.primaryDark,
-	justifyContent: "center",
-	padding: 18,
-	borderRadius: 20,
+const text = {
+	fontFamily: theme.fonts.buttons,
+	color: theme.colors.textDark,
+	fontWeight: theme.fonts.buttons,
+	fontSize: 18,
 };
 
-const description = {
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "center",
-	marginLeft: 24,
-};
-
-const subSub = {
-	fontFamily: theme.fonts.headerFour,
-	color: theme.colors.textGrey,
-	fontWeight: theme.fonts.headerFour,
-	fontSize: 16,
-	marginBottom: 0,
-};
-
-export default ChooseMethod;
+export default TransferCredits;
