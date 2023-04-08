@@ -1,10 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import theme from "../../../theme";
+import CourseComponent from "./CoursesComponent";
 
 const EditHistory = ({ data, setData, setEnableButton }) => {
 	useEffect(() => {
 		setEnableButton(true);
 	});
+
+	const [years, setYears] = useState([]);
+
+	const addYear = () => {
+		setYears(
+			years.concat(
+				<CourseComponent
+					data={data}
+					setData={setData}
+					key={years.length}
+				></CourseComponent>
+			)
+		);
+	};
 
 	return (
 		<div className="container" style={container}>
@@ -17,6 +32,12 @@ const EditHistory = ({ data, setData, setEnableButton }) => {
 					courses.
 				</p>
 			</div>
+			<div style={components}>{years}</div>
+			<div style={buttonWrapper}>
+				<button style={button} onClick={addYear}>
+					Add a new academic year →
+				</button>
+			</div>
 		</div>
 	);
 };
@@ -27,7 +48,7 @@ const container = {
 };
 
 const header = {
-	marginBottom: 50,
+	marginBottom: 24,
 };
 
 const title = {
@@ -43,6 +64,33 @@ const subTitle = {
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerThreeMedium,
 	fontSize: 18,
+};
+
+const components = {
+	display: "flex",
+	flexDirection: "column",
+	gap: "24px",
+	marginBottom: "36px",
+};
+
+const buttonWrapper = {
+	display: "flex",
+	flexDirection: "row",
+	justifyContent: "flex-end",
+	marginBottom: "24px",
+};
+
+const button = {
+	padding: "8px 24px",
+	fontFamily: theme.fonts.buttons,
+	color: "#0671E0",
+	fontWeight: theme.fonts.buttons,
+	fontSize: 14,
+	borderWidth: 0,
+	borderRadius: 4,
+	backgroundColor: theme.colors.primaryLightBackground,
+	boxShadow:
+		"0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px -2px rgba(16, 24, 40, 0.1)",
 };
 
 export default EditHistory;
