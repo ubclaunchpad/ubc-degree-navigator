@@ -3,7 +3,7 @@ import UploadIcon from "../../../assets/upload-cloud.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";
 
-const UploadTranscript = ({ data, setData, setEnableButton }) => {
+const UploadTransferCredit = ({ data, setData, setEnableButton }) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
@@ -41,17 +41,16 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 		<div className="container" style={container}>
 			<div className="header" style={header}>
 				<h1 className="title" style={title}>
-					Upload your transcript
+					Upload your transfer credits
 				</h1>
 				<p className="subTitle" style={subTitle}>
-					Please upload a screenshot of your transcript that can be found under
-					“Your Grade Summary” on the{" "}
+					Please upload a screenshot of your transfer credits that can be found
+					under "Grades & Records" &lt; “Transfer Credits” on the{" "}
 					<a href="https://ssc.adm.ubc.ca/">Student Service Centre website</a>.{" "}
 					<br />
 					<br />
-					Your screenshot should include courses from “All Sessions” and only
-					include the transcript table. Still unsure what you need? Here is an
-					example!
+					After selecting your campus location, take a screenshot of the table
+					that incldues your transfer credits. Here is an example!
 				</p>
 			</div>
 
@@ -153,4 +152,4 @@ const subSub = {
 	fontSize: 16,
 	marginBottom: 0,
 };
-export default UploadTranscript;
+export default UploadTransferCredit;
