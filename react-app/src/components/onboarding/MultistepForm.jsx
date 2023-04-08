@@ -4,6 +4,7 @@ import ChooseMethod from "./courseHistory/ChooseMethod";
 import UploadTranscript from "./courseHistory/UploadTranscript";
 import EditHistory from "./courseHistory/EditHistory";
 import TransferCredits from "./transferCredits/TransferCredits";
+import ChooseRoute from "./transferCredits/ChooseRoute";
 import AdditionalInformation from "./AdditionalInformation";
 import Results from "./Results";
 import Review from "./Review";
@@ -11,7 +12,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
 
 const MultistepForm = () => {
-	const [step, setStep] = useState("course history");
+	const [step, setStep] = useState("choose route"); // TODO: edit this back to "course history"
 	const [data, setData] = useState({
 		courses: [],
 		transferCredits: [],
@@ -79,7 +80,13 @@ const MultistepForm = () => {
 					/>
 				);
 			case "choose route":
-				return;
+				return (
+					<ChooseRoute
+						transferCreditRoute={transferCreditRoute}
+						setTransferCreditRoute={setTransferCreditRoute}
+						setEnableButton={setEnableButton}
+					/>
+				);
 			case "upload transfer credit":
 				return;
 			case "edit transfer credit":
@@ -99,8 +106,11 @@ const MultistepForm = () => {
 		if (step === "edit course history" && transcriptMethod === "manual") {
 			setStep("course history");
 		}
-		if (step === "edit transfer credit" && hasTransferCredit == "no") {
+		if (step === "additional information" && hasTransferCredit == "no") {
 			setStep("transfer credits");
+		}
+		if (step === "edit transfer credit" && transferCreditRoute === "manual") {
+			setStep("choose route");
 		} else {
 			let index = steps.indexOf(step);
 			if (index !== 0) {
@@ -122,7 +132,10 @@ const MultistepForm = () => {
 		if (step === "course history" && transcriptMethod === "manual") {
 			setStep("edit course history");
 		}
-		if (step === "transfer credits" && hasTransferCredit == "no") {
+		if (step === "transfer credits" && hasTransferCredit === "no") {
+			setStep("additional information");
+		}
+		if (step === "choose route" && transferCreditRoute === "manual") {
 			setStep("edit transfer credit");
 		} else {
 			let index = steps.indexOf(step);
