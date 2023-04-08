@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import theme from "../../../theme";
 
 const TransferCredits = ({
-	transferCreditRoute,
-	setTransferCreditRoute,
+	hasTransferCredit,
+	setHasTransferCredit,
 	setEnableButton,
 }) => {
 	const useHover = () => {
@@ -53,7 +53,7 @@ const TransferCredits = ({
 					...option,
 					...{
 						backgroundColor:
-							transferCreditRoute === "yes" || isHover1
+							hasTransferCredit === "yes" || isHover1
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover1 ? 1 : 0,
@@ -62,7 +62,7 @@ const TransferCredits = ({
 				onMouseEnter={handleMouseEnter1}
 				onMouseLeave={handleMouseLeave1}
 				onClick={() => {
-					setTransferCreditRoute("yes");
+					setHasTransferCredit("yes");
 					setEnableButton(true);
 				}}
 			>
@@ -75,7 +75,7 @@ const TransferCredits = ({
 					...option,
 					...{
 						backgroundColor:
-							transferCreditRoute === "no" || isHover2
+							hasTransferCredit === "no" || isHover2
 								? "#EBF2FF"
 								: theme.colors.primaryLightBackground,
 						borderWidth: isHover2 ? 1 : 0,
@@ -84,7 +84,7 @@ const TransferCredits = ({
 				onMouseEnter={handleMouseEnter2}
 				onMouseLeave={handleMouseLeave2}
 				onClick={() => {
-					setTransferCreditRoute("no");
+					setHasTransferCredit("no");
 					setEnableButton(true);
 				}}
 			>
