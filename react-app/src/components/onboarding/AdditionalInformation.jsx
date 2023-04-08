@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const AdditionalInformation = (data, setData, setEnableButton) => {
+const AdditionalInformation = ({ data, setData, setEnableButton }) => {
 	useEffect(() => {
 		setEnableButton(true);
 	});

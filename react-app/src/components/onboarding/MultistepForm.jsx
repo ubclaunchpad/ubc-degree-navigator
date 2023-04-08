@@ -14,7 +14,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
 
 const MultistepForm = () => {
-	const [step, setStep] = useState("choose route"); // TODO: edit this back to "course history"
+	const [step, setStep] = useState("additional information"); // TODO: edit this back to "course history"
 	const [data, setData] = useState({
 		courses: [],
 		transferCredits: [],
@@ -34,9 +34,9 @@ const MultistepForm = () => {
 		"choose route", // 4
 		"upload transfer credit", // 5
 		"edit transfer credit", // 6
-		"degree information", // 7
+		"additional information", // 7
 		"review", // 8
-		"results!", // 9
+		"results", // 9
 	];
 
 	const stepTitles = [
@@ -114,7 +114,13 @@ const MultistepForm = () => {
 					/>
 				);
 			case "review":
-				return <Review data={data} setData={setData} />;
+				return (
+					<Review
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton}
+					/>
+				);
 			case "results":
 				return <Results data={data} setData={setData} />;
 			default:
@@ -155,7 +161,7 @@ const MultistepForm = () => {
 			}
 		}
 		setEnableButton(false);
-		console.log(step);
+		console.log(steps[steps.indexOf(step) + 1]);
 	};
 
 	return (
@@ -167,7 +173,7 @@ const MultistepForm = () => {
 					{stepTitles.map((object, i) => {
 						let currIndex = steps.indexOf(step);
 						let mapToTitleIndex =
-							currIndex < 3 ? 0 : currIndex < 7 ? 1 : currIndex - 4;
+							currIndex < 3 ? 0 : currIndex < 7 ? 1 : currIndex - 5;
 						return (
 							<div
 								className="navstep"
@@ -211,7 +217,8 @@ const MultistepForm = () => {
 				<div className="buttons" style={buttons}>
 					<button
 						style={
-							step === "course history" || steps.indexOf(step) === steps.length
+							step === "course history" ||
+							steps.indexOf(step) === steps.length - 1
 								? invisibleButton
 								: prevButton
 						}
@@ -223,7 +230,7 @@ const MultistepForm = () => {
 					</button>
 					<button
 						style={
-							steps.indexOf(step) === steps.length
+							steps.indexOf(step) === steps.length - 1
 								? invisibleButton
 								: enableButton
 								? nextButton
