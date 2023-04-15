@@ -14,7 +14,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
 
 const MultistepForm = () => {
-	const [step, setStep] = useState("edit transfer credit"); // TODO: edit this back to "course history"
+	const [step, setStep] = useState("course history"); // TODO: edit this back to "course history"
 	const [data, setData] = useState({
 		courses: [
 			["CPSC 110", "CPSC 121", "PHYS 101", "MATH 100"],
@@ -23,8 +23,8 @@ const MultistepForm = () => {
 			["CPSC 213", "DSCI 100", "MATH 221", "MATH 302"],
 		],
 		transferCredits: [{ "BIOL 1**": 3 }, { "CHIN 241": 3 }],
-		program: "",
-		major: "",
+		program: "Bachelor of Computer Science",
+		major: "Computer Science",
 	});
 	const [enableButton, setEnableButton] = useState(false);
 	const [transcriptMethod, setTranscriptMethod] = useState("");
@@ -40,7 +40,7 @@ const MultistepForm = () => {
 		"upload transfer credit", // 5
 		"edit transfer credit", // 6
 		"additional information", // 7
-		"review", // 8
+		// "review", // 8
 		"results", // 9
 	];
 
@@ -48,7 +48,7 @@ const MultistepForm = () => {
 		"Course history",
 		"Transfer credits",
 		"Degree information",
-		"Review",
+		// "Review",
 		"Results!",
 	];
 
