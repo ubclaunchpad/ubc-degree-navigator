@@ -3,7 +3,8 @@ import theme from "../../../theme";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const CourseComponent = ({ data, setData, indexKey }) => {
-	const [tempData, setTempData] = useState({});
+	// data is array of two terms [[courses taken term 1], [courses taken term 2]]
+
 	const [courseListOne, setCourseListOne] = useState([]);
 	const [showInputOne, setShowInputOne] = useState(false);
 	const [showAddOne, setShowAddOne] = useState(true);
@@ -11,7 +12,49 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 	const [showInputTwo, setShowInputTwo] = useState(false);
 	const [showAddTwo, setShowAddTwo] = useState(true);
 
+	const initCourseList = () => {
+		if (data.length === 0) {
+			return;
+		}
+
+		let tempCourseListOne = [];
+		let tempCourseListTwo = [];
+		if (courseListOne.length === 0) {
+			data[0].forEach((val) => {
+				tempCourseListOne.push(
+					<div key={val + "1"} id={val + "1"} style={chip}>
+						<p style={chipText}>{val}</p>
+						<CancelIcon
+							style={chipIcon}
+							onClick={() => removeCourse(val, "1")}
+						></CancelIcon>
+					</div>
+				);
+			});
+		}
+
+		if (courseListTwo.length === 0) {
+			data[1].forEach((val) => {
+				tempCourseListTwo.push(
+					<div key={val + "1"} id={val + "1"} style={chip}>
+						<p style={chipText}>{val}</p>
+						<CancelIcon
+							style={chipIcon}
+							onClick={() => removeCourse(val, "1")}
+						></CancelIcon>
+					</div>
+				);
+			});
+		}
+
+		setCourseListOne(tempCourseListOne);
+		setCourseListTwo(tempCourseListTwo);
+	};
+
 	const addCourseListOne = (val) => {
+		if (document.getElementById(indexKey + "1")) {
+			document.getElementById(indexKey + "1").value = "";
+		}
 		setCourseListOne(
 			courseListOne.concat(
 				<div key={val + "1"} id={val + "1"} style={chip}>
@@ -25,10 +68,12 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		);
 		setShowInputOne(false);
 		setShowAddOne(true);
-		document.getElementById(indexKey + "1").value = "";
 	};
 
 	const addCourseListTwo = (val) => {
+		if (document.getElementById(indexKey + "2")) {
+			document.getElementById(indexKey + "2").value = "";
+		}
 		setCourseListTwo(
 			courseListTwo.concat(
 				<div key={val + "2"} id={val + "2"} style={chip}>
@@ -42,7 +87,6 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		);
 		setShowInputTwo(false);
 		setShowAddTwo(true);
-		document.getElementById(indexKey + "2").value = "";
 	};
 
 	const handleEnter = (e, num) => {
@@ -50,11 +94,17 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 			let val = document.getElementById(indexKey + num).value;
 			num === "1" ? addCourseListOne(val) : addCourseListTwo(val);
 
-			let newCourse = data.courses.push(val);
+			let newCourse;
+			if (data[num]) {
+				newCourse = data[num].push(val);
+			} else {
+				newCourse = data.push([val]);
+			}
+
 			setData((prev) => ({
 				data: {
 					...prev.data,
-					courses: newCourse,
+					// courses: newCourse,
 				},
 			}));
 
@@ -63,7 +113,7 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 	};
 
 	const removeCourse = (val, num) => {
-		console.log(courseListOne);
+		//console.log(courseListOne);
 
 		/*let index = courseListOne.findIndex((c) => {
 			c.key === "CPSC 1011";
@@ -74,9 +124,9 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		//console.log()
 
 		if (num === "1") {
-			setCourseListOne(courseListOne.filter((c, i) => i !== index));
+			setCourseListOne(courseListOne.filter((_, i) => i !== index));
 		} else {
-			setCourseListTwo(courseListTwo.filter((c, i) => i !== index));
+			setCourseListTwo(courseListTwo.filter((_, i) => i !== index));
 		}
 
 		let newIndex = data.courses.indexOf(val);
@@ -89,11 +139,14 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		}));
 	};
 
+	if (courseListOne.length === 0 && courseListTwo.length === 0)
+		initCourseList();
+
 	return (
 		<div style={container}>
 			<div style={year}>
 				<p style={{ ...subHeading, ...{ marginBottom: 0 } }}>
-					Year {indexKey + 1}
+					Year {Number(indexKey) + 1}
 				</p>
 			</div>
 			<hr style={divider} />
