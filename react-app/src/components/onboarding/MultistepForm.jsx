@@ -14,9 +14,14 @@ import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
 
 const MultistepForm = () => {
-	const [step, setStep] = useState("additional information"); // TODO: edit this back to "course history"
+	const [step, setStep] = useState("edit course history"); // TODO: edit this back to "course history"
 	const [data, setData] = useState({
-		courses: [],
+		courses: [
+			["CPSC 110", "CPSC 121", "PHYS 101", "MATH 100"],
+			["MATH 100", "ENGL 110", "CPSC 210", "ASTR 101"],
+			["CPSC 221", "MATH 200", "STAT 200", "WRDS 150"],
+			["CPSC 213", "DSCI 100", "MATH 221", "MATH 302"],
+		],
 		transferCredits: [],
 		program: "",
 		major: "",
@@ -131,11 +136,15 @@ const MultistepForm = () => {
 	const goBack = () => {
 		if (step === "edit course history" && transcriptMethod === "manual") {
 			setStep("course history");
-		}
-		if (step === "additional information" && hasTransferCredit === "no") {
+		} else if (
+			step === "additional information" &&
+			hasTransferCredit === "no"
+		) {
 			setStep("transfer credits");
-		}
-		if (step === "edit transfer credit" && transferCreditRoute === "manual") {
+		} else if (
+			step === "edit transfer credit" &&
+			transferCreditRoute === "manual"
+		) {
 			setStep("choose route");
 		} else {
 			let index = steps.indexOf(step);
@@ -148,11 +157,9 @@ const MultistepForm = () => {
 	const goForward = () => {
 		if (step === "course history" && transcriptMethod === "manual") {
 			setStep("edit course history");
-		}
-		if (step === "transfer credits" && hasTransferCredit === "no") {
+		} else if (step === "transfer credits" && hasTransferCredit === "no") {
 			setStep("additional information");
-		}
-		if (step === "choose route" && transferCreditRoute === "manual") {
+		} else if (step === "choose route" && transferCreditRoute === "manual") {
 			setStep("edit transfer credit");
 		} else {
 			let index = steps.indexOf(step);
@@ -161,7 +168,7 @@ const MultistepForm = () => {
 			}
 		}
 		setEnableButton(false);
-		console.log(steps[steps.indexOf(step) + 1]);
+		// console.log(steps[steps.indexOf(step) + 1]);
 	};
 
 	return (
