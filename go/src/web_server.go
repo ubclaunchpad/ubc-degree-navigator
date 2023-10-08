@@ -20,6 +20,12 @@ func main() {
 	r.POST("api/user/register", controllers.Register)
 	r.POST("api/user/login", controllers.Login)
 
+	r.GET("/", func(c *gin.Context) { // Creates route for root(/), second argument is function to execute
+    c.JSON(200, gin.H{
+      "message": "Hello World",
+  	})
+	})
+
 	r.Run() // By default, isten and serve on http://localhost:8080
 }
 
