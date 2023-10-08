@@ -54,37 +54,46 @@ const UploadTransferCredit = ({ data, setData, setEnableButton }) => {
 				</p>
 			</div>
 
-			<div
-				className="method"
-				style={{
-					...method,
-					...{
-						backgroundColor: isHover1
-							? "#EBF2FF"
-							: theme.colors.primaryLightBackground,
-						borderWidth: isHover1 ? 1 : 0,
-					},
-				}}
-				onMouseEnter={handleMouseEnter1}
-				onMouseLeave={handleMouseLeave1}
-				onClick={() => {
-					setEnableButton(true);
-				}}
-			>
-				<div style={icon}>
-					<img src={UploadIcon} alt="upload icon" />
-				</div>
-				<div className="description" style={description}>
-					<div style={topper}>
-						<p className="subTitle" style={subTitle}>
-							File Upload
-						</p>
-						{isUploaded ? <CheckIcon style={check} /> : <br />}
+			<label htmlFor="actual-btn">
+				<div
+					className="method"
+					style={{
+						...method,
+						...{
+							backgroundColor: isHover1
+								? "#EBF2FF"
+								: theme.colors.primaryLightBackground,
+							borderWidth: isHover1 ? 1 : 0,
+						},
+					}}
+					onMouseEnter={handleMouseEnter1}
+					onMouseLeave={handleMouseLeave1}
+					onClick={() => {
+						setEnableButton(true);
+					}}
+				>
+					<div style={icon}>
+						<img src={UploadIcon} alt="upload icon" />
 					</div>
+					<div className="description" style={description}>
+						<div style={topper}>
+							<p className="subTitle" style={subTitle}>
+								File Upload
+							</p>
+							{isUploaded ? <CheckIcon style={check} /> : <br />}
+						</div>
 
-					<p style={subSub}>Accepted formats: JPEG, JPG, PNG.</p>
+						<p style={subSub}>Accepted formats: JPEG, JPG, PNG.</p>
+					</div>
 				</div>
-			</div>
+			</label>
+
+			<input
+				type="file"
+				id="actual-btn"
+				style={{ display: "none", pointerEvents: "none" }}
+				onChange={() => setIsUploaded(true)}
+			/>
 		</div>
 	);
 };
