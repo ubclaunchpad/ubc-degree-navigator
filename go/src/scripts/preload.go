@@ -243,17 +243,19 @@ func LoadAllCourses() {
 func load_courses(courses []map[string]any, subject_name string, DB *gorm.DB) {
 	for _, course_data := range courses {
 		var course_number string = course_data["course"].(string)
-		var course_num_int, _ = strconv.Atoi(course_number)
-		var course_num = uint(course_num_int)
-
+	
 		var course_level_int, _ = strconv.Atoi(course_number[0:1])
 		var course_level = uint(course_level_int)
 
 		var course_digit_two_int, _ = strconv.Atoi(course_number[1:2])
 		var course_digit_two = uint(course_digit_two_int)
+
+		var course_digit_three_int, _ = strconv.Atoi(course_number[2:3])
+		var course_digit_three = uint(course_digit_three_int)
+		
 		// credits set to 3 as a placeholder for testing purposes;
 		// temporary fix before webscraping
-		course := models.Course{Faculty: subject_name, Level: course_level, CourseNum: course_num, DigitTwo: course_digit_two, Credits: 3}
+		course := models.Course{Faculty: subject_name, DigitOne: course_level, DigitTwo: course_digit_two, DigitThree: course_digit_three, Credit: 3}
 		DB.Create(&course)
 	}
 }
