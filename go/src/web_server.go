@@ -19,9 +19,6 @@ func main() {
 	models.ConnectDatabase()
 	scripts.LoadAllCourses()
 
-	r.POST("api/user/register", controllers.Register)
-	r.POST("api/user/login", controllers.Login)
-
 	r.POST("/api/user/cc", controllers.AddCompletedCourse)
 
 	r.Run() // By default, isten and serve on http://localhost:8080

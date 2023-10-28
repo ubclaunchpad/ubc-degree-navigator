@@ -19,12 +19,13 @@ func ConnectDatabase() {
 	db.Exec("DROP TABLE programs")
 	db.Exec("DROP TABLE completed_courses")
 
-	// err = database.AutoMigrate(&User{})
 	db.AutoMigrate(&Course{})
-	db.AutoMigrate(&Requirement{})
-	db.AutoMigrate(&Program{})
-	db.AutoMigrate(&User{})
 	db.AutoMigrate(&CompletedCourses{})
+	// err = database.AutoMigrate(&User{})
+	//db.AutoMigrate(&Requirement{})
+	//db.AutoMigrate(&Program{})
+	//db.AutoMigrate(&User{})
+	//db.AutoMigrate(&Faculty{})
 
 	DB = db
 }
@@ -36,5 +37,6 @@ func DropTables() {
 		DB.Exec("DROP TABLE courses")
 		DB.Exec("DROP TABLE requirements")
 		DB.Exec("DROP TABLE users")
+		DB.Exec("DROP TABLE programs")
 	}
 }
