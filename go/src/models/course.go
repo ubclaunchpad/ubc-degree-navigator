@@ -6,4 +6,5 @@ type Course struct {
 	DigitOne   uint   `json:"digitOne"`   // first digit
 	DigitTwo   uint   `json:"digitTwo"`   // second digit
 	DigitThree uint   `json:"digitThree"` // third digit
+	Credit     uint   `json:"credit"`
 }
