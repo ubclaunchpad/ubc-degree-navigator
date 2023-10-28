@@ -1,7 +1,7 @@
 package models
 
-type Program struct {
+type Faculty struct {
 	ID          uint          `gorm:"primaryKey"`
-	Name        string        `json:"programName"`
+	Name        string        `json:"facultyName"`
 	Requirement []Requirement `json:"req"`
 }
