@@ -2,73 +2,57 @@ package models
 
 import (
 	"errors"
-	"html"
-	"strings"
-	token "workspace/utils"
+	"fmt"
 
-	"golang.org/x/crypto/bcrypt"
+	"github.com/jinzhu/gorm" // ORM package for Go
 )
 
-/*
-TODO:
-
-* add documentation
-* currently supports pre-auth (add support for auth (password, etc.))
-*/
 type User struct {
 	ID       uint      `gorm:"primaryKey"`
 	Email    string    `json:"email"`
 	Username string    `json:"username"`
-	Password string    `json:"password"`
-	Programs []Program `json:"programs"`
+	Programs []uint    `json:"programs"` // ids of programs
+	Faculty  uint      `json:"faculty"` // id of faculty
 }
 
 type CompletedCourses struct {
-	UserID           uint   `json:"userid"`
-	YearCompleted    uint   `json:"yearCompleted"` //
-	SessionCompleted uint   `json:"termCompleted"` // 0 is Summer, 1 is W1, 2 is W2
-	WhichCourse      Course `json:"course"`
+	UserID           uint `json:"userid"`
+	YearCompleted    uint `json:"yearCompleted"`    //
+	SessionCompleted uint `json:"sessionCompleted"` // 0 is Summer, 1 is W1, 2 is W2
+	CourseID         uint `json:"courseid"`
+	CreditCounted    uint `json:"creditCounted"`
 }
 
 func (u *User) SaveUser() (*User, error) {
+	db, e := gorm.Open("sqlite3", "./gorm.db")
+	if e != nil {
+		panic("Unable to connect to db")
+	}
 	var err error
 	var existingUsers []User
-	err = DB.Where("username = ? AND email = ?", u.Username, u.Email).Find(&existingUsers).Error
+	err = db.Where("username = ? AND email = ?", u.Username, u.Email).Find(&existingUsers).Error
 	if len(existingUsers) > 0 {
 		return &User{}, errors.New("user already exists")
 	}
-	err = DB.Create(&u).Error
+	err = db.Create(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
 	return u, nil
 }
 
-func (u *User) BeforeSave() error {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+func AddCourse(userid uint, yearcompleted uint, sessioncompleted uint, courseid uint, creditcounted uint) {
+	db, err := gorm.Open("sqlite3", "./gorm.db")
 	if err != nil {
-		return err
+		panic("Unable to connect to db")
 	}
-	u.Password = string(hashedPassword)
-	u.Username = html.EscapeString(strings.TrimSpace((u.Username)))
-	return nil
-}
-
-func VerifyPassword(password string, hashedPassword string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-}
-
-func LoginCheck(username string, password string) (string, error) {
-	var err error
-	user := User{}
-	err = DB.Model(User{}).Where("username = ?", username).Take(&user).Error
-	if err != nil {
-		return "", err
+	cc := CompletedCourses{UserID: userid, YearCompleted: yearcompleted, SessionCompleted: sessioncompleted, CourseID: courseid, CreditCounted: creditcounted}
+	fmt.Println(cc)
+	e := db.Create(&cc).Error
+	if e != nil {
+		panic("Could not create entry in database")
 	}
-	err = VerifyPassword(password, user.Password)
-	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
-		return "badpass", err
-	}
-	token, err := token.GenerateToken(user.ID)
-	return token, nil
+	var entry CompletedCourses
+	db.First(&entry)
+	fmt.Println("data", entry)
 }
