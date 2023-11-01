@@ -20,7 +20,7 @@ func main() {
 	scripts.LoadAllCourses()
 
 	r.POST("/api/user/cc", controllers.AddCompletedCourse)
-
+	r.POST("/api/user/upload", controllers.UploadTranscript)
 	r.Run() // By default, isten and serve on http://localhost:8080
 }
 
