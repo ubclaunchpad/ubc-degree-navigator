@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 	"workspace/models"
 
@@ -13,9 +14,10 @@ import (
 )
 
 // campus is vancouver or okanagan
-func scrape_subject_urls(campus string) {
+func scrapeSubjectURLs(campus string) {
 	models.ConnectDatabase()
 	var DB *gorm.DB = models.DB
+	var dbMutex sync.Mutex
 
 	var subjects_URL string = fmt.Sprintf("https://%s.calendar.ubc.ca/course-descriptions/courses-subject", campus)
 	var courses_selector string = fmt.Sprintf("a[href*='https://%s.calendar.ubc.ca/course-descriptions/subject']", campus)
@@ -32,12 +34,6 @@ func scrape_subject_urls(campus string) {
 	courses_collector := colly.NewCollector(
 		colly.Async(true),
 	)
-	courses_collector.Limit(&colly.LimitRule{
-		DomainGlob:  "*",
-		Delay:       2 * time.Second,
-		Parallelism: 4,
-	})
-	// use queue, goroutines, channels for scrape links, then visiting those links?
 
 	subjects_collector.OnError(func(r *colly.Response, err error) {
 		fmt.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
@@ -45,7 +41,18 @@ func scrape_subject_urls(campus string) {
 
 	courses_collector.OnError(func(r *colly.Response, err error) {
 		fmt.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
-		r.Request.Retry()
+
+		if r.StatusCode == 429 {
+			retryAfterHeader := r.Headers.Get("Retry-After") + "s"
+			retryAfterDuration, err := time.ParseDuration(retryAfterHeader)
+			if err != nil {
+				fmt.Println("Failed to parse 'Retry-After' header:", err)
+				return
+			}
+
+			time.Sleep(retryAfterDuration)
+			r.Request.Retry()
+		}
 	})
 
 	subjects_collector.OnHTML(courses_selector, func(e *colly.HTMLElement) {
@@ -63,7 +70,10 @@ func scrape_subject_urls(campus string) {
 			credit, _ := strconv.Atoi(credit_string)
 			course := models.NewCourse(subject, course_number, uint(credit))
 			fmt.Println(course)
+
+			dbMutex.Lock()
 			DB.Create(&course)
+			dbMutex.Unlock()
 		}
 	})
 
