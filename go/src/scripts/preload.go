@@ -12,31 +12,32 @@ import (
 )
 
 func LoadAllCourses() {
+	scrape_subject_urls("vancouver")
 	// TODO
-	models.ConnectDatabase()
-	var DB *gorm.DB = models.DB
+	// models.ConnectDatabase()
+	// var DB *gorm.DB = models.DB
 
-	var subjects_data, err = get_subjects("UBCV")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	// var subjects_data, err = get_subjects("UBCV")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
 
-	for _, subject := range subjects_data {
-		var subject_name string = subject["subject"]
-		courses, err := get_courses("UBCV", subject_name)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		load_courses(courses, subject_name, DB)
-	}
+	// for _, subject := range subjects_data {
+	// 	var subject_name string = subject["subject"]
+	// 	courses, err := get_courses("UBCV", subject_name)
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 		return
+	// 	}
+	// 	load_courses(courses, subject_name, DB)
+	// }
 }
 
 func load_courses(courses []map[string]any, subject_name string, DB *gorm.DB) {
 	for _, course_data := range courses {
 		var course_number string = course_data["course"].(string)
-	
+
 		var course_level_int, _ = strconv.Atoi(course_number[0:1])
 		var course_level = uint(course_level_int)
 
@@ -45,7 +46,7 @@ func load_courses(courses []map[string]any, subject_name string, DB *gorm.DB) {
 
 		var course_digit_three_int, _ = strconv.Atoi(course_number[2:3])
 		var course_digit_three = uint(course_digit_three_int)
-		
+
 		// credits set to 3 as a placeholder for testing purposes;
 		// temporary fix before webscraping
 		course := models.Course{Faculty: subject_name, DigitOne: course_level, DigitTwo: course_digit_two, DigitThree: course_digit_three, Credit: 3}
