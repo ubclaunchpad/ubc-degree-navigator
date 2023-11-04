@@ -11,43 +11,44 @@ import (
 )
 
 func LoadAllCourses() {
-	scrapeSubjectURLs("vancouver")
-	// TODO
-	// models.ConnectDatabase()
-	// var DB *gorm.DB = models.DB
+	scrapeCourses("vancouver")
 
-	// var subjects_data, err = get_subjects("UBCV")
+	// models.ConnectDatabase()
+	// var db *gorm.DB = models.DB
+
+	// var subjectsData, err = getSubjects("UBCV")
 	// if err != nil {
 	// 	fmt.Println(err)
 	// 	return
 	// }
 
-	// for _, subject := range subjects_data {
-	// 	var subject_name string = subject["subject"]
-	// 	courses, err := get_courses("UBCV", subject_name)
+	// for _, subject := range subjectsData {
+	// 	var subjectName string = subject["subject"]
+	// 	courses, err := getCourses("UBCV", subjectName)
 	// 	if err != nil {
 	// 		fmt.Println(err)
 	// 		return
 	// 	}
-	// 	load_courses(courses, subject_name, DB)
+	// 	loadCourses(courses, subjectName, db)
 	// }
 }
 
-func load_courses(courses []map[string]any, subject_name string, DB *gorm.DB) {
-	for _, course_data := range courses {
-		var course_number string = course_data["course"].(string)
+func loadCourses(courses []map[string]any, subjectName string, DB *gorm.DB) {
+	for _, courseData := range courses {
+		var courseNumber string = courseData["course"].(string)
 
 		// credits set to 3 as a placeholder for testing purposes;
 		// temporary fix before webscraping
-		course := models.NewCourse(subject_name, course_number, 3)
+		course := models.NewCourse(subjectName, courseNumber, 3)
 		DB.Create(&course)
 	}
 }
 
-func get_subjects(campus string) ([]map[string]string, error) {
-	var subjects_api_url string = "https://ubcgrades.com/api/v3/subjects/" + campus
+// campus is "UBCV" or "UBCO"
+func getSubjects(campus string) ([]map[string]string, error) {
+	var subjectsApiURL string = "https://ubcgrades.com/api/v3/subjects/" + campus
 
-	resp, err := http.Get(subjects_api_url)
+	resp, err := http.Get(subjectsApiURL)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -60,19 +61,19 @@ func get_subjects(campus string) ([]map[string]string, error) {
 		return nil, err
 	}
 
-	var subjects_data []map[string]string
+	var subjectsData []map[string]string
 
-	if err := json.Unmarshal(bodyBytes, &subjects_data); err != nil {
+	if err := json.Unmarshal(bodyBytes, &subjectsData); err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	return subjects_data, nil
+	return subjectsData, nil
 }
 
-func get_courses(campus string, subject string) ([]map[string]any, error) {
-	var courses_api_url string = "https://ubcgrades.com/api/v3/courses/" + campus + "/"
-	resp, err := http.Get(courses_api_url + subject)
+func getCourses(campus string, subject string) ([]map[string]any, error) {
+	var coursesApiURL string = "https://ubcgrades.com/api/v3/courses/" + campus + "/"
+	resp, err := http.Get(coursesApiURL + subject)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -85,12 +86,12 @@ func get_courses(campus string, subject string) ([]map[string]any, error) {
 		return nil, err
 	}
 
-	var courses_data []map[string]any
+	var coursesData []map[string]any
 
-	if err := json.Unmarshal(bodyBytes, &courses_data); err != nil {
+	if err := json.Unmarshal(bodyBytes, &coursesData); err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	return courses_data, nil
+	return coursesData, nil
 }

@@ -11,15 +11,15 @@ type Course struct {
 	Credit     uint   `json:"credit"`
 }
 
-func NewCourse(faculty string, course_number string, credit uint) Course {
-	var course_level_int, _ = strconv.Atoi(course_number[0:1])
-	var course_level = uint(course_level_int)
+func NewCourse(faculty string, courseNumber string, credit uint) Course {
+	var courseLevelInt, _ = strconv.Atoi(courseNumber[0:1])
+	var courseLevel = uint(courseLevelInt)
 
-	var course_digit_two_int, _ = strconv.Atoi(course_number[1:2])
-	var course_digit_two = uint(course_digit_two_int)
+	var courseDigitTwoInt, _ = strconv.Atoi(courseNumber[1:2])
+	var courseDigitTwo = uint(courseDigitTwoInt)
 
-	var course_digit_three_int, _ = strconv.Atoi(course_number[2:3])
-	var course_digit_three = uint(course_digit_three_int)
-	course := Course{Faculty: faculty, DigitOne: course_level, DigitTwo: course_digit_two, DigitThree: course_digit_three, Credit: credit}
+	var courseDigitThreeInt, _ = strconv.Atoi(courseNumber[2:3])
+	var courseDigitThree = uint(courseDigitThreeInt)
+	course := Course{Faculty: faculty, DigitOne: courseLevel, DigitTwo: courseDigitTwo, DigitThree: courseDigitThree, Credit: credit}
 	return course
 }
