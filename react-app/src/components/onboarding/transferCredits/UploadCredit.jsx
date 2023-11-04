@@ -3,7 +3,7 @@ import UploadIcon from "../../../assets/upload-cloud.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";
 
-const UploadTransferCredit = ({ data, setData, setEnableButton }) => {
+const UploadCredit = ({ data, setData, setEnableButton }) => {
 	const useHover = () => {
 		const [isHover, setIsHover] = useState(false);
 
@@ -161,4 +161,4 @@ const subSub = {
 	fontSize: 16,
 	marginBottom: 0,
 };
-export default UploadTransferCredit;
+export default UploadCredit;
