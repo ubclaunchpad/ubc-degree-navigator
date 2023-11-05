@@ -11,26 +11,24 @@ import (
 )
 
 func LoadAllCourses() {
-	scrapeCourses("vancouver")
+	models.ConnectDatabase()
+	var db *gorm.DB = models.DB
 
-	// models.ConnectDatabase()
-	// var db *gorm.DB = models.DB
+	var subjectsData, err = getSubjects("UBCV")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-	// var subjectsData, err = getSubjects("UBCV")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-
-	// for _, subject := range subjectsData {
-	// 	var subjectName string = subject["subject"]
-	// 	courses, err := getCourses("UBCV", subjectName)
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 		return
-	// 	}
-	// 	loadCourses(courses, subjectName, db)
-	// }
+	for _, subject := range subjectsData {
+		var subjectName string = subject["subject"]
+		courses, err := getCourses("UBCV", subjectName)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		loadCourses(courses, subjectName, db)
+	}
 }
 
 func loadCourses(courses []map[string]any, subjectName string, DB *gorm.DB) {

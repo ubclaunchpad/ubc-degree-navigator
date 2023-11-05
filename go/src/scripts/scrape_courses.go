@@ -2,6 +2,7 @@ package scripts
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
 	"strings"
 	"sync"
@@ -17,7 +18,7 @@ var db *gorm.DB
 var dbMutex sync.Mutex
 var subjectURLQueue *queue.Queue
 
-func scrapeCourses(campus string) {
+func InitializeCoursesOnDB(campus string) {
 	models.ConnectDatabase()
 	db = models.DB
 
@@ -27,7 +28,7 @@ func scrapeCourses(campus string) {
 	)
 
 	scrapeSubjectURLs("vancouver")
-	scrapeLoadCoursesToDB()
+	scrapeAndLoadCoursesToDB()
 }
 
 // campus is "vancouver" or "okanagan"
@@ -49,12 +50,16 @@ func scrapeSubjectURLs(campus string) {
 	subjectsCollector.Visit(subjectsURL)
 }
 
-func scrapeLoadCoursesToDB() {
+func scrapeAndLoadCoursesToDB() {
 	var coursesSelector string = "h3.text-lg"
 
 	coursesCollector := colly.NewCollector(
 		colly.Async(true),
 	)
+
+	coursesCollector.OnRequest(func(r *colly.Request) {
+		r.Headers.Set("User-Agent", randStringBytes(12))
+	})
 
 	coursesCollector.OnError(func(r *colly.Response, err error) {
 		fmt.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
@@ -92,9 +97,21 @@ func loadCourseToDB(courseText string) {
 	if !strings.ContainsAny(creditString, "-/.") {
 		credit, _ := strconv.Atoi(creditString)
 		course := models.NewCourse(subject, courseNumber, uint(credit))
+		fmt.Println(course)
 
 		dbMutex.Lock()
 		db.Create(&course)
 		dbMutex.Unlock()
 	}
+}
+
+// taken from https://stackoverflow.com/a/22892986; used to generate random UserAgent string
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+func randStringBytes(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
 }
