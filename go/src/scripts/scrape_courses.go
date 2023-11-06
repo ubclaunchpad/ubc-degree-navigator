@@ -53,9 +53,8 @@ func scrapeAndEnqueueSubjectURLs(campus string) {
 func scrapeAndLoadCoursesToDB() {
 	var coursesSelector string = "h3.text-lg"
 
-	coursesCollector := colly.NewCollector(
-		colly.Async(true),
-	)
+	coursesCollector := colly.NewCollector(colly.MaxDepth(1), colly.DetectCharset(), colly.Async(true), colly.AllowURLRevisit())
+	coursesCollector.SetRequestTimeout(120 * time.Second)
 
 	coursesCollector.Limit(&colly.LimitRule{
 		DomainGlob:  "*",
