@@ -27,12 +27,12 @@ func InitializeCoursesOnDB(campus string) {
 		&queue.InMemoryQueueStorage{MaxSize: 10000}, // Use default queue storage
 	)
 
-	scrapeSubjectURLs("vancouver")
+	scrapeAndEnqueueSubjectURLs("vancouver")
 	scrapeAndLoadCoursesToDB()
 }
 
 // campus is "vancouver" or "okanagan"
-func scrapeSubjectURLs(campus string) {
+func scrapeAndEnqueueSubjectURLs(campus string) {
 	var subjectsURL string = fmt.Sprintf("https://%s.calendar.ubc.ca/course-descriptions/courses-subject", campus)
 	var subjectsSelector string = fmt.Sprintf("a[href*='https://%s.calendar.ubc.ca/course-descriptions/subject']", campus)
 
@@ -57,6 +57,11 @@ func scrapeAndLoadCoursesToDB() {
 		colly.Async(true),
 	)
 
+	coursesCollector.Limit(&colly.LimitRule{
+		DomainGlob:  "*",
+		Parallelism: 8,
+	})
+
 	coursesCollector.OnRequest(func(r *colly.Request) {
 		r.Headers.Set("User-Agent", randStringBytes(12))
 	})
@@ -73,8 +78,10 @@ func scrapeAndLoadCoursesToDB() {
 			}
 
 			time.Sleep(retryAfterDuration)
-			r.Request.Retry()
+		} else {
+			time.Sleep(5 * time.Second)
 		}
+		r.Request.Retry()
 	})
 
 	coursesCollector.OnHTML(coursesSelector, func(e *colly.HTMLElement) {
@@ -97,7 +104,6 @@ func loadCourseToDB(courseText string) {
 	if !strings.ContainsAny(creditString, "-/.") {
 		credit, _ := strconv.Atoi(creditString)
 		course := models.NewCourse(subject, courseNumber, uint(credit))
-		fmt.Println(course)
 
 		dbMutex.Lock()
 		db.Create(&course)
