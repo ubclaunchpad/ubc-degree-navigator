@@ -2,7 +2,6 @@ package scripts
 
 import (
 	"fmt"
-	//"os"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -13,8 +12,7 @@ import (
 
 var textractSession *textract.Textract
 
-
-func ParseTableFromTranscript(file []byte) (map[string]interface{}) {
+func init() {
 	creds := credentials.NewSharedCredentials("/users/hridaybuddhdev/desktop/credentials", "default")
 	//TODO: this is just for testing, replace with env variables
 	// Retrieve the credentials value
@@ -24,12 +22,12 @@ func ParseTableFromTranscript(file []byte) (map[string]interface{}) {
 		// handle error
 	}
 
-	//fmt.Print(creds)
 	textractSession = textract.New(session.Must(session.NewSession(&aws.Config{
 		Region: aws.String("us-west-2"), // Oregon
 	})), &aws.Config{Credentials: creds})
+}
 
-	//localFile, _ := os.ReadFile("/Users/hridaybuddhdev/Desktop/transcriptimg.png") ALSO FOR TESTING - REMOVE
+func ParseTableFromTranscript(file []byte) map[string]interface{} {
 	tableFeature := textract.FeatureTypeTables
 	features := []*string{&tableFeature}
 	resp, err := textractSession.AnalyzeDocument(&textract.AnalyzeDocumentInput{
@@ -42,11 +40,8 @@ func ParseTableFromTranscript(file []byte) (map[string]interface{}) {
 		fmt.Println(err)
 	}
 
-	//print each word in the table
-
 	tableJSON := extractTables(resp.Blocks)
-	//fmt.Println("Table JSON: ", tableJSON)
-	return tableJSON;
+	return tableJSON
 
 }
 
@@ -65,10 +60,15 @@ func extractTables(blocks []*textract.Block) map[string]interface{} {
 	return tablesJSON
 }
 
-func extractTable(tableBlock *textract.Block, blocks []*textract.Block) map[string]interface{} {
-	tableJSON := make(map[string]interface{})
-	tableID := *tableBlock.Id
-	// change this to restructure json output
+func extractTable(tableBlock *textract.Block, blocks []*textract.Block) map[string]map[string]string {
+	tableCells := getAllTableCells(tableBlock, blocks)
+	tableJSON := parseCoursesFromCells(tableCells)
+	return tableJSON
+}
+
+func getAllTableCells(tableBlock *textract.Block, blocks []*textract.Block) []string {
+	var tableCells []string
+	//get array of all cells with their text
 	for _, relationship := range tableBlock.Relationships {
 		if *relationship.Type == "CHILD" {
 			for _, childID := range relationship.Ids {
@@ -76,13 +76,36 @@ func extractTable(tableBlock *textract.Block, blocks []*textract.Block) map[stri
 				if *childBlock.BlockType == "CELL" {
 					// Process each cell
 					cellText := getChildBlockText(childBlock, blocks)
-					tableJSON[cellText] = cellText
+					tableCells = append(tableCells, cellText)
 				}
 			}
 		}
 	}
+	return tableCells
+}
 
-	return map[string]interface{}{tableID: tableJSON}
+func parseCoursesFromCells(tableCells []string) map[string]map[string]string {
+	tableJSON := make(map[string]map[string]string)
+	//following row length value is based on # of columns in the UBC unofficial transcript
+	const rowLength = 11 //TODO: get this value dynamically
+	headers := [rowLength]string{}
+	//get column header values
+	for i := 0; i < rowLength; i++ {
+		headers[i] = tableCells[i]
+	}
+
+	currentCourseName := ""
+	for i, value := range tableCells {
+		//if cell is first in the row (course name), update current course name
+		if i%rowLength == 0 {
+			currentCourseName = value
+			tableJSON[currentCourseName] = map[string]string{}
+		} else {
+			tableJSON[currentCourseName][headers[i%rowLength]] = value
+		}
+
+	}
+	return tableJSON
 }
 
 func findBlockByID(blockID *string, blocks []*textract.Block) *textract.Block {

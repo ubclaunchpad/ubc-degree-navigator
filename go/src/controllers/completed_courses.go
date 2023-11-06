@@ -1,14 +1,8 @@
 package controllers
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
 	"workspace/models"
-	"workspace/scripts"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,23 +23,3 @@ func AddCompletedCourse(c *gin.Context) {
 	models.AddCourse(cc.UserID, cc.YearCompleted, cc.SessionCompleted, cc.CourseID, cc.CreditCounted)
 }
 
-func UploadTranscript(c *gin.Context) {
-
-	file, _ := c.FormFile("file")
-	src, _ := file.Open()
-	defer src.Close()
-	//encode image as bytes for Textract parse
-	buf := bytes.NewBuffer(nil)
-	if _, err := io.Copy(buf, src); err != nil {
-		return
-	}
-
-	//use textract to parse file into table
-	tableMap := scripts.ParseTableFromTranscript(buf.Bytes())
-	jsonBytes, err := json.MarshalIndent(tableMap, "", "  ")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(string(jsonBytes))
-	}
-}
