@@ -3,23 +3,25 @@ package scripts
 import (
 	"fmt"
 	"strings"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/textract"
+	"github.com/joho/godotenv"
 )
 
 var textractSession *textract.Textract
 
 func init() {
-	creds := credentials.NewSharedCredentials("/users/hridaybuddhdev/desktop/credentials", "default")
-	//TODO: this is just for testing, replace with env variables
+	if err := godotenv.Load(".env"); err != nil {
+		panic("env variables not available")
+	}
+	creds := credentials.NewEnvCredentials()
 	// Retrieve the credentials value
 	credValue, err := creds.Get()
 	if err != nil {
-		fmt.Println(credValue)
 		// handle error
+		fmt.Println(credValue)
 	}
 
 	textractSession = textract.New(session.Must(session.NewSession(&aws.Config{
