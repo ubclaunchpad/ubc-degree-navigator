@@ -3,30 +3,39 @@ package scripts
 import (
 	"fmt"
 	"strings"
+
 	"github.com/aws/aws-sdk-go/aws"
+	//"github.com/aws/aws-sdk-go/aws/credentials"
+	//"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/aws/aws-sdk-go/service/textract"
-	"github.com/joho/godotenv"
 )
 
 var textractSession *textract.Textract
 
 func init() {
-	if err := godotenv.Load(".env"); err != nil {
-		panic("env variables not available")
+	roleArn := "arn:aws:iam::402678751882:role/TextractForBlueNav"
+	roleSessionName := "AssumedRoleSession"
+	sess := session.Must(session.NewSession())
+	// Create STS client
+	stsSvc := sts.New(sess)
+	// Assume IAM role
+	input := &sts.AssumeRoleInput{
+		RoleArn:         aws.String(roleArn),
+		RoleSessionName: aws.String(roleSessionName),
 	}
-	creds := credentials.NewEnvCredentials()
-	// Retrieve the credentials value
-	credValue, err := creds.Get()
+	result, err := stsSvc.AssumeRole(input)
 	if err != nil {
-		// handle error
-		fmt.Println(credValue)
+		fmt.Println("Error assuming role:", err)
+		return
 	}
-
-	textractSession = textract.New(session.Must(session.NewSession(&aws.Config{
-		Region: aws.String("us-west-2"), // Oregon
-	})), &aws.Config{Credentials: creds})
+	// Extract temporary credentials
+	accessKey := *result.Credentials.AccessKeyId
+	secretKey := *result.Credentials.SecretAccessKey
+	sessionToken := *result.Credentials.SessionToken
+	textractSession = textract.New(sess, &aws.Config{Credentials: credentials.NewStaticCredentials(accessKey, secretKey, sessionToken), Region: aws.String("us-west-2")})
 }
 
 func ParseTableFromTranscript(file []byte) map[string]interface{} {
@@ -39,7 +48,7 @@ func ParseTableFromTranscript(file []byte) map[string]interface{} {
 	})
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while calling analyze document", err)
 	}
 
 	tableJSON := extractTables(resp.Blocks)
