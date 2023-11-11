@@ -4,6 +4,10 @@
 #### Screenshot (if applicable)
 > This can be FE screenshot, DB screenshot, API call from network tab, etc.
 
+## How do I test
+> Provide breif steps on how to test these changes. 
+1. 
+
 ## Checklist before requesting a review
 - [ ] I have performed a self-review of my code
 - [ ] I have resolved any merge conflicts
