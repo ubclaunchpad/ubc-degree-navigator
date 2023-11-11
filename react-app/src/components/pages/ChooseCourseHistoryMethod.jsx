@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ChooseMethod from "../onboarding/courseHistory/ChooseMethod";
 
-function CourseHistory({
+function ChooseCourseHistoryMethod({
     transcriptMethod,
 	setTranscriptMethod,
 	setEnableButton 
@@ -32,4 +32,4 @@ function CourseHistory({
     );
 }
 
-export default CourseHistory
+export default ChooseCourseHistoryMethod

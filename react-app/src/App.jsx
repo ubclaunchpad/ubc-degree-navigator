@@ -6,13 +6,15 @@ import {
 	Route
 } from "react-router-dom";
 
-import CourseHistory from "./components/pages/CourseHistory.jsx";
+import ChooseCourseHistoryMethod from "./components/pages/ChooseCourseHistoryMethod.jsx";
 import UploadCourseHistory from "./components/pages/UploadCourseHistory.jsx";
 import ManualCourseHistory from "./components/pages/ManualCourseHistory.jsx";
-import CheckTransferCredits from "./components/onboarding/transferCredits/CheckTransferCredits.jsx";
+import TransferCredit from "./components/pages/TransferCredit.jsx";
 import UploadTransferCredit from "./components/pages/UploadTransferCredit.jsx";
 import ManualTransferCredit from "./components/pages/ManualTransferCredit.jsx";
 import ChooseTransferCreditMethod from "./components/pages/ChooseTransferCreditMethod.jsx";
+import ProgramInformation from "./components/pages/ProgramInformation.jsx";
+import Results from "./components/onboarding/Results.jsx";
 
 
 
@@ -39,7 +41,7 @@ function App() {
 			<Routes>
 
 				<Route path="/"
-					element={<CourseHistory
+					element={<ChooseCourseHistoryMethod
 						transcriptMethod={transcriptMethod}
 						setTranscriptMethod={setTranscriptMethod}
 						setEnableButton={setEnableButton} />}
@@ -60,7 +62,7 @@ function App() {
 				></Route>
 
 				<Route path="/transferCredit"
-					element={<CheckTransferCredits
+					element={<TransferCredit
 						hasTransferCredit={hasTransferCredit}
 						setHasTransferCredit={setHasTransferCredit}
 						setEnableButton={setEnableButton}/>}
@@ -85,6 +87,19 @@ function App() {
 						data={data}
 						setData={setData}
 						setEnableButton={setEnableButton} />}
+				></Route>
+
+				<Route path="/programInformation"
+					element={<ProgramInformation
+						data={data}
+						setData={setData}
+						setEnableButton={setEnableButton} />}
+				></Route>
+
+				<Route path="/results"
+					element={<Results
+						data={data}
+						setData={setData} />}
 				></Route>
 
 			</Routes>

@@ -10,7 +10,7 @@ function ManualTransferCredit({
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        navigate('/program');
+        navigate('/programInformation');
     };
 
     return (

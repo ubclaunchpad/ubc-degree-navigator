@@ -2,10 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import EditHistory from "../onboarding/courseHistory/EditHistory";
 
-function ManualCourseHistory(
+function ManualCourseHistory( {
     data,
 	setData,
     setEnableButton
+}
 ) {
     const navigate = useNavigate();
 

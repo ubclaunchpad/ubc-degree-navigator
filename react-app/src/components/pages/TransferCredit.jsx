@@ -13,7 +13,7 @@ function TransferCredit({
         if (hasTransferCredit) {
             navigate('/chooseTransferCreditMethod');
         } else {
-            navigate('/program');
+            navigate('/programInformation');
         }    
     };
 
