@@ -8,11 +8,11 @@ import (
 )
 
 type User struct {
-	ID       uint      `gorm:"primaryKey"`
-	Email    string    `json:"email"`
-	Username string    `json:"username"`
-	Programs []uint    `json:"programs"` // ids of programs
-	Faculty  uint      `json:"faculty"` // id of faculty
+	ID       uint   `gorm:"primaryKey"`
+	Email    string `json:"email"`
+	Username string `json:"username"`
+	Programs []uint `json:"programs"` // ids of programs
+	Faculty  uint   `json:"faculty"`  // id of faculty
 }
 
 type CompletedCourses struct {
@@ -41,7 +41,7 @@ func (u *User) SaveUser() (*User, error) {
 	return u, nil
 }
 
-func AddCourse(userid uint, yearcompleted uint, sessioncompleted uint, courseid uint, creditcounted uint) {
+func LoadCompletedCourseToDB(userid uint, yearcompleted uint, sessioncompleted uint, courseid uint, creditcounted uint) {
 	db, err := gorm.Open("sqlite3", "./gorm.db")
 	if err != nil {
 		panic("Unable to connect to db")
