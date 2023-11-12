@@ -1,9 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import theme from "../../theme";
 import page from "../../page";
-
 import ProgressBar from "../onboarding/ProgressBar";
 import ChooseRoute from "../onboarding/transferCredits/ChooseRoute";
 
