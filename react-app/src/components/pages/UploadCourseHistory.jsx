@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import theme from "../../theme";
+import page from "../../page";
+
 import ProgressBar from "../onboarding/ProgressBar";
 import UploadTranscript from "../onboarding/courseHistory/UploadTranscript";
 
@@ -15,26 +17,28 @@ function UploadCourseHistory({
 
     const previousButtonClick = () => {
         navigate('/');
+        setEnableButton(false);
     };
 
     const nextButtonClick = () => {
         navigate('/manualCourseHistory');
+        setEnableButton(false);
     };
 
     return (
-        <div className="body" style={body}>
+        <div className="body" style={page.body}>
             <ProgressBar currStepIndex={1} />
 
-            <div className="content" style={content}>
+            <div className="content" style={page.content}>
                 <UploadTranscript
                     data={data}
                     setData={setData}
                     setEnableButton={setEnableButton}
                 />
 
-                <div className="buttons" style={buttons}>
+                <div className="buttons" style={page.buttons}>
                     <button
-                        style={prevButton}
+                        style={page.prevButton}
                         onClick={previousButtonClick}>
                         Previous Step
                     </button>
@@ -42,8 +46,8 @@ function UploadCourseHistory({
                     <button
                         style={
                             enableButton
-                                ? nextButton
-                                : disabledButton
+                                ? page.nextButton
+                                : page.disabledButton
                         }
                         onClick={nextButtonClick}>
                         Next Step →
@@ -56,61 +60,4 @@ function UploadCourseHistory({
 }
 
 export default UploadCourseHistory;
-
-
-const body = {
-    fontFamily: "Montserrat",
-    margin: 16,
-    display: "flex",
-    flexDirection: "row",
-};
-
-const content = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    margin: 92,
-    width: "73.545%",
-};
-
-const buttons = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    fontFamily: theme.fonts.buttons,
-    fontWeight: theme.fontWeights.buttons,
-};
-
-const disabledButton = {
-    border: "none",
-    borderRadius: "5px",
-    paddingLeft: "25.5px",
-    paddingRight: "25.5px",
-    paddingTop: "12px",
-    paddingBottom: "12px",
-    backgroundColor: theme.colors.primaryDark,
-    color: "#fff",
-    opacity: "0.5",
-    pointerEvents: "none",
-};
-
-const prevButton = {
-    border: "none",
-    padding: "10",
-    backgroundColor: "rgba(0,0,0,0)",
-    color: "#256AF4",
-    cursor: "pointer",
-};
-
-const nextButton = {
-    border: "none",
-    borderRadius: "5px",
-    paddingLeft: "25.5px",
-    paddingRight: "25.5px",
-    paddingTop: "12px",
-    paddingBottom: "12px",
-    backgroundColor: theme.colors.primaryDark,
-    color: "#fff",
-    cursor: "pointer",
-};
 

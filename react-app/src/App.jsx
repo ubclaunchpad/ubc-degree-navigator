@@ -107,7 +107,8 @@ function App() {
 				<Route path="/results"
 					element={<ResultsPage
 						data={data}
-						setData={setData} />}
+						setData={setData}
+						setEnableButton={setEnableButton} />}
 				></Route>
 
 			</Routes>

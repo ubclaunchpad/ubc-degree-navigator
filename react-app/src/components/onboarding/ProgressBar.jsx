@@ -38,7 +38,7 @@ function ProgressBar({
                                     ...(i < mapToTitleIndex ? finishedCheckbox : ""),
                                 }}
                             >
-                                {i < currStepIndex ? <CheckIcon /> : i + 1}
+                                {i < mapToTitleIndex ? <CheckIcon /> : i + 1}
                             </p>
 
                             <p
