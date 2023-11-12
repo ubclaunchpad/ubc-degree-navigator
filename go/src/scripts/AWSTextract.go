@@ -3,39 +3,23 @@ package scripts
 import (
 	"fmt"
 	"strings"
-
 	"github.com/aws/aws-sdk-go/aws"
-	//"github.com/aws/aws-sdk-go/aws/credentials"
-	//"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/aws/aws-sdk-go/service/textract"
+	"github.com/joho/godotenv"
 )
 
 var textractSession *textract.Textract
 
 func init() {
-	roleArn := "arn:aws:iam::402678751882:role/TextractForBlueNav"
-	roleSessionName := "AssumedRoleSession"
-	sess := session.Must(session.NewSession())
-	// Create STS client
-	stsSvc := sts.New(sess)
-	// Assume IAM role
-	input := &sts.AssumeRoleInput{
-		RoleArn:         aws.String(roleArn),
-		RoleSessionName: aws.String(roleSessionName),
+	if err := godotenv.Load(".env"); err != nil {
+		panic("env file not available")
 	}
-	result, err := stsSvc.AssumeRole(input)
-	if err != nil {
-		fmt.Println("Error assuming role:", err)
-		return
-	}
-	// Extract temporary credentials
-	accessKey := *result.Credentials.AccessKeyId
-	secretKey := *result.Credentials.SecretAccessKey
-	sessionToken := *result.Credentials.SessionToken
-	textractSession = textract.New(sess, &aws.Config{Credentials: credentials.NewStaticCredentials(accessKey, secretKey, sessionToken), Region: aws.String("us-west-2")})
+	creds := credentials.NewEnvCredentials()
+	textractSession = textract.New(session.Must(session.NewSession(&aws.Config{
+		Region: aws.String("us-west-2"), // Oregon
+	})), &aws.Config{Credentials: creds})
 }
 
 func ParseTableFromTranscript(file []byte) map[string]interface{} {
