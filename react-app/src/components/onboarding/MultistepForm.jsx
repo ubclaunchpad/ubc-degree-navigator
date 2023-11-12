@@ -3,7 +3,7 @@ import theme from "../../theme";
 
 import ChooseMethod from "./courseHistory/ChooseMethod";
 import UploadTranscript from "./courseHistory/UploadTranscript";
-import EditHistory from "./courseHistory/EditHistory";
+import EditCourseHistory from "./courseHistory/EditCourseHistory";
 import CheckTransferCredits from "./transferCredits/CheckTransferCredits";
 import ChooseRoute from "./transferCredits/ChooseRoute";
 import UploadTransferCredit from "./transferCredits/UploadTransferCredit";
@@ -74,7 +74,7 @@ const MultistepForm = () => {
 				);
 			case "edit course history":
 				return (
-					<EditHistory
+					<EditCourseHistory
 						data={data}
 						setData={setData}
 						setEnableButton={setEnableButton}

@@ -1,29 +1,117 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
+import theme from "../../theme";
+import ProgressBar from "../onboarding/ProgressBar";
 import AdditionalInformation from "../onboarding/AdditionalInformation";
 
 function ProgramInformation({
     data,
     setData,
+    enableButton,
     setEnableButton
 }) {
     const navigate = useNavigate();
 
-    const handleButtonClick = () => {
+    const previousButtonClick = () => {
+        navigate('/manualTransferCredit');
+    }
+
+    const nextButtonClick = () => {
         navigate('/results');
       };
 
     return (
-         <div>
+        <div className="body" style={body}>
+            <ProgressBar currStepIndex={7} />
+
+            <div className="content" style={content}>
             <AdditionalInformation
                data={data}
                setData={setData}
                setEnableButton={setEnableButton}
             />
-            <button onClick={handleButtonClick}>Next Step</button>
+
+                <div className="buttons" style={buttons}>
+                    <button
+                        style={prevButton}
+                        onClick={previousButtonClick}>
+                        Previous Step
+                    </button>
+
+                    <button
+                        style={
+                            enableButton
+                                ? nextButton
+                                : disabledButton
+                        }
+                        onClick={nextButtonClick}>
+                        Next Step →
+                    </button>
+                </div>
+
+            </div>
         </div>
         
     );
 }
 
-export default ProgramInformation
+export default ProgramInformation;
+
+
+const body = {
+    fontFamily: "Montserrat",
+    margin: 16,
+    display: "flex",
+    flexDirection: "row",
+};
+
+const content = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    margin: 92,
+    width: "73.545%",
+};
+
+const buttons = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    fontFamily: theme.fonts.buttons,
+    fontWeight: theme.fontWeights.buttons,
+};
+
+const disabledButton = {
+    border: "none",
+    borderRadius: "5px",
+    paddingLeft: "25.5px",
+    paddingRight: "25.5px",
+    paddingTop: "12px",
+    paddingBottom: "12px",
+    backgroundColor: theme.colors.primaryDark,
+    color: "#fff",
+    opacity: "0.5",
+    pointerEvents: "none",
+};
+
+const prevButton = {
+    border: "none",
+    padding: "10",
+    backgroundColor: "rgba(0,0,0,0)",
+    color: "#256AF4",
+    cursor: "pointer",
+};
+
+const nextButton = {
+    border: "none",
+    borderRadius: "5px",
+    paddingLeft: "25.5px",
+    paddingRight: "25.5px",
+    paddingTop: "12px",
+    paddingBottom: "12px",
+    backgroundColor: theme.colors.primaryDark,
+    color: "#fff",
+    cursor: "pointer",
+};
+

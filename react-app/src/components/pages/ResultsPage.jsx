@@ -3,39 +3,26 @@ import { useNavigate } from "react-router-dom";
 
 import theme from "../../theme";
 import ProgressBar from "../onboarding/ProgressBar";
-import ChooseRoute from "../onboarding/transferCredits/ChooseRoute";
+import Results from "../onboarding/Results";
 
-function ChooseTransferCreditMethod({
-    transferCreditRoute,
-    setTransferCreditRoute,
-    enableButton,
-    setEnableButton
+function ResultsPage({
+    data,
+    setData
 }) {
     const navigate = useNavigate();
 
     const previousButtonClick = () => {
-        navigate('/transferCredit');
-    };
-
-    const nextButtonClick = () => {
-        if (transferCreditRoute === 'upload') {
-            navigate('/uploadTransferCredit');
-        }
-
-        if (transferCreditRoute === 'manual') {
-            navigate('/manualTransferCredit');
-        }
-    };
+        navigate('/programInformation');
+    }
 
     return (
         <div className="body" style={body}>
-            <ProgressBar currStepIndex={4} />
+            <ProgressBar currStepIndex={8} />
 
             <div className="content" style={content}>
-                <ChooseRoute
-                    transferCreditRoute={transferCreditRoute}
-                    setTransferCreditRoute={setTransferCreditRoute}
-                    setEnableButton={setEnableButton}
+                <Results
+                    data={data}
+                    setData={setData}
                 />
 
                 <div className="buttons" style={buttons}>
@@ -44,24 +31,14 @@ function ChooseTransferCreditMethod({
                         onClick={previousButtonClick}>
                         Previous Step
                     </button>
-
-                    <button
-                        style={
-                            enableButton
-                                ? nextButton
-                                : disabledButton
-                        }
-                        onClick={nextButtonClick}>
-                        Next Step →
-                    </button>
                 </div>
-
             </div>
         </div>
     );
 }
 
-export default ChooseTransferCreditMethod;
+
+export default ResultsPage;
 
 const body = {
     fontFamily: "Montserrat",
@@ -118,4 +95,3 @@ const nextButton = {
     color: "#fff",
     cursor: "pointer",
 };
-

@@ -14,7 +14,7 @@ import UploadTransferCredit from "./components/pages/UploadTransferCredit.jsx";
 import ManualTransferCredit from "./components/pages/ManualTransferCredit.jsx";
 import ChooseTransferCreditMethod from "./components/pages/ChooseTransferCreditMethod.jsx";
 import ProgramInformation from "./components/pages/ProgramInformation.jsx";
-import Results from "./components/onboarding/Results.jsx";
+import ResultsPage from "./components/pages/ResultsPage.jsx";
 
 
 
@@ -44,6 +44,7 @@ function App() {
 					element={<ChooseCourseHistoryMethod
 						transcriptMethod={transcriptMethod}
 						setTranscriptMethod={setTranscriptMethod}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton} />}
 				></Route>
 
@@ -51,6 +52,7 @@ function App() {
 					element={<UploadCourseHistory
 						data={data}
 						setData={setData}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton} />}
 				></Route>
 
@@ -58,6 +60,7 @@ function App() {
 					element={<ManualCourseHistory
 						data={data}
 						setData={setData}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton} />}
 				></Route>
 
@@ -65,6 +68,7 @@ function App() {
 					element={<TransferCredit
 						hasTransferCredit={hasTransferCredit}
 						setHasTransferCredit={setHasTransferCredit}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton}/>}
 				></Route>
 
@@ -72,6 +76,7 @@ function App() {
 					element={<ChooseTransferCreditMethod
 						transferCreditRoute={transferCreditRoute}
 						setTransferCreditRoute={setTransferCreditRoute}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton} />}
 				></Route>
 
@@ -79,6 +84,7 @@ function App() {
 					element={<UploadTransferCredit
 						data={data}
 						setData={setData}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton}/>}
 				></Route>
 
@@ -86,6 +92,7 @@ function App() {
 					element={<ManualTransferCredit
 						data={data}
 						setData={setData}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton} />}
 				></Route>
 
@@ -93,11 +100,12 @@ function App() {
 					element={<ProgramInformation
 						data={data}
 						setData={setData}
+						enableButton={enableButton}
 						setEnableButton={setEnableButton} />}
 				></Route>
 
 				<Route path="/results"
-					element={<Results
+					element={<ResultsPage
 						data={data}
 						setData={setData} />}
 				></Route>
