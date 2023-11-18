@@ -20,6 +20,6 @@ func AddCompletedCourse(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	models.AddCourse(cc.UserID, cc.YearCompleted, cc.SessionCompleted, cc.CourseID, cc.CreditCounted)
+	models.LoadCompletedCourseToDB(cc.UserID, cc.YearCompleted, cc.SessionCompleted, cc.CourseID, cc.CreditCounted)
 }
 

@@ -17,7 +17,8 @@ var err error
 func main() {
 	r := gin.Default() // Initialize server with default settings
 	models.ConnectDatabase()
-	scripts.LoadAllCourses()
+	// scripts.LoadAllCourses()
+	scripts.InitializeCoursesOnDB("vancouver")
 
 	r.POST("/api/user/cc", controllers.AddCompletedCourse)
 	r.POST("/api/user/upload", controllers.UploadTranscript)
