@@ -8,11 +8,11 @@ import (
 )
 
 type CompletedCourses struct {
-	UserID           uint   `json:"userid"`
-	YearCompleted    uint   `json:"yearCompleted"` //
-	SessionCompleted uint   `json:"sessionCompleted"` // 0 is Summer, 1 is W1, 2 is W2
-	CourseID       	 uint   `json:"courseid"`
-  CreditCounted    uint   `json:"creditCounted"`
+	UserID           uint `json:"userid"`
+	YearCompleted    uint `json:"yearCompleted"`    //
+	SessionCompleted uint `json:"sessionCompleted"` // 0 is Summer, 1 is W1, 2 is W2
+	CourseID         uint `json:"courseid"`
+	CreditCounted    uint `json:"creditCounted"`
 }
 
 func AddCompletedCourse(c *gin.Context) {
@@ -21,5 +21,5 @@ func AddCompletedCourse(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	models.AddCourse(cc.UserID, cc.YearCompleted, cc.SessionCompleted, cc.CourseID, cc.CreditCounted)
+	models.LoadCompletedCourseToDB(cc.UserID, cc.YearCompleted, cc.SessionCompleted, cc.CourseID, cc.CreditCounted)
 }

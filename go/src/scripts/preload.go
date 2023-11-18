@@ -5,58 +5,48 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strconv"
 	"workspace/models"
 
 	"github.com/jinzhu/gorm"
 )
 
 func LoadAllCourses() {
-	// TODO
 	models.ConnectDatabase()
-	var DB *gorm.DB = models.DB
+	var db *gorm.DB = models.DB
 
-	var subjects_data, err = get_subjects("UBCV")
+	var subjectsData, err = getSubjects("UBCV")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	for _, subject := range subjects_data {
-		var subject_name string = subject["subject"]
-		courses, err := get_courses("UBCV", subject_name)
+	for _, subject := range subjectsData {
+		var subjectName string = subject["subject"]
+		courses, err := getCourses("UBCV", subjectName)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		load_courses(courses, subject_name, DB)
+		loadCourses(courses, subjectName, db)
 	}
 }
 
-func load_courses(courses []map[string]any, subject_name string, DB *gorm.DB) {
-	for _, course_data := range courses {
-		var course_number string = course_data["course"].(string)
-	
-		var course_level_int, _ = strconv.Atoi(course_number[0:1])
-		var course_level = uint(course_level_int)
+func loadCourses(courses []map[string]any, subjectName string, DB *gorm.DB) {
+	for _, courseData := range courses {
+		var courseNumber string = courseData["course"].(string)
 
-		var course_digit_two_int, _ = strconv.Atoi(course_number[1:2])
-		var course_digit_two = uint(course_digit_two_int)
-
-		var course_digit_three_int, _ = strconv.Atoi(course_number[2:3])
-		var course_digit_three = uint(course_digit_three_int)
-		
 		// credits set to 3 as a placeholder for testing purposes;
 		// temporary fix before webscraping
-		course := models.Course{Faculty: subject_name, DigitOne: course_level, DigitTwo: course_digit_two, DigitThree: course_digit_three, Credit: 3}
+		course := models.NewCourse(subjectName, courseNumber, 3)
 		DB.Create(&course)
 	}
 }
 
-func get_subjects(campus string) ([]map[string]string, error) {
-	var subjects_api_url string = "https://ubcgrades.com/api/v3/subjects/" + campus
+// campus is "UBCV" or "UBCO"
+func getSubjects(campus string) ([]map[string]string, error) {
+	var subjectsApiURL string = "https://ubcgrades.com/api/v3/subjects/" + campus
 
-	resp, err := http.Get(subjects_api_url)
+	resp, err := http.Get(subjectsApiURL)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -69,19 +59,19 @@ func get_subjects(campus string) ([]map[string]string, error) {
 		return nil, err
 	}
 
-	var subjects_data []map[string]string
+	var subjectsData []map[string]string
 
-	if err := json.Unmarshal(bodyBytes, &subjects_data); err != nil {
+	if err := json.Unmarshal(bodyBytes, &subjectsData); err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	return subjects_data, nil
+	return subjectsData, nil
 }
 
-func get_courses(campus string, subject string) ([]map[string]any, error) {
-	var courses_api_url string = "https://ubcgrades.com/api/v3/courses/" + campus + "/"
-	resp, err := http.Get(courses_api_url + subject)
+func getCourses(campus string, subject string) ([]map[string]any, error) {
+	var coursesApiURL string = "https://ubcgrades.com/api/v3/courses/" + campus + "/"
+	resp, err := http.Get(coursesApiURL + subject)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -94,12 +84,12 @@ func get_courses(campus string, subject string) ([]map[string]any, error) {
 		return nil, err
 	}
 
-	var courses_data []map[string]any
+	var coursesData []map[string]any
 
-	if err := json.Unmarshal(bodyBytes, &courses_data); err != nil {
+	if err := json.Unmarshal(bodyBytes, &coursesData); err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	return courses_data, nil
+	return coursesData, nil
 }
