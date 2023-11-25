@@ -108,7 +108,8 @@ function App() {
 						data={data}
 						setData={setData}
 						enableButton={enableButton}
-						setEnableButton={setEnableButton} />}
+						setEnableButton={setEnableButton}
+						hasTransferCredit={hasTransferCredit} />}
 				></Route>
 
 				<Route path="/results"

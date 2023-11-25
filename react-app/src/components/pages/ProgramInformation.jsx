@@ -9,12 +9,17 @@ function ProgramInformation({
     data,
     setData,
     enableButton,
-    setEnableButton
+    setEnableButton, 
+    hasTransferCredit
 }) {
     const navigate = useNavigate();
 
     const previousButtonClick = () => {
-        navigate('/manualTransferCredit');
+        if (hasTransferCredit == "yes") {
+            navigate('/manualTransferCredit');
+        } else {
+            navigate('/transferCredit');
+        }
         setEnableButton(false);
     }
 
