@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import theme from "../../../theme";
+import { container, header, title, subTitle, text } from "./TransferCreditsStyles";
 
 const TransferCredits = ({
 	hasTransferCredit,
@@ -92,37 +93,6 @@ const TransferCredits = ({
 			</div>
 		</div>
 	);
-};
-
-const container = {
-	display: "flex",
-	flexDirection: "column",
-};
-
-const header = {
-	marginBottom: 50,
-};
-
-const title = {
-	fontFamily: theme.fonts.headerOne,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerOne,
-	fontSize: 32,
-	paddingBottom: 16,
-};
-
-const subTitle = {
-	fontFamily: theme.fonts.headerThreeMedium,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerThreeMedium,
-	fontSize: 18,
-};
-
-const text = {
-	fontFamily: theme.fonts.buttons,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.buttons,
-	fontSize: 18,
 };
 
 export default TransferCredits;

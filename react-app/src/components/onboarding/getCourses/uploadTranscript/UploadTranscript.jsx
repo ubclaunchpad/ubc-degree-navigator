@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import theme from "../../../theme";
+import { container, header, title, subTitle, icon, description, topper, check, subSub } from "./UploadTranscriptStyles";
 
 const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	const useHover = () => {
@@ -99,67 +100,4 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	);
 };
 
-const container = {
-	display: "flex",
-	flexDirection: "column",
-};
-
-const header = {
-	marginBottom: 50,
-};
-
-const title = {
-	fontFamily: theme.fonts.headerOne,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerOne,
-	fontSize: 32,
-	paddingBottom: 16,
-};
-
-const subTitle = {
-	fontFamily: theme.fonts.headerThreeMedium,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerThreeMedium,
-	fontSize: 18,
-};
-
-const icon = {
-	width: 72,
-	height: 72,
-	backgroundColor: theme.colors.primaryDark,
-	justifyContent: "center",
-	padding: 18,
-	borderRadius: 20,
-};
-
-const topper = {
-	display: "flex",
-	flexDirection: "row",
-};
-
-const check = {
-	width: 20,
-	height: 20,
-	marginTop: 2,
-	marginLeft: 8,
-	padding: 2,
-	backgroundColor: theme.colors.primaryDark,
-	color: theme.colors.textLight,
-	borderRadius: 10,
-};
-
-const description = {
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "center",
-	marginLeft: 24,
-};
-
-const subSub = {
-	fontFamily: theme.fonts.headerFour,
-	color: theme.colors.textGrey,
-	fontWeight: theme.fonts.headerFour,
-	fontSize: 16,
-	marginBottom: 0,
-};
 export default UploadTranscript;

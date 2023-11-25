@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UploadIcon from "../../../assets/upload-cloud.svg";
 import ManualIcon from "../../../assets/playlist_add.svg";
 import theme from "../../../theme";
+import { container, header, title, subTitle, icon, description, subSub } from "./ChooseMethodStyles";
 
 const ChooseMethod = ({
 	transcriptMethod,
@@ -109,54 +110,6 @@ const ChooseMethod = ({
 			</div>
 		</div>
 	);
-};
-
-const container = {
-	display: "flex",
-	flexDirection: "column",
-};
-
-const header = {
-	marginBottom: 50,
-};
-
-const title = {
-	fontFamily: theme.fonts.headerOne,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerOne,
-	fontSize: 32,
-	paddingBottom: 16,
-};
-
-const subTitle = {
-	fontFamily: theme.fonts.headerThreeMedium,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerThreeMedium,
-	fontSize: 18,
-};
-
-const icon = {
-	width: 72,
-	height: 72,
-	backgroundColor: theme.colors.primaryDark,
-	justifyContent: "center",
-	padding: 18,
-	borderRadius: 20,
-};
-
-const description = {
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "center",
-	marginLeft: 24,
-};
-
-const subSub = {
-	fontFamily: theme.fonts.headerFour,
-	color: theme.colors.textGrey,
-	fontWeight: theme.fonts.headerFour,
-	fontSize: 16,
-	marginBottom: 0,
 };
 
 export default ChooseMethod;

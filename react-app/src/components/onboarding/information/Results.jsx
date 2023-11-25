@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import theme from "../../theme";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { borderRadius } from "@mui/system";
+import { container, header, title, graphs, graph, chartTheme, pieChart, graphText, description, descTitle, descBody, recommCourses, recommTitle, recomm, chip } from "./ResultsStyles";
 
 const Results = () => {
 	return (
@@ -131,107 +131,5 @@ const Results = () => {
 		</div>
 	);
 };
-
-const container = {
-	display: "flex",
-	flexDirection: "column",
-};
-
-const header = {
-	marginBottom: 24,
-};
-
-const title = {
-	fontFamily: theme.fonts.headerOne,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerOne,
-	fontSize: 32,
-	paddingBottom: 16,
-};
-
-const graphs = {};
-
-const graph = {
-	display: "flex",
-	flexDirection: "row",
-	marginBottom: 28,
-};
-
-const pieChart = {
-	marginRight: "32px",
-};
-
-const graphText = {
-	fontFamily: theme.fonts.headerOne,
-	fontWeight: 800,
-	fontSize: 28,
-	marginBottom: 0,
-};
-
-const description = {
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "center",
-};
-
-const descTitle = {
-	fontFamily: theme.fonts.headerOne,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerOne,
-	fontSize: 24,
-	marginBottom: 20,
-};
-
-const descBody = {
-	fontFamily: theme.fonts.headerTwo,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerTwo,
-	fontSize: 20,
-	marginBottom: 0,
-};
-
-const recommCourses = {
-	display: "flex",
-	flexDirection: "column",
-};
-
-const recommTitle = {
-	marginTop: "22px",
-	marginBottom: "22px",
-	fontFamily: theme.fonts.headerFour,
-	color: theme.colors.textDark,
-	fontWeight: theme.fonts.headerFour,
-	fontSize: 16,
-};
-
-const recomm = {
-	display: "flex",
-	flexDirection: "row",
-	gap: "20px",
-	fontFamily: theme.fonts.buttons,
-	color: "#0671E0",
-	fontWeight: theme.fonts.buttons,
-	fontSize: 14,
-};
-
-const chip = {
-	backgroundColor: theme.colors.primaryLightBackground,
-	borderRadius: 4,
-	padding: "8px 20px",
-};
-
-const chartTheme = createTheme({
-	palette: {
-		complete: {
-			main: "#8A8D56",
-		},
-		incomplete: {
-			main: "#F2B5AA",
-		},
-		incompleteDarker: {
-			main: "#E66D57",
-		},
-	},
-});
 
 export default Results;

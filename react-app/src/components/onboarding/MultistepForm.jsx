@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import theme from "../../theme";
-import ChooseMethod from "./courseHistory/ChooseMethod";
-import UploadTranscript from "./courseHistory/UploadTranscript";
+import ChooseMethod from "./getCourses/ChooseMethod";
+import UploadTranscript from "./uploadTranscript/UploadTranscript";
 import EditHistory from "./courseHistory/EditHistory";
 import TransferCredits from "./transferCredits/TransferCredits";
 import ChooseRoute from "./transferCredits/ChooseRoute";
 import UploadTransferCredit from "./transferCredits/UploadTransferCredit";
 import EditTransferCredits from "./transferCredits/EditTransferCredits";
-import AdditionalInformation from "./AdditionalInformation";
-import Results from "./Results";
-import Review from "./Review";
+import AdditionalInformation from "./information/AdditionalInformation";
+import Results from "./information/Results";
+import Review from "./information/Review";
 import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
+import { body, progress, logoText, navbarsteps, navstep, selected, todo, navnum, finishedCheckbox, navname, finishedName, Illustration, content, buttons, invisibleButton, prevButton, nextButton, disabledButton } from "./MultistepFormStyles";
 
 const MultistepForm = () => {
 	const [step, setStep] = useState("course history"); // TODO: edit this back to "course history"
@@ -253,141 +253,6 @@ const MultistepForm = () => {
 			</div>
 		</div>
 	);
-};
-
-const body = {
-	fontFamily: "Montserrat",
-	margin: 16,
-	display: "flex",
-	flexDirection: "row",
-};
-
-const progress = {
-	width: "26.455%",
-	height: "100%",
-	display: "flex",
-	flexDirection: "column",
-	boxShadow: "none",
-	borderRadius: 10,
-	backgroundColor: theme.colors.primaryLightBackground,
-};
-
-const logoText = {
-	fontFamily: theme.fonts.headerOne,
-	color: theme.colors.primaryDark,
-	fontWeight: 700,
-	fontSize: 20,
-	margin: 48,
-};
-
-const navbarsteps = {
-	display: "flex",
-	flexDirection: "column",
-	marginLeft: 36,
-	marginBottom: 36,
-	fontFamily: theme.fonts.headerThreeMedium,
-	weight: theme.fonts.headerThreeMedium,
-};
-
-const navstep = {
-	display: "flex",
-	flexDirection: "row",
-	alignItems: "center",
-	marginTop: 0,
-	marginBottom: 36,
-};
-
-const navnum = {
-	width: 35,
-	height: 35,
-	marginRight: 25,
-	paddingTop: 6,
-	borderStyle: "solid",
-	borderWidth: 1,
-	borderRadius: 6,
-	textAlign: "center",
-	fontSize: 16,
-};
-
-const finishedCheckbox = {
-	backgroundColor: theme.colors.primaryMedium,
-	color: theme.colors.textLight,
-};
-
-const navname = {
-	font: theme.fonts.headerThreeMedium,
-	weight: theme.fonts.headerThreeMedium,
-};
-
-const finishedName = {
-	color: "#ABBED1",
-};
-
-const selected = {
-	color: theme.colors.primary,
-};
-
-const todo = {
-	color: theme.colors.textGrey,
-};
-
-const Illustration = {
-	width: 367,
-	height: 334.32,
-};
-
-const content = {
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "space-between",
-	margin: 92,
-	width: "73.545%",
-};
-
-const invisibleButton = {
-	opacity: 0,
-	pointerEvents: "none",
-};
-
-const buttons = {
-	display: "flex",
-	flexDirection: "row",
-	justifyContent: "space-between",
-	fontFamily: theme.fonts.buttons,
-	fontWeight: theme.fontWeights.buttons,
-};
-
-const prevButton = {
-	border: "none",
-	padding: "10",
-	backgroundColor: "rgba(0,0,0,0)",
-	color: "#256AF4",
-	cursor: "pointer",
-};
-
-const disabledButton = {
-	border: "none",
-	borderRadius: "5px",
-	paddingLeft: "25.5px",
-	paddingRight: "25.5px",
-	paddingTop: "12px",
-	paddingBottom: "12px",
-	backgroundColor: theme.colors.primaryDark,
-	color: "#fff",
-	opacity: "0.5",
-	pointerEvents: "none",
-};
-
-const nextButton = {
-	border: "none",
-	borderRadius: "5px",
-	paddingLeft: "25.5px",
-	paddingRight: "25.5px",
-	paddingTop: "12px",
-	paddingBottom: "12px",
-	backgroundColor: theme.colors.primaryDark,
-	color: "#fff",
-	cursor: "pointer",
 };
 
 export default MultistepForm;
