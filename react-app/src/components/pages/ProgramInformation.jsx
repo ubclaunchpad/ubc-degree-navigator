@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import page from "../../page";
+import page from "./page";
 import ProgressBar from "../onboarding/ProgressBar";
 import AdditionalInformation from "../onboarding/AdditionalInformation";
 
