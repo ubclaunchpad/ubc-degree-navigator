@@ -6,6 +6,7 @@ import {
 	Route
 } from "react-router-dom";
 
+import Login from "./components/pages/Login.jsx";
 import ChooseCourseHistoryMethod from "./components/pages/ChooseCourseHistoryMethod.jsx";
 import UploadCourseHistory from "./components/pages/UploadCourseHistory.jsx";
 import ManualCourseHistory from "./components/pages/ManualCourseHistory.jsx";
@@ -39,6 +40,12 @@ function App() {
 	return (
 		<div className="App" style={app}>
 			<Routes>
+
+				{
+				/*<Route path="/"
+						element={<Login/>}
+				></Route> */
+				}
 
 				<Route path="/"
 					element={<ChooseCourseHistoryMethod
