@@ -19,7 +19,7 @@ function TransferCredit({
     };
 
     const nextButtonClick = () => {
-        if (hasTransferCredit) {
+        if (hasTransferCredit == 'yes') {
             navigate('/chooseTransferCreditMethod');
         } else {
             navigate('/programInformation');
