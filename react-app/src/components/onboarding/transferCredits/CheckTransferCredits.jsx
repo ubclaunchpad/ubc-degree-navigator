@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import theme from "../../../theme";
 
-const TransferCredits = ({
+const CheckTransferCredits = ({
 	hasTransferCredit,
 	setHasTransferCredit,
 	setEnableButton,
@@ -125,4 +125,4 @@ const text = {
 	fontSize: 18,
 };
 
-export default TransferCredits;
+export default CheckTransferCredits;

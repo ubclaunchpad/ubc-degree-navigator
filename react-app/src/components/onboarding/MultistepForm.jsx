@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import theme from "../../theme";
+
 import ChooseMethod from "./courseHistory/ChooseMethod";
 import UploadTranscript from "./courseHistory/UploadTranscript";
-import EditHistory from "./courseHistory/EditHistory";
-import TransferCredits from "./transferCredits/TransferCredits";
+import EditCourseHistory from "./courseHistory/EditCourseHistory";
+import CheckTransferCredits from "./transferCredits/CheckTransferCredits";
 import ChooseRoute from "./transferCredits/ChooseRoute";
 import UploadTransferCredit from "./transferCredits/UploadTransferCredit";
 import EditTransferCredits from "./transferCredits/EditTransferCredits";
 import AdditionalInformation from "./AdditionalInformation";
 import Results from "./Results";
 import Review from "./Review";
+
 import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
 
@@ -72,7 +74,7 @@ const MultistepForm = () => {
 				);
 			case "edit course history":
 				return (
-					<EditHistory
+					<EditCourseHistory
 						data={data}
 						setData={setData}
 						setEnableButton={setEnableButton}
@@ -80,7 +82,7 @@ const MultistepForm = () => {
 				);
 			case "transfer credits":
 				return (
-					<TransferCredits
+					<CheckTransferCredits
 						hasTransferCredit={hasTransferCredit}
 						setHasTransferCredit={setHasTransferCredit}
 						setEnableButton={setEnableButton}

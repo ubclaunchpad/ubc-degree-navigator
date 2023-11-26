@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import theme from "../../../theme";
 import CourseComponent from "./CoursesComponent";
 
-const EditHistory = ({ data, setData, setEnableButton }) => {
+const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 	useEffect(() => {
 		setEnableButton(true);
 	});
@@ -121,4 +121,4 @@ const button = {
 		"0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px -2px rgba(16, 24, 40, 0.1)",
 };
 
-export default EditHistory;
+export default EditCourseHistory;
