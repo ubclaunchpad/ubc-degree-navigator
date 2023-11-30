@@ -21,6 +21,7 @@ func main() {
 	scripts.InitializeCoursesOnDB("vancouver")
 
 	r.POST("/api/user/cc", controllers.AddCompletedCourse)
+	r.PUT("/api/user/additional_info", controllers.AddAdditionalInfo)
 
 	r.Run() // By default, isten and serve on http://localhost:8080
 }
