@@ -4,17 +4,23 @@ import theme from "../../theme";
 const page = {
     body: {
         fontFamily: "Montserrat",
-        margin: 16,
         display: "flex",
         flexDirection: "row",
+        width: "100vw",
+        height:"100vh",
+    },
+
+    progress: {
+        width: "30%",
+        height:"90%",
     },
 
     content: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        margin: 92,
-        width: "73.545%",
+        width: "70%",
+        height: "90%",
     },
 
     buttons: {

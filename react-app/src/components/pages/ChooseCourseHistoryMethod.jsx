@@ -27,7 +27,10 @@ function ChooseCourseHistoryMethod({
 
     return (
         <div className="body" style={page.body}>
-            <ProgressBar currStepIndex={0} />
+            
+            <div className="progress" style={page.progress}>
+                <ProgressBar currStepIndex={0} />
+            </div>
 
             <div className="content" style={page.content}>
                 <ChooseMethod
