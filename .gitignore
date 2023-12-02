@@ -1,5 +1,10 @@
+# Go server testing tool
 *tmp
 .air.toml
-go.mod
-go.sum
-*.db
+
+# Regenerated Go files
+*go.mod
+*go.sum
+*gorm.db
+
+go/src/.env

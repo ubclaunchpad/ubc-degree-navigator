@@ -3,7 +3,6 @@ package controllers
 import (
 	"net/http"
 	"workspace/models"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,3 +22,4 @@ func AddCompletedCourse(c *gin.Context) {
 	}
 	models.LoadCompletedCourseToDB(cc.UserID, cc.YearCompleted, cc.SessionCompleted, cc.CourseID, cc.CreditCounted)
 }
+

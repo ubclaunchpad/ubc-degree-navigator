@@ -23,6 +23,7 @@ func main() {
 	r.POST("/api/user/cc", controllers.AddCompletedCourse)
 	r.PUT("/api/user/additional_info", controllers.AddAdditionalInfo)
 
+	r.POST("/api/user/upload", controllers.UploadTranscript)
 	r.Run() // By default, isten and serve on http://localhost:8080
 }
 

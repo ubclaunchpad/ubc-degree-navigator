@@ -52,6 +52,7 @@ $  go get -u -v github.com/gin-gonic/gin
 $  go get -u -v github.com/jinzhu/gorm
 $  go get -u -v github.com/jinzhu/gorm/dialects/sqlite
 $  go get -u -v github.com/gin-contrib/cors
+$  go get -u -v github.com/gocolly/colly
 
 
 // or you can use the following command to download all packages in go.mod
