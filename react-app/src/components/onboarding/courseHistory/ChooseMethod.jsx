@@ -114,6 +114,7 @@ const ChooseMethod = ({
 const container = {
 	display: "flex",
 	flexDirection: "column",
+	width: "100%",
 };
 
 const header = {

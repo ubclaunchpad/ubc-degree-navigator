@@ -11,7 +11,8 @@ const page = {
     },
 
     progress: {
-        width: "30%",
+        margin: "1%",
+        width: "15%",
         height:"90%",
     },
 
@@ -19,7 +20,7 @@ const page = {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        width: "70%",
+        width: "83%",
         height: "90%",
     },
 
