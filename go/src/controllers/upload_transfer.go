@@ -7,11 +7,10 @@ import (
 	"io"
 	"net/http"
 	"workspace/scripts"
-
 	"github.com/gin-gonic/gin"
 )
 
-func UploadTranscript(c *gin.Context) {
+func UploadTransferCredits(c *gin.Context) {
 
 	file, _ := c.FormFile("file")
 	src, _ := file.Open()
@@ -23,7 +22,7 @@ func UploadTranscript(c *gin.Context) {
 	}
 
 	//use textract to parse file into table
-	mode := "cc" // cc = completed courses mode (official transcript)
+	mode := "tc" // tc = transfer credits mode 
 	tableMap := scripts.ParseTableFromTranscript(buf.Bytes(), mode)
 	_, err := json.MarshalIndent(tableMap, "", "  ")
 	if err != nil {
