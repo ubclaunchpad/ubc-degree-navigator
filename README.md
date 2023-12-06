@@ -23,7 +23,7 @@ $  go version
   - `bin` stores executables, `pkg` stores external packages, `src` has all your source code.
 - Go modules solve many problems with GOPATH , the original system, by allowing users to put their project code in their chosen directory and specify versions of dependencies for each module.
 
-- Run the following command on terminal in the root directory.
+- Run the following command on terminal in the `\go\src` directory.
 
 ```bash
 $  go mod init github.com/[username]/ubc-degree-navigator
@@ -35,7 +35,7 @@ $  go mod init github.com/[username]/ubc-degree-navigator
 $  go mod tidy
 ```
 
-Check: You would see files `go.mod` (and maybe `go.sum` as well) created in your root directory.
+Check: You would see files `go.mod` (and maybe `go.sum` as well) created in your `\go\src` directory.
 
 ### Goal: Download required packages
 
@@ -52,6 +52,11 @@ $  go get -u -v github.com/gin-gonic/gin
 $  go get -u -v github.com/jinzhu/gorm
 $  go get -u -v github.com/jinzhu/gorm/dialects/sqlite
 $  go get -u -v github.com/gin-contrib/cors
+$  go get -u -v github.com/gocolly/colly
+
+
+// or you can use the following command to download all packages in go.mod
+$ go mod download
 ```
 
 Check: You would see `go.mod` file and `go.sum` file populated with the required packages
