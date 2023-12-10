@@ -1,5 +1,6 @@
 import React from "react";
-import theme from "../../theme";
+import theme from "../theme";
+import "./ProgressBar.css";
 
 import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
@@ -87,10 +88,8 @@ const nonImgDiv = {
 const logoText = {
     fontFamily: theme.fonts.headerOne,
     color: theme.colors.primaryDark,
-    fontWeight: 700,
-    fontSize: "1.5em",
     textAlign: "center",
-    margin: "20%",
+    margin: "18%",
 };
 
 const navbarsteps = {
@@ -98,9 +97,9 @@ const navbarsteps = {
     flexDirection: "column",
     boxSizing: "box-model",
     width: "100%",
-    height: "60%",
-    paddingLeft: "5%",
-    paddingRight: "5%",
+    height: "64%",
+    paddingLeft: "10%",
+    paddingRight: "10%",
     fontFamily: theme.fonts.headerThreeMedium,
     weight: theme.fonts.headerThreeMedium,
 };
@@ -108,6 +107,7 @@ const navbarsteps = {
 const navstep = {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     margin: "2%",
     width: "96%",
 };
@@ -133,7 +133,6 @@ const finishedCheckbox = {
 
 const navname = {
     paddingLeft: "5%",
-    paddingTop: "5%",
     font: theme.fonts.headerThreeMedium,
     weight: theme.fonts.headerThreeMedium,
 };
