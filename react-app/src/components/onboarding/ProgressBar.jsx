@@ -14,53 +14,52 @@ function ProgressBar({
         "Results",
     ];
 
+    let mapToTitleIndex = currStepIndex < 3 ? 0 : currStepIndex < 7 ? 1 : currStepIndex - 5;
+
     return (
-        <div className="progress" style={progress}>
-            <h1 style={logoText}>BlueNav</h1>
+        <div className="bar" style={bar}>
 
-            <div className="navbarsteps" style={navbarsteps}>
-                {stepTitles.map((object, i) => {
-                    let mapToTitleIndex = currStepIndex < 3 ? 0 : currStepIndex < 7 ? 1 : currStepIndex - 5;
+            <div style={nonImgDiv}>
+                <h1 style={logoText}>BlueNav</h1>
 
-                    return (
-                        <div
-                            className="navstep"
-                            style={{
-                                ...navstep,
-                                ...(i === mapToTitleIndex ? selected : todo),
-                            }}
-                            key={i}
-                        >
+                <div className="navbarsteps" style={navbarsteps}>
+                    {stepTitles.map((object, i) => {
+                        return (
                             <div
-                                className="navnum"
+                                className="navstep"
                                 style={{
+                                    ...navstep,
+                                    ...(i === mapToTitleIndex ? selected : todo),
+                                }}
+                                key={i}
+                            >
+                                <div className="navnum" style={{
                                     ...navnum,
-                                    ...(i < mapToTitleIndex ? finishedCheckbox : ""),
-                                }}
-                            >
-                                <p>{i < mapToTitleIndex ? <CheckIcon /> : i + 1}</p>
-                            </div>
+                                    ...(i < mapToTitleIndex ? finishedCheckbox : "")
+                                }}>
+                                    <div>{i < mapToTitleIndex ? <CheckIcon /> : i + 1}</div>
+                                </div>
 
-                            <p
-                                className="navname"
-                                style={{
+                                <div className="navname" style={{
                                     ...navname,
-                                    ...(i < mapToTitleIndex ? finishedName : ""),
-                                }}
-                            >
-                                {object}
-                            </p>
-
-                        </div>
-                    );
-                })}
+                                    ...(i < mapToTitleIndex ? finishedName : "")
+                                }}>
+                                    {object}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
 
-            <img
-                src={NavIllustration}
-                alt="navBar illustration"
-                style={Illustration}
-            />
+            <div style={imgDiv}>
+                <img
+                    src={NavIllustration}
+                    alt="navBar illustration"
+                    style={Illustration}
+                />
+            </div>
+
 
         </div>
     )
@@ -69,15 +68,21 @@ function ProgressBar({
 export default ProgressBar
 
 
-const progress = {
+const bar = {
     width: "100%",
     height: "100%",
     display: "flex",
     flexDirection: "column",
+    justifyContent: "space-between",
     boxShadow: "none",
     borderRadius: "2%",
     backgroundColor: theme.colors.primaryLightBackground,
 };
+
+const nonImgDiv = {
+    width: "100%",
+    height: "50%",
+}
 
 const logoText = {
     fontFamily: theme.fonts.headerOne,
@@ -85,12 +90,17 @@ const logoText = {
     fontWeight: 700,
     fontSize: "1.5em",
     textAlign: "center",
-    margin: "10%",
+    margin: "20%",
 };
 
 const navbarsteps = {
     display: "flex",
     flexDirection: "column",
+    boxSizing: "box-model",
+    width: "100%",
+    height: "60%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
     fontFamily: theme.fonts.headerThreeMedium,
     weight: theme.fonts.headerThreeMedium,
 };
@@ -98,20 +108,22 @@ const navbarsteps = {
 const navstep = {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
-    marginBottom: "2%",
+    margin: "2%",
+    width: "96%",
 };
 
 const navnum = {
-    width: "50%",
-    height: "50%",
-    marginRight: "5%",
-    paddingTop: "6%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     borderStyle: "solid",
     borderWidth: 1,
     borderRadius: "5%",
-    textAlign: "center",
-    fontSize: "1em",
+    width: "20%",
+    height: "0%",
+    paddingTop: "10%",
+    paddingBottom: "10%",
 };
 
 const finishedCheckbox = {
@@ -120,6 +132,8 @@ const finishedCheckbox = {
 };
 
 const navname = {
+    paddingLeft: "5%",
+    paddingTop: "5%",
     font: theme.fonts.headerThreeMedium,
     weight: theme.fonts.headerThreeMedium,
 };
@@ -136,8 +150,12 @@ const todo = {
     color: theme.colors.textGrey,
 };
 
-const Illustration = {
+const imgDiv = {
     width: "100%",
     height: "30%",
-    alignSelf: "flex-start",
+}
+const Illustration = {
+    width: "100%",
+    height: "130%",
+    alignSelf: "end",
 };

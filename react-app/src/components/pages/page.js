@@ -6,21 +6,23 @@ const page = {
         fontFamily: "Montserrat",
         display: "flex",
         flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
         width: "100vw",
         height:"100vh",
     },
 
     progress: {
         margin: "1%",
-        width: "15%",
-        height:"90%",
+        width: "20%",
+        height: "98%",
     },
 
     content: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        width: "83%",
+        width: "78%",
         height: "90%",
     },
 
