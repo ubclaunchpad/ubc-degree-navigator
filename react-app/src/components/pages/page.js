@@ -7,13 +7,12 @@ const page = {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center",
         width: "100vw",
         height:"100vh",
     },
 
     progress: {
-        margin: "1%",
+        margin: "1!",
         width: "20%",
         height: "98%",
     },
@@ -21,12 +20,14 @@ const page = {
     content: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
-        width: "78%",
-        height: "90%",
+        width: "74%",
+        marginLeft: "2%",
+        marginRight: "2%",
+        height: "100%",
     },
 
     buttons: {
+        height: "10%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -36,11 +37,12 @@ const page = {
 
     disabledButton: {
         border: "none",
-        borderRadius: "5px",
-        paddingLeft: "25.5px",
-        paddingRight: "25.5px",
-        paddingTop: "12px",
-        paddingBottom: "12px",
+        height: "96%",
+        borderRadius: "5%",
+        paddingLeft: "4%",
+        paddingRight: "4%",
+        paddingTop: "2%",
+        paddingBottom: "2%",
         backgroundColor: theme.colors.primaryDark,
         color: "#fff",
         opacity: "0.5",
@@ -57,11 +59,12 @@ const page = {
 
     nextButton: {
         border: "none",
-        borderRadius: "5px",
-        paddingLeft: "25.5px",
-        paddingRight: "25.5px",
-        paddingTop: "12px",
-        paddingBottom: "12px",
+        height: "96%",
+        borderRadius: "5%",
+        paddingLeft: "4%",
+        paddingRight: "4%",
+        paddingTop: "2%",
+        paddingBottom: "2%",
         backgroundColor: theme.colors.primaryDark,
         color: "#fff",
         cursor: "pointer",

@@ -1,5 +1,5 @@
 import React from "react";
-import theme from "../theme";
+import theme from "../../theme";
 import "./ProgressBar.css";
 
 import CheckIcon from "@mui/icons-material/Check";
@@ -89,7 +89,8 @@ const logoText = {
     fontFamily: theme.fonts.headerOne,
     color: theme.colors.primaryDark,
     textAlign: "center",
-    margin: "18%",
+    margin: "15%",
+    marginBottom: "5%",
 };
 
 const navbarsteps = {
@@ -133,6 +134,7 @@ const finishedCheckbox = {
 
 const navname = {
     paddingLeft: "5%",
+    width: "75%",
     font: theme.fonts.headerThreeMedium,
     weight: theme.fonts.headerThreeMedium,
 };

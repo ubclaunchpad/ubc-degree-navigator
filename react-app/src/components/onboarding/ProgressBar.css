@@ -5,7 +5,7 @@
     }
 
     div {
-        font-size: 14px;
+        font-size: 12px;
     }
 }
 
@@ -17,7 +17,7 @@
     }
 
     div {
-        font-size: 16px;
+        font-size: 14px;
     }
     
 }
@@ -25,11 +25,11 @@
 @media only screen and (min-width: 1025px) {
     h1 {
         font-weight: 1000;
-        font-size: 1.8em;
+        font-size: 1.7em;
     }
 
     div {
-        font-size: 18px;
+        font-size: 16px;
     }
     
 }
