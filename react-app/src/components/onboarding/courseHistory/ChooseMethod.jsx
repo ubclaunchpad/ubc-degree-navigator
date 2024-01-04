@@ -3,7 +3,6 @@ import UploadIcon from "../../../assets/upload-cloud.svg";
 import ManualIcon from "../../../assets/playlist_add.svg";
 
 import theme from "../../../theme";
-import "./ChooseMethod.css";
 
 const ChooseMethod = ({
 	transcriptMethod,
@@ -107,35 +106,42 @@ const ChooseMethod = ({
 const container = {
 	display: "flex",
 	flexDirection: "column",
-	width: "100%",
-	height: "100%",
+	width: "90%",
+	height: "90vh",
+	marginLeft: "5%",
+	marginRight: "5%",
+	marginBottom: "8%",
+	justifyContent: "space-evenly",
+	flexShrink: "1",
 };
 
 const header = {
-	marginTop: "5%",
-	marginBottom: "5%",
+	height: "15vh",
+	width: "100%"
 };
 
 const title = {
 	fontFamily: theme.fonts.headerOne,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerOne,
-	paddingBottom: "2%",
+	fontSize: "4.5vh",
+	marginBottom: "2vh",
 };
 
 const subTitle = {
 	fontFamily: theme.fonts.headerThreeMedium,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerThreeMedium,
-	marginBottom: "0.5%",
+	fontSize: "2.8vh"
 };
 
 const method = {
 	display: "flex",
 	flexDirection: "row",
 	alignItems: "center",
-	marginBottom: "3%",
-	padding: "2.5%",
+	justifyContent: "space-evenly",
+	width: "100%",
+	height: "25%",
 	borderRadius: "5%",
 	borderColor: theme.colors.primaryDark,
 };
@@ -145,27 +151,26 @@ const icon = {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    width: "10%",
-    height: "0%",
-    paddingTop: "5%",
-    paddingBottom: "5%",
+    width: "10vh",
+    height: "0",
+    paddingTop: "5vh",
+    paddingBottom: "5vh",
 	backgroundColor: theme.colors.primaryDark,
-	borderRadius: "20%",
+	borderRadius: "2vh",
 };
 
 const description = {
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "center",
-	width: "76%",
-	marginLeft: "4%",
+	width: "80%",
 };
 
 const subSub = {
 	fontFamily: theme.fonts.headerFour,
 	color: theme.colors.textGrey,
 	fontWeight: theme.fonts.headerFour,
-	marginBottom: 0,
+	fontSize: "2.2vh",
 };
 
 const illustration = {

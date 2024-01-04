@@ -1,6 +1,5 @@
 import React from "react";
 import theme from "../../theme";
-import "./ProgressBar.css";
 
 import CheckIcon from "@mui/icons-material/Check";
 import NavIllustration from "../../assets/navIllustration.svg";
@@ -19,38 +18,35 @@ function ProgressBar({
 
     return (
         <div className="bar" style={bar}>
-
-            <div style={nonImgDiv}>
+            <div className="navbarsteps" style={navbarsteps}>
                 <h1 style={logoText}>BlueNav</h1>
 
-                <div className="navbarsteps" style={navbarsteps}>
-                    {stepTitles.map((object, i) => {
-                        return (
-                            <div
-                                className="navstep"
-                                style={{
-                                    ...navstep,
-                                    ...(i === mapToTitleIndex ? selected : todo),
-                                }}
-                                key={i}
-                            >
-                                <div className="navnum" style={{
-                                    ...navnum,
-                                    ...(i < mapToTitleIndex ? finishedCheckbox : "")
-                                }}>
-                                    <div>{i < mapToTitleIndex ? <CheckIcon /> : i + 1}</div>
-                                </div>
-
-                                <div className="navname" style={{
-                                    ...navname,
-                                    ...(i < mapToTitleIndex ? finishedName : "")
-                                }}>
-                                    {object}
-                                </div>
+                {stepTitles.map((object, i) => {
+                    return (
+                        <div
+                            className="navstep"
+                            style={{
+                                ...navstep,
+                                ...(i === mapToTitleIndex ? selected : todo),
+                            }}
+                            key={i}
+                        >
+                            <div className="navnum" style={{
+                                ...navnum,
+                                ...(i < mapToTitleIndex ? finishedCheckbox : "")
+                            }}>
+                                <div>{i < mapToTitleIndex ? <CheckIcon /> : i + 1}</div>
                             </div>
-                        );
-                    })}
-                </div>
+
+                            <div className="navname" style={{
+                                ...navname,
+                                ...(i < mapToTitleIndex ? finishedName : "")
+                            }}>
+                                {object}
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
 
             <div style={imgDiv}>
@@ -71,34 +67,28 @@ export default ProgressBar
 
 const bar = {
     width: "100%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
+    height: "100vh",
     boxShadow: "none",
     borderRadius: "2%",
     backgroundColor: theme.colors.primaryLightBackground,
 };
 
-const nonImgDiv = {
-    width: "100%",
-    height: "50%",
-}
-
 const logoText = {
     fontFamily: theme.fonts.headerOne,
     color: theme.colors.primaryDark,
     textAlign: "center",
-    margin: "15%",
-    marginBottom: "5%",
+    fontSize: "4vh",
+    marginTop: "5vh",
+    marginBottom: "5vh",
 };
 
 const navbarsteps = {
     display: "flex",
     flexDirection: "column",
+    flexShrink: "1",
     boxSizing: "box-model",
     width: "100%",
-    height: "64%",
+    height: "70vh",
     paddingLeft: "10%",
     paddingRight: "10%",
     fontFamily: theme.fonts.headerThreeMedium,
@@ -111,6 +101,7 @@ const navstep = {
     alignItems: "center",
     margin: "2%",
     width: "96%",
+    fontSize: "2.4vh",
 };
 
 const navnum = {
@@ -120,11 +111,11 @@ const navnum = {
     alignItems: "center",
     borderStyle: "solid",
     borderWidth: 1,
-    borderRadius: "5%",
-    width: "20%",
+    borderRadius: "1vh",
+    width: "6vh",
     height: "0%",
-    paddingTop: "10%",
-    paddingBottom: "10%",
+    paddingTop: "3vh",
+    paddingBottom: "3vh",
 };
 
 const finishedCheckbox = {
@@ -153,10 +144,9 @@ const todo = {
 
 const imgDiv = {
     width: "100%",
-    height: "30%",
+    height: "30vh",
 }
 const Illustration = {
     width: "100%",
-    height: "130%",
-    alignSelf: "end",
+    height: "100%",
 };
