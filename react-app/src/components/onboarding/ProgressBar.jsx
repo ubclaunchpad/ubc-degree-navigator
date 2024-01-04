@@ -69,7 +69,6 @@ const bar = {
     width: "100%",
     height: "100vh",
     boxShadow: "none",
-    borderRadius: "2%",
     backgroundColor: theme.colors.primaryLightBackground,
 };
 
