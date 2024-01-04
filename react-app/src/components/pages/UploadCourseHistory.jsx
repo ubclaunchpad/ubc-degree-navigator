@@ -25,7 +25,9 @@ function UploadCourseHistory({
 
     return (
         <div className="body" style={page.body}>
-            <ProgressBar currStepIndex={1} />
+            <div className="progress" style={page.progress}>
+                <ProgressBar currStepIndex={1} />
+            </div>
 
             <div className="content" style={page.content}>
                 <UploadTranscript

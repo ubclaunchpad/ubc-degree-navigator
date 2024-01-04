@@ -20,15 +20,6 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 
 	const [isHover1, handleMouseEnter1, handleMouseLeave1] = useHover();
 
-	const method = {
-		display: "flex",
-		flexDirection: "row",
-		marginBottom: 24,
-		padding: 39,
-		borderRadius: 10,
-		borderColor: theme.colors.primaryDark,
-	};
-
 	const [isUploaded, setIsUploaded] = useState(false);
 
 	/* TODO: Uncomment after implementing file upload
@@ -74,7 +65,7 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 					}}
 				>
 					<div style={icon}>
-						<img src={UploadIcon} alt="upload icon" />
+						<img src={UploadIcon} alt="upload icon" style={illustration}/>
 					</div>
 					<div className="description" style={description}>
 						<div style={topper}>
@@ -102,34 +93,62 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 const container = {
 	display: "flex",
 	flexDirection: "column",
+	flexShrink: "1",
+	height: "90vh",
+	width: "90%",
 };
 
 const header = {
-	marginBottom: 50,
+	marginTop: "10vh",
+	width: "100%",
+	height: "30vh"
 };
 
 const title = {
 	fontFamily: theme.fonts.headerOne,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerOne,
-	fontSize: 32,
-	paddingBottom: 16,
+	fontSize: "4.5vh",
+	marginBottom: "2.5vh",
 };
 
 const subTitle = {
 	fontFamily: theme.fonts.headerThreeMedium,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerThreeMedium,
-	fontSize: 18,
+	fontSize: "2.4vh",
+	marginBottom: "1vh",
+};
+
+const method = {
+	display: "flex",
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "flex-start",
+	width: "100%",
+	height: "20vh",
+	borderRadius: "5%",
+	borderColor: theme.colors.primaryDark,
+	marginTop: "2.5vh",
 };
 
 const icon = {
-	width: 72,
-	height: 72,
+	display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "10vh",
+    height: "0",
+    paddingTop: "5vh",
+    paddingBottom: "5vh",
 	backgroundColor: theme.colors.primaryDark,
-	justifyContent: "center",
-	padding: 18,
-	borderRadius: 20,
+	borderRadius: "2vh",
+	marginLeft: "3vh",
+};
+
+const illustration = {
+	width: "50%",
+	height: "auto",
 };
 
 const topper = {
@@ -138,28 +157,27 @@ const topper = {
 };
 
 const check = {
-	width: 20,
-	height: 20,
-	marginTop: 2,
-	marginLeft: 8,
-	padding: 2,
 	backgroundColor: theme.colors.primaryDark,
 	color: theme.colors.textLight,
-	borderRadius: 10,
+	width: "2.5vh",
+	height: "2.5vh",
+	padding: "1%",
+	marginTop: "0.5vh",
+	marginLeft: "1vh",
+	borderRadius: "1.5vh",
 };
 
 const description = {
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "center",
-	marginLeft: 24,
+	marginLeft: "3vh",
 };
 
 const subSub = {
 	fontFamily: theme.fonts.headerFour,
 	color: theme.colors.textGrey,
 	fontWeight: theme.fonts.headerFour,
-	fontSize: 16,
-	marginBottom: 0,
+	fontSize: "2vh",
 };
 export default UploadTranscript;
