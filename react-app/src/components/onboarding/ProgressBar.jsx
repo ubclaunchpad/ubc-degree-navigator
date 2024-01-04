@@ -100,7 +100,7 @@ const navstep = {
     alignItems: "center",
     margin: "2%",
     width: "96%",
-    fontSize: "2.4vh",
+    fontSize: "2.2vh",
 };
 
 const navnum = {

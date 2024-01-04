@@ -35,6 +35,7 @@ const page = {
         justifyContent: "flex-end",
         fontFamily: theme.fonts.buttons,
         fontWeight: theme.fontWeights.buttons,
+        fontSize: "2.3vh",
     },
 
     disabledButton: {
