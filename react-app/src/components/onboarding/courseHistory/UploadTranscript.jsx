@@ -94,7 +94,7 @@ const container = {
 	display: "flex",
 	flexDirection: "column",
 	flexShrink: "1",
-	height: "90vh",
+	height: "88vh",
 	width: "90%",
 };
 

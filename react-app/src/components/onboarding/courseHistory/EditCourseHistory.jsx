@@ -60,11 +60,14 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 					courses.
 				</p>
 			</div>
-			<div style={components}>{init()}</div>
-			<div style={buttonWrapper}>
+			<div style={components}>
+				{init()}
+
+				<div style={buttonWrapper}>
 				<button style={button} onClick={() => addYear()}>
 					Add a new academic year →
 				</button>
+			</div>
 			</div>
 		</div>
 	);
@@ -73,49 +76,56 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 const container = {
 	display: "flex",
 	flexDirection: "column",
+	flexShrink: "1",
+	height: "88vh",
+	width: "90%",
 };
 
 const header = {
-	marginBottom: 24,
+	margin: "5vh 0vh 0vh 0vh",
+	height: "20vh"
 };
 
 const title = {
 	fontFamily: theme.fonts.headerOne,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerOne,
-	fontSize: 32,
-	paddingBottom: 16,
+	fontSize: "4.5vh",
+	marginBottom: "2vh",
 };
 
 const subTitle = {
 	fontFamily: theme.fonts.headerThreeMedium,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerThreeMedium,
-	fontSize: 18,
+	fontSize: "2.8vh",
 };
 
 const components = {
 	display: "flex",
 	flexDirection: "column",
-	gap: "24px",
-	marginBottom: "36px",
+	flexShrink: "1",
+	overflow: "scroll",
+	height: "70vh",
+	gap: "4vh",
+	margin: "0vh 0vh 3vh 0vh",
 };
 
 const buttonWrapper = {
 	display: "flex",
 	flexDirection: "row",
 	justifyContent: "flex-end",
-	marginBottom: "24px",
+	marginBottom: "2vh",
 };
 
 const button = {
-	padding: "8px 24px",
+	padding: "1.5vh 2.5vh",
 	fontFamily: theme.fonts.buttons,
 	color: "#0671E0",
 	fontWeight: theme.fonts.buttons,
-	fontSize: 14,
+	fontSize: "1.8vh",
 	borderWidth: 0,
-	borderRadius: 4,
+	borderRadius: "1.5vh",
 	backgroundColor: theme.colors.primaryLightBackground,
 	boxShadow:
 		"0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px -2px rgba(16, 24, 40, 0.1)",

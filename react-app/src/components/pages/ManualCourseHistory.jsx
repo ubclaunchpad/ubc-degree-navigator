@@ -26,7 +26,9 @@ function ManualCourseHistory({
 
     return (
         <div className="body" style={page.body}>
-            <ProgressBar currStepIndex={2} />
+            <div className="progress" style={page.progress}>
+                <ProgressBar currStepIndex={2} />
+            </div>
 
             <div className="content" style={page.content}>
                 <EditCourseHistory

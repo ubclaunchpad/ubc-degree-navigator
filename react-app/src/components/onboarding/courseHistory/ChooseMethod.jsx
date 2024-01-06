@@ -107,7 +107,7 @@ const container = {
 	display: "flex",
 	flexDirection: "column",
 	width: "90%",
-	height: "90vh",
+	height: "88vh",
 	marginLeft: "5%",
 	marginRight: "5%",
 	marginBottom: "8%",

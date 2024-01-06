@@ -20,30 +20,31 @@ const page = {
     content: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "space-between",
         width: "80%",
         height: "100vh",
     },
 
     buttons: {
-        height: "8vh",
         width: "90%",
         marginLeft: "5%",
         marginRight: "5%",
-        marginBottom: "2vh",
+        marginTop: "2vh",
+        marginBottom: "3vh",
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-end",
         fontFamily: theme.fonts.buttons,
         fontWeight: theme.fontWeights.buttons,
-        fontSize: "2.3vh",
+        fontSize: "2vh",
     },
 
     disabledButton: {
         border: "none",
-        height: "7.5vh",
+        height: "7vh",
         borderRadius: "5%",
         textAlign: "center",
-        padding: "2vh",
+        padding: "1.5vh 2vh",
         backgroundColor: theme.colors.primaryDark,
         color: "#fff",
         opacity: "0.5",
@@ -52,9 +53,9 @@ const page = {
 
     prevButton: {
         border: "none",
-        height: "7.5vh",
+        height: "7vh",
         textAlign: "center",
-        padding: "2vh",
+        padding: "1.5vh 2vh",
         backgroundColor: "rgba(0,0,0,0)",
         color: "#256AF4",
         cursor: "pointer",
@@ -63,9 +64,9 @@ const page = {
 
     nextButton: {
         border: "none",
-        height: "7.5vh",
+        height: "7vh",
         borderRadius: "5%",
-        padding: "2vh",
+        padding: "1.5vh 2vh",
         backgroundColor: theme.colors.primaryDark,
         color: "#fff",
         cursor: "pointer",

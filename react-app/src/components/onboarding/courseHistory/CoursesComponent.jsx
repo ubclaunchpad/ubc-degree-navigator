@@ -208,21 +208,27 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 const container = {
 	display: "flex",
 	flexDirection: "column",
+	flexShrink: "1",
+	fontSize: "2vh",
 	backgroundColor: theme.colors.primaryLightBackground,
 	borderRadius: 10,
-	padding: "32px 36px",
+	padding: "6vh 6vh 0vh 6vh",
 	boxShadow:
 		"0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px -2px rgba(16, 24, 40, 0.1)",
+	boxSizing: "border-box",
+	height: "60vh",
 };
 
-const year = { display: "flex", flexDirection: "column" };
+const year = { 
+	display: "flex", 
+	flexDirection: "column",
+};
 
 const subHeading = {
 	fontFamily: theme.fonts.headerFourMedium,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.headerFourMedium,
-	fontSize: 14,
-	marginBottom: 16,
+	marginBottom: "2.4vh",
 };
 
 const divider = {
@@ -233,36 +239,35 @@ const divider = {
 const term = {
 	display: "flex",
 	flexDirection: "column",
-	marginBottom: 40,
+	marginBottom: "8vh",
 };
 
 const courses = {
 	display: "flex",
 	flexDirection: "row",
 	flexWrap: "wrap",
-	gap: "20px",
+	gap: "3vh",
+	height: "5vh"
 };
 
 const courseInput = {
-	paddingLeft: 10,
-	height: 32,
-	width: 240,
+	height: "5vh",
+	width: "15vh",
 	fontFamily: theme.fonts.buttons,
 	color: theme.colors.textDark,
 	fontWeight: theme.fonts.buttons,
 	borderColor: theme.colors.textDark,
-	borderRadius: 5,
+	borderRadius: "1vh",
 	backgroundColor: "#EEF5FC",
 };
 
 const addButton = {
 	color: theme.colors.primaryDark,
-	fontSize: 18,
-	height: 32,
-	width: 46,
+	height: "5vh",
+	width: "15vh",
 	borderWidth: 1,
 	borderColor: theme.colors.primaryDark,
-	borderRadius: 5,
+	borderRadius: "1vh",
 	backgroundColor: theme.colors.primaryLightBackground,
 };
 
@@ -271,23 +276,21 @@ const chip = {
 	flexDirection: "row",
 	justifyContent: "center",
 	alignItems: "center",
-	height: 32,
-	width: 126,
-	borderRadius: 4,
+	height: "0",
+	width: "16vh",
+	padding: "2.5vh 0vh",
+	borderRadius: "1vh",
 	backgroundColor: "#EEF5FC",
-	//width: "fit-content",
 };
 const chipText = {
 	fontFamily: theme.fonts.buttons,
 	color: "#0671E0",
 	fontWeight: theme.fonts.buttons,
-	fontSize: 14,
-	paddingRight: 6,
-	margin: 0,
+	margin: "0 1vh 0 0",
 };
 const chipIcon = {
-	width: 16,
-	height: 16,
+	width: "2.5vh",
+	height: "auto",
 	color: theme.colors.primaryDark,
 };
 
