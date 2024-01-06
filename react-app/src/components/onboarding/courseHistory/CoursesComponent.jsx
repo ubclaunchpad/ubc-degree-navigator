@@ -215,8 +215,7 @@ const container = {
 	padding: "6vh 6vh 0vh 6vh",
 	boxShadow:
 		"0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px -2px rgba(16, 24, 40, 0.1)",
-	boxSizing: "border-box",
-	height: "60vh",
+	height: "auto",
 };
 
 const year = { 
@@ -239,6 +238,7 @@ const divider = {
 const term = {
 	display: "flex",
 	flexDirection: "column",
+	height: "auto",
 	marginBottom: "8vh",
 };
 
@@ -247,7 +247,7 @@ const courses = {
 	flexDirection: "row",
 	flexWrap: "wrap",
 	gap: "3vh",
-	height: "5vh"
+	height: "auto"
 };
 
 const courseInput = {
