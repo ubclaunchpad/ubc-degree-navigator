@@ -22,7 +22,7 @@ func ConnectDatabase() {
 	db.AutoMigrate(&Course{})
 	db.AutoMigrate(&CompletedCourses{})
 	// err = database.AutoMigrate(&User{})
-	//db.AutoMigrate(&Requirement{})
+	db.AutoMigrate(&Requirement{})
 	//db.AutoMigrate(&Program{})
 	//db.AutoMigrate(&User{})
 	//db.AutoMigrate(&Faculty{})

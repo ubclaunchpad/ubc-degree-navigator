@@ -19,6 +19,7 @@ func main() {
 	models.ConnectDatabase()
 	// scripts.LoadAllCourses()
 	scripts.InitializeCoursesOnDB("vancouver")
+	scripts.InitializeFacultyRequirementsOnDB()
 
 	r.POST("/api/user/cc", controllers.AddCompletedCourse)
 	r.POST("/api/user/upload", controllers.UploadTranscript)
