@@ -46,18 +46,28 @@ func (u *User) SaveUser() (*User, error) {
 	return u, nil
 }
 
-func LoadCompletedCourseToDB(userid uint, yearcompleted uint, sessioncompleted uint, courseid uint, creditcounted uint) {
+func LoadCompletedCourseToDB(cc *CompletedCourses) {
 	db, err := gorm.Open("sqlite3", "./gorm.db")
 	if err != nil {
 		panic("Unable to connect to db")
 	}
-	cc := CompletedCourses{UserID: userid, YearCompleted: yearcompleted, SessionCompleted: sessioncompleted, CourseID: courseid, CreditCounted: creditcounted}
-	fmt.Println(cc)
 	e := db.Create(&cc).Error
 	if e != nil {
 		panic("Could not create entry in database")
 	}
-	var entry CompletedCourses
-	db.First(&entry)
-	fmt.Println("data", entry)
+}
+
+func UpdateCompletedCourseInDB(cc *CompletedCourses) (CompletedCourses, error) {
+	db, err := gorm.Open("sqlite3", "./gorm.db")
+	if err != nil {
+		panic("Unable to connect to db")
+	}
+	var updateErr = db.Model(CompletedCourses{}).Where("user_id = ? AND course_id = ?", cc.UserID, cc.CourseID).Updates(*cc).Error
+	if updateErr != nil {
+		fmt.Println(updateErr)
+		panic("Unable to update completedcourse")
+	}
+	var completedCourse CompletedCourses
+	getErr := db.Where("user_id = ? AND course_id = ?", cc.UserID, cc.CourseID).First(&completedCourse).Error
+	return completedCourse, getErr
 }
