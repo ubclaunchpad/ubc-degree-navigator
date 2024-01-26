@@ -8,11 +8,16 @@ import (
 )
 
 type User struct {
-	ID       uint   `gorm:"primaryKey"`
-	Email    string `json:"email"`
-	Username string `json:"username"`
-	Programs []uint `json:"programs"` // ids of programs
-	Faculty  uint   `json:"faculty"`  // id of faculty
+	ID                      uint     `gorm:"primaryKey"`
+	Email                   string   `json:"email"`
+	Username                string   `json:"username"`
+	PrimaryMajor            uint     `json:"primaryMajor"` // id of primary major
+	SecondaryMajor          uint     `json:"secondaryMajor"` // id of secondary   major
+	Minor                   uint     `json:"minor"` // id of minor
+	PrimarySpecialization   uint     `json:"primarySpecialization"` // id of primary specialization
+	SecondarySpecialization uint     `json:"secondarySpecialization"` // id of secondary specialization
+	Concentration           uint     `json:"concentration"` // id of concentration
+	Faculty                 uint     `json:"faculty"` // id of faculty
 }
 
 type CompletedCourses struct {
