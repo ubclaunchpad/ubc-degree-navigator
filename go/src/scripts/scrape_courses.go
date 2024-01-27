@@ -20,7 +20,6 @@ var subjectURLQueue *queue.Queue
 var facultyRequirementsURLQueue *queue.Queue
 
 func InitializeCoursesOnDB(campus string) {
-	models.ConnectDatabase()
 	db = models.DB
 
 	subjectURLQueue, _ = queue.New(
@@ -33,7 +32,6 @@ func InitializeCoursesOnDB(campus string) {
 }
 
 func InitializeFacultyRequirementsOnDB() {
-	models.ConnectDatabase()
 	db = models.DB
 	facultyRequirementsURLQueue, _ = queue.New(
 		2, // Number of consumer threads
@@ -46,7 +44,7 @@ func InitializeFacultyRequirementsOnDB() {
 
 func scrapeAndEnqueueFacultyRequirementsURLs(campus string) {
 	var facultyRequirementsURL string = fmt.Sprintf("https://%s.calendar.ubc.ca/faculties-colleges-and-schools/faculty-science/bachelor-science/general-degree-requirements", campus)
-	
+
 	facultyRequirementsCollector := colly.NewCollector()
 
 	facultyRequirementsCollector.OnError(func(r *colly.Response, err error) {
@@ -175,19 +173,19 @@ func loadRequirementsToDB(requirements []string, credits []string) {
 	for i := 0; i < len(requirements); i++ {
 		var requirement = requirements[i]
 		var credit int
-		if (strings.ToLower(requirements[i][:1]) == requirements[i][:1]) {
-			requirement = requirements[i - 1] + " " + requirement
+		if strings.ToLower(requirements[i][:1]) == requirements[i][:1] {
+			requirement = requirements[i-1] + " " + requirement
 		}
-		if (credits[i] == "-") {
-			credit = 0;
+		if credits[i] == "-" {
+			credit = 0
 		} else {
 			credit, _ = strconv.Atoi(credits[i])
 		}
 
-		fullRequirement := models.NewRequirement(requirement, uint(credit)) 
+		fullRequirement := models.NewRequirement(requirement, uint(credit))
 
 		dbMutex.Lock()
-		db.Create(&fullRequirement) 
+		db.Create(&fullRequirement)
 		dbMutex.Unlock()
 	}
 }

@@ -13,17 +13,17 @@ func ConnectDatabase() {
 	if err != nil {
 		panic("Unable to connect to db")
 	}
-	// db.Exec("DROP TABLE courses")
-	// db.Exec("DROP TABLE requirements")
-	// db.Exec("DROP TABLE users")
-	// db.Exec("DROP TABLE programs")
-	// db.Exec("DROP TABLE completed_courses")
+	db.Exec("DROP TABLE courses")
+	db.Exec("DROP TABLE requirements")
+	db.Exec("DROP TABLE users")
+	db.Exec("DROP TABLE programs")
+	db.Exec("DROP TABLE completed_courses")
 
 	db.AutoMigrate(&Course{})
 	db.AutoMigrate(&CompletedCourses{})
-	db.AutoMigrate(&User{})
+	// db.AutoMigrate(&User{})
 	// err = database.AutoMigrate(&User{})
-	db.AutoMigrate(&Requirement{})
+	// db.AutoMigrate(&Requirement{})
 	//db.AutoMigrate(&Program{})
 	//db.AutoMigrate(&Faculty{})
 
