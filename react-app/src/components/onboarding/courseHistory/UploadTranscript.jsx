@@ -19,21 +19,41 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	};
 
 	const [isHover1, handleMouseEnter1, handleMouseLeave1] = useHover();
-
-	const method = {
-		display: "flex",
-		flexDirection: "row",
-		marginBottom: 24,
-		padding: 39,
-		borderRadius: 10,
-		borderColor: theme.colors.primaryDark,
-	};
-
 	const [isUploaded, setIsUploaded] = useState(false);
+
+	const sendFile = async (file) => {
+
+		try {
+			const response = await fetch("/api/user/upload", {
+				method: "POST",
+				body: file
+			})
+
+			if (!response.ok) {
+				throw new Error("Failed to send file");
+			}
+		} catch (error) {
+			console.error("Error:", error)
+		}
+		
+	}
+
+	const handleUpload = (e) => {
+		setIsUploaded(true);
+
+		const files = e.target.files;
+		const formData = new FormData();
+		formData.append('transcript', files[0]);
+
+		sendFile(formData);
+	}
+
+
+
 
 	/* TODO: Uncomment after implementing file upload
   if (isUploaded) {
-    setEnableButton(true);
+	setEnableButton(true);
   }
   */
 
@@ -93,7 +113,7 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 				type="file"
 				id="actual-btn"
 				style={{ display: "none", pointerEvents: "none" }}
-				onChange={() => setIsUploaded(true)}
+				onChange={handleUpload}
 			/>
 		</div>
 	);
@@ -162,4 +182,14 @@ const subSub = {
 	fontSize: 16,
 	marginBottom: 0,
 };
+
+const method = {
+	display: "flex",
+	flexDirection: "row",
+	marginBottom: 24,
+	padding: 39,
+	borderRadius: 10,
+	borderColor: theme.colors.primaryDark,
+};
+
 export default UploadTranscript;
