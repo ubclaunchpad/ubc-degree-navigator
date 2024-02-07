@@ -10,3 +10,8 @@ type Requirement struct {
 	CreditsRequired  uint   `json:"creditsRequired"`  // required # of credits from courses permitted
 	Alternatives     []Course `gorm:"foreignKey:ID"`
 }
+
+func NewRequirement(description string, credits uint) Requirement {
+	requirement := Requirement{Description: description, CreditsRequired: credits}
+	return requirement
+}
