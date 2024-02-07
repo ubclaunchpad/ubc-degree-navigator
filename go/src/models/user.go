@@ -11,7 +11,7 @@ type User struct {
 	ID       uint   `gorm:"primaryKey"`
 	Email    string `json:"email"`
 	Username string `json:"username"`
-	Programs []uint `json:"programs"` // ids of programs
+	Programs []Program `gorm:"foreignKey:ID"` // ids of programs
 	Faculty  uint   `json:"faculty"`  // id of faculty
 }
 
