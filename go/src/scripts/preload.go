@@ -11,7 +11,6 @@ import (
 )
 
 func LoadAllCourses() {
-	models.ConnectDatabase()
 	var db *gorm.DB = models.DB
 
 	var subjectsData, err = getSubjects("UBCV")
