@@ -27,6 +27,7 @@ func main() {
 	r.POST("/api/user/upload", controllers.UploadTranscript)
 
 	// r.GET("/user/:id", controllers.GetUserInfo)
+	r.POST("/api/user/transfer", controllers.UploadTransferCredits)
 	r.Run() // By default, isten and serve on http://localhost:8080
 }
 

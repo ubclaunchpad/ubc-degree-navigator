@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/textract"
+	"github.com/barkimedes/go-deepcopy"
 	"github.com/joho/godotenv"
 )
 
@@ -22,7 +23,7 @@ func init() {
 	})), &aws.Config{Credentials: creds})
 }
 
-func ParseTableFromTranscript(file []byte) map[string]interface{} {
+func ParseTableFromTranscript(file []byte, mode string) map[string]interface{} {
 	tableFeature := textract.FeatureTypeTables
 	features := []*string{&tableFeature}
 	resp, err := textractSession.AnalyzeDocument(&textract.AnalyzeDocumentInput{
@@ -35,29 +36,31 @@ func ParseTableFromTranscript(file []byte) map[string]interface{} {
 		fmt.Println("Error while calling analyze document", err)
 	}
 
-	tableJSON := extractTables(resp.Blocks)
+	tableJSON := extractMainTable(resp.Blocks, mode)
 	return tableJSON
 
 }
 
-func extractTables(blocks []*textract.Block) map[string]interface{} {
-	tablesJSON := make(map[string]interface{})
-
+func extractMainTable(blocks []*textract.Block, mode string) map[string]interface{} {
+	tableJSON := make(map[string]interface{})
+	tableBlocks := []*textract.Block{}
 	for _, block := range blocks {
 		if *block.BlockType == "TABLE" {
 			// Process each table
-			tableID := *block.Id
-			tableJSON := extractTable(block, blocks)
-			tablesJSON[tableID] = tableJSON
+			tableBlocks = append(tableBlocks, block)
 		}
 	}
-
-	return tablesJSON
+	if mode == "cc" {
+		tableJSON = extractTable(tableBlocks[0], blocks, mode)
+	} else {
+		tableJSON = extractTable(tableBlocks[1], blocks, mode)
+	}
+	return tableJSON
 }
 
-func extractTable(tableBlock *textract.Block, blocks []*textract.Block) map[string]map[string]string {
+func extractTable(tableBlock *textract.Block, blocks []*textract.Block, mode string) map[string]interface{} {
 	tableCells := getAllTableCells(tableBlock, blocks)
-	tableJSON := parseCoursesFromCells(tableCells)
+	tableJSON := parseCoursesFromCells(tableCells, mode)
 	return tableJSON
 }
 
@@ -79,24 +82,44 @@ func getAllTableCells(tableBlock *textract.Block, blocks []*textract.Block) []st
 	return tableCells
 }
 
-func parseCoursesFromCells(tableCells []string) map[string]map[string]string {
-	tableJSON := make(map[string]map[string]string)
+func parseCoursesFromCells(tableCells []string, mode string) map[string]interface{} {
+	tableJSON := make(map[string]interface{})
 	//following row length value is based on # of columns in the UBC unofficial transcript
-	const rowLength = 11 //TODO: get this value dynamically
-	headers := [rowLength]string{}
+	rowLength := 11
+	courseNamePos := 0
+	//handle transfer credits case
+	if mode == "tc" {
+		rowLength = 6
+		courseNamePos = 1
+	}
+
+	headers := [11]string{}
 	//get column header values
 	for i := 0; i < rowLength; i++ {
 		headers[i] = tableCells[i]
 	}
 
 	currentCourseName := ""
+	currentCourseDetails := map[string]string{}
+	for _, header := range headers {
+		currentCourseDetails[header] = ""
+	}
 	for i, value := range tableCells {
 		//if cell is first in the row (course name), update current course name
-		if i%rowLength == 0 {
+		if i%rowLength == courseNamePos {
 			currentCourseName = value
 			tableJSON[currentCourseName] = map[string]string{}
 		} else {
-			tableJSON[currentCourseName][headers[i%rowLength]] = value
+			currentCourseDetails[headers[i%rowLength]] = value
+			if (i+1)%rowLength == 0 {
+				courseDetails, err := deepcopy.Anything(currentCourseDetails)
+				if err != nil {
+					panic(err)
+				} else {
+					tableJSON[currentCourseName] = courseDetails
+				}
+
+			}
 		}
 
 	}
