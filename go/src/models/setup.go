@@ -21,11 +21,11 @@ func ConnectDatabase() {
 
 	db.AutoMigrate(&Course{})
 	db.AutoMigrate(&CompletedCourses{})
-	// db.AutoMigrate(&User{})
 	// err = database.AutoMigrate(&User{})
-	// db.AutoMigrate(&Requirement{})
-	//db.AutoMigrate(&Program{})
-	//db.AutoMigrate(&Faculty{})
+	db.AutoMigrate(&Requirement{})
+	db.AutoMigrate(&Program{})
+	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Faculty{})
 
 	DB = db
 }
