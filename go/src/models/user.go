@@ -71,3 +71,16 @@ func UpdateCompletedCourseInDB(cc *CompletedCourses) (CompletedCourses, error) {
 	getErr := db.Where("user_id = ? AND course_id = ?", cc.UserID, cc.CourseID).First(&completedCourse).Error
 	return completedCourse, getErr
 }
+
+func GetCompletedCoursesInDB(user *User) {
+	db, err := gorm.Open("sqlite3", "./gorm.db")
+	var completedCourses []CompletedCourses
+	if err != nil {
+		panic("Unable to connect to db")
+	}
+	e := db.Model(CompletedCourses{}).Where("user_id = ?", user.ID).Find(&completedCourses).Error;
+	if e != nil {
+		panic("Could not create entry in database")
+	}
+	fmt.Println(completedCourses);
+}
