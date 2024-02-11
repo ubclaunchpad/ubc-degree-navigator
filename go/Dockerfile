@@ -1,4 +1,4 @@
-FROM golang:1.21.3
+FROM golang:1.21.3 AS builder
 
 WORKDIR /app/src
 
@@ -10,8 +10,17 @@ WORKDIR /app
 
 COPY . .
 
-EXPOSE 8080
-
 WORKDIR /app/src
 
-CMD ["go", "run", "web_server.go"]
+RUN go install -ldflags "-extldflags '-static'"
+
+
+FROM alpine:latest
+
+ENV PATH=${PATH}:/usr/local/bin
+
+COPY --from=builder /go/bin/workspace /usr/local/bin/workspace
+
+EXPOSE 8080
+
+ENTRYPOINT ["workspace"]
