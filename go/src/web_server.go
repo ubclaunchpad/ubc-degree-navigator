@@ -28,12 +28,9 @@ func main() {
 	r.PATCH("/api/user/cc", controllers.UpdateCompleteCourse)
 	r.PUT("/api/user/additional_info", controllers.AddAdditionalInfo)
 	r.POST("/api/user/upload", controllers.UploadTranscript)
-<<<<<<< HEAD
 
 	// r.GET("/user/:id", controllers.GetUserInfo)
-=======
 	r.POST("/api/user/transfer", controllers.UploadTransferCredits)
->>>>>>> 99cc34e (Refactored textract calls to support transfer credit upload)
 	r.Run() // By default, isten and serve on http://localhost:8080
 }
 
