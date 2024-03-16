@@ -6,6 +6,7 @@ import (
 	_ "workspace/models"
 	"workspace/scripts"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -16,6 +17,8 @@ var err error
 
 func main() {
 	r := gin.Default() // Initialize server with default settings
+	r.Use(cors.Default())
+
 	models.ConnectDatabase()
 	// scripts.LoadAllCourses()
 	scripts.InitializeCoursesOnDB("vancouver")

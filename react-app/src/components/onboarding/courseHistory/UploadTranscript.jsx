@@ -21,12 +21,13 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	const [isHover1, handleMouseEnter1, handleMouseLeave1] = useHover();
 	const [isUploaded, setIsUploaded] = useState(false);
 
-	const sendFile = async (file) => {
+	const sendFile = async (formData) => {
 
 		try {
-			const response = await fetch("/api/user/upload", {
+			const response = await fetch("http://localhost:8080/api/user/upload", {
+				mode: "cors",
 				method: "POST",
-				body: file
+				body: formData
 			})
 
 			if (!response.ok) {
@@ -35,15 +36,15 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 		} catch (error) {
 			console.error("Error:", error)
 		}
-		
+
 	}
 
 	const handleUpload = (e) => {
 		setIsUploaded(true);
 
-		const files = e.target.files;
-		const formData = new FormData();
-		formData.append('transcript', files[0]);
+		let file = e.target.files[0];
+		let formData = new FormData()
+   		formData.append('file', file)
 
 		sendFile(formData);
 	}
@@ -109,12 +110,15 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 				</div>
 			</label>
 
-			<input
-				type="file"
-				id="actual-btn"
-				style={{ display: "none", pointerEvents: "none" }}
-				onChange={handleUpload}
-			/>
+			<form>
+				<input
+					type="file"
+					id="actual-btn"
+					style={{ display: "none", pointerEvents: "none" }}
+					onChange={handleUpload}
+				/>
+			</form>
+
 		</div>
 	);
 };
