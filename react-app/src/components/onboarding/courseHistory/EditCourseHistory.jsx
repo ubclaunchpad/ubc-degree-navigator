@@ -10,29 +10,22 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 	const [years, setYears] = useState([]);
 
 	const init = () => {
-		if (years.length !== 0) {
-			return years;
+		if (years.length == 0) {
+			let tempYear = [];
+			for (let i = 1; i < data.courses.length; i++) {
+				tempYear.push(
+					<CourseComponent
+						key={i}
+						indexKey={i}
+						data={data.courses[i]}
+						setData={setData}
+					>
+					</CourseComponent>
+				)
+			}
+
+			setYears(tempYear);
 		}
-
-		let split = data.courses.reduce(function (result, value, index, array) {
-			if (index % 2 === 0) result.push(array.slice(index, index + 2));
-			return result;
-		}, []);
-
-		let tempYear = [];
-		split.forEach((year, i) => {
-			tempYear.push(
-				<CourseComponent
-					key={`${split.indexOf(year)}`}
-					data={year}
-					setData={setData}
-					indexKey={`${split.indexOf(year)}`}
-				></CourseComponent>
-			);
-		});
-
-		setYears(tempYear);
-
 		return years;
 	};
 
@@ -41,9 +34,9 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 			years.concat(
 				<CourseComponent
 					key={years.length}
+					indexKey={years.length}
 					data={[]}
 					setData={setData}
-					indexKey={years.length}
 				></CourseComponent>
 			)
 		);
@@ -122,3 +115,24 @@ const button = {
 };
 
 export default EditCourseHistory;
+
+/*
+let split = data.courses.reduce(function (result, value, index, array) {
+			if (index % 2 === 0) result.push(array.slice(index, index + 2));
+			return result;
+		}, []);
+
+		let tempYear = [];
+		split.forEach((year, i) => {
+			tempYear.push(
+				<CourseComponent
+					key={`${split.indexOf(year)}`}
+					data={year}
+					setData={setData}
+					indexKey={`${split.indexOf(year)}`}
+				></CourseComponent>
+			);
+		});
+
+		setYears(tempYear);
+ */

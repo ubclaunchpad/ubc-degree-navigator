@@ -22,41 +22,61 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	const [isUploaded, setIsUploaded] = useState(false);
 
 	const sendFile = async (formData) => {
-
 		try {
 			const response = await fetch("http://localhost:8080/api/user/upload", {
 				mode: "cors",
 				method: "POST",
 				body: formData
-			})
+			});
 
 			if (!response.ok) {
 				throw new Error("Failed to send file");
 			}
+
+			return await response.json();
 		} catch (error) {
-			console.error("Error:", error)
+			console.error("Error:", error);
 		}
+	};
 
-	}
-
-	const handleUpload = (e) => {
+	const handleUpload = async (e) => {
 		setIsUploaded(true);
+		setEnableButton(true);
 
 		let file = e.target.files[0];
-		let formData = new FormData()
-   		formData.append('file', file)
+		let formData = new FormData();
+		formData.append('file', file);
 
-		sendFile(formData);
-	}
+		try {
+			const tableMap = await sendFile(formData);
+			const courses = Object.entries(tableMap).reduce((acc, [key, value]) => {
+				const year = parseInt(value.Year);
+				const term = parseInt(value.Term);
+				
+				if (!isNaN(year) && !isNaN(term)) {
+					if (!acc[year]) {
+						acc[year] = [];
+					}
+	
+					if (!acc[year][term]) {
+						acc[year][term] = [];
+					}
+	
+					acc[year][term].push(key);
+				}
 
+				return acc;
+			}, []);
 
+			let temp = data;
+			temp.courses = courses;
+			console.log(temp)
+			setData(temp);
 
-
-	/* TODO: Uncomment after implementing file upload
-  if (isUploaded) {
-	setEnableButton(true);
-  }
-  */
+		} catch (error) {
+			console.error("Failed to send file:", error);
+		}
+	};
 
 	return (
 		<div className="container" style={container}>
@@ -90,9 +110,6 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 					}}
 					onMouseEnter={handleMouseEnter1}
 					onMouseLeave={handleMouseLeave1}
-					onClick={() => {
-						setEnableButton(true);
-					}}
 				>
 					<div style={icon}>
 						<img src={UploadIcon} alt="upload icon" />
