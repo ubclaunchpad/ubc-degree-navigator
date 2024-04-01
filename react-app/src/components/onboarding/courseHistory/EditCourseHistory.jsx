@@ -17,7 +17,7 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 					<CourseComponent
 						key={i}
 						indexKey={i}
-						data={data.courses[i]}
+						data={data}
 						setData={setData}
 					>
 					</CourseComponent>

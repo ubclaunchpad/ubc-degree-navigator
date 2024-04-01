@@ -40,9 +40,6 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	};
 
 	const handleUpload = async (e) => {
-		setIsUploaded(true);
-		setEnableButton(true);
-
 		let file = e.target.files[0];
 		let formData = new FormData();
 		formData.append('file', file);
@@ -72,6 +69,8 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 			temp.courses = courses;
 			console.log(temp)
 			setData(temp);
+			setIsUploaded(true);
+			setEnableButton(true);
 
 		} catch (error) {
 			console.error("Failed to send file:", error);

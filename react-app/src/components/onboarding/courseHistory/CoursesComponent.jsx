@@ -3,7 +3,7 @@ import theme from "../../../theme";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const CourseComponent = ({ data, setData, indexKey }) => {
-	// data is array of two terms [[courses taken term 1], [courses taken term 2]]
+	// data.courses[indexKey]: [[], [courses taken term 1], [courses taken term 2]]
 
 	const [courseListOne, setCourseListOne] = useState([]);
 	const [showInputOne, setShowInputOne] = useState(false);
@@ -20,31 +20,39 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		let tempCourseListOne = [];
 		let tempCourseListTwo = [];
 		if (courseListOne.length === 0) {
-			data[0].forEach((val) => {
+			let termCourses = data.courses[indexKey][1];
+
+			for (let i = 0; i < termCourses.length; i++) {
+				let val = termCourses[i];
+
 				tempCourseListOne.push(
 					<div key={val + "1"} id={val + "1"} style={chip}>
 						<p style={chipText}>{val}</p>
 						<CancelIcon
 							style={chipIcon}
-							onClick={() => removeCourse(val, "1")}
+							onClick={() => removeCourse("1", i)}
 						></CancelIcon>
 					</div>
 				);
-			});
+			}
 		}
 
 		if (courseListTwo.length === 0) {
-			data[1].forEach((val) => {
+			let termCourses = data.courses[indexKey][2];
+
+			for (let i = 0; i < termCourses.length; i++) {
+				let val = termCourses[i];
+
 				tempCourseListTwo.push(
-					<div key={val + "1"} id={val + "1"} style={chip}>
+					<div key={val + "2"} id={val + "2"} style={chip}>
 						<p style={chipText}>{val}</p>
 						<CancelIcon
 							style={chipIcon}
-							onClick={() => removeCourse(val, "1")}
+							onClick={() => removeCourse("2", i)}
 						></CancelIcon>
 					</div>
 				);
-			});
+			}
 		}
 
 		setCourseListOne(tempCourseListOne);
@@ -89,64 +97,76 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		setShowAddTwo(true);
 	};
 
-	const handleEnter = (e, num) => {
+	const handleEnter = (e, term) => {
 		if (e.key === "Enter") {
-			let val = document.getElementById(indexKey + num).value;
-			num === "1" ? addCourseListOne(val) : addCourseListTwo(val);
+			let val = document.getElementById(indexKey + term).value;
+			term === "1" ? addCourseListOne(val) : addCourseListTwo(val);
 
-			let newCourse;
-			if (data[num]) {
-				newCourse = data[num].push(val);
-			} else {
-				newCourse = data.push([val]);
-			}
+			let newCourses = data.courses[indexKey][term].push(val);
 
 			setData((prev) => ({
 				data: {
 					...prev.data,
-					// courses: newCourse,
+					courses: newCourses
 				},
 			}));
-
-			//console.log(courseListOne);
 		}
 	};
 
-	const removeCourse = (val, num) => {
-		//console.log(courseListOne);
+	const removeCourse = (term, courseIndex) => {
+		let newCourses = data.courses[indexKey][term].filter((_, i) => i !== courseIndex);
 
-		/*let index = courseListOne.findIndex((c) => {
-			c.key === "CPSC 1011";
-		});*/
-		let index = 0;
-
-		//console.log(index);
-		//console.log()
-
-		if (num === "1") {
-			setCourseListOne(courseListOne.filter((_, i) => i !== index));
-		} else {
-			setCourseListTwo(courseListTwo.filter((_, i) => i !== index));
-		}
-
-		let newIndex = data.courses.indexOf(val);
-		let newCourse = data.courses.splice(newIndex, 1);
 		setData((prev) => ({
 			data: {
 				...prev.data,
-				courses: newCourse,
+				courses: newCourses
 			},
 		}));
+
+		if (term === "1") {
+			let tempCourseListOne = [];
+			for (let i = 0; i < newCourses.length; i++) {
+				let val = newCourses[i];
+
+				tempCourseListOne.push(
+					<div key={val + "1"} id={val + "1"} style={chip}>
+						<p style={chipText}>{val}</p>
+						<CancelIcon
+							style={chipIcon}
+							onClick={() => removeCourse("1", i)}
+						></CancelIcon>
+					</div>
+				);
+			}
+			setCourseListOne(tempCourseListOne);
+		} else {
+			let tempCourseListTwo = [];
+			for (let i = 0; i < newCourses.length; i++) {
+				let val = newCourses[i];
+
+				tempCourseListTwo.push(
+					<div key={val + "1"} id={val + "1"} style={chip}>
+						<p style={chipText}>{val}</p>
+						<CancelIcon
+							style={chipIcon}
+							onClick={() => removeCourse("2", i)}
+						></CancelIcon>
+					</div>
+				);
+			}
+			setCourseListTwo(tempCourseListTwo);
+		}	
 	};
 
-	if (courseListOne.length === 0 && courseListTwo.length === 0)
+	if (courseListOne.length === 0 && courseListTwo.length === 0) {
 		initCourseList();
+	}
 
 	return (
 		<div style={container}>
 			<div style={year}>
 				<p style={{ ...subHeading, ...{ marginBottom: 0 } }}>
-					Year {Number(indexKey) + 1}
+					Year {Number(indexKey)}
 				</p>
 			</div>
 			<hr style={divider} />
