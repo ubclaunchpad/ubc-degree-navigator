@@ -1,106 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import theme from "../../../theme";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const CourseComponent = ({ data, setData, indexKey }) => {
 	// data.courses[indexKey]: [[], [courses taken term 1], [courses taken term 2]]
 
-	const [courseListOne, setCourseListOne] = useState([]);
 	const [showInputOne, setShowInputOne] = useState(false);
 	const [showAddOne, setShowAddOne] = useState(true);
-	const [courseListTwo, setCourseListTwo] = useState([]);
 	const [showInputTwo, setShowInputTwo] = useState(false);
 	const [showAddTwo, setShowAddTwo] = useState(true);
+	const [termOneList, setTermOneList] = useState(data.courses[indexKey][1]);
+	const [termTwoList, setTermTwoList] = useState(data.courses[indexKey][2]);
 
-	const initCourseList = () => {
-		if (data.length === 0) {
-			return;
-		}
-
-		let tempCourseListOne = [];
-		let tempCourseListTwo = [];
-		if (courseListOne.length === 0) {
-			let termCourses = data.courses[indexKey][1];
-
-			for (let i = 0; i < termCourses.length; i++) {
-				let val = termCourses[i];
-
-				tempCourseListOne.push(
-					<div key={val + "1"} id={val + "1"} style={chip}>
-						<p style={chipText}>{val}</p>
-						<CancelIcon
-							style={chipIcon}
-							onClick={() => removeCourse("1", i)}
-						></CancelIcon>
-					</div>
-				);
-			}
-		}
-
-		if (courseListTwo.length === 0) {
-			let termCourses = data.courses[indexKey][2];
-
-			for (let i = 0; i < termCourses.length; i++) {
-				let val = termCourses[i];
-
-				tempCourseListTwo.push(
-					<div key={val + "2"} id={val + "2"} style={chip}>
-						<p style={chipText}>{val}</p>
-						<CancelIcon
-							style={chipIcon}
-							onClick={() => removeCourse("2", i)}
-						></CancelIcon>
-					</div>
-				);
-			}
-		}
-
-		setCourseListOne(tempCourseListOne);
-		setCourseListTwo(tempCourseListTwo);
-	};
-
-	const addCourseListOne = (val) => {
-		if (document.getElementById(indexKey + "1")) {
-			document.getElementById(indexKey + "1").value = "";
-		}
-		setCourseListOne(
-			courseListOne.concat(
-				<div key={val + "1"} id={val + "1"} style={chip}>
-					<p style={chipText}>{val}</p>
+	const TermOneComponent = ({ data }) => (
+		data.map((course, index) => (
+				<div key={course + "1"} id={course + "1"} style={chip}>
+					<p style={chipText}>{course}</p>
 					<CancelIcon
 						style={chipIcon}
-						onClick={() => removeCourse(val, "1")}
+						onClick={() => {
+							removeCourse("1", index)
+						}}
 					></CancelIcon>
 				</div>
-			)
-		);
-		setShowInputOne(false);
-		setShowAddOne(true);
-	};
+			))
+	)
 
-	const addCourseListTwo = (val) => {
-		if (document.getElementById(indexKey + "2")) {
-			document.getElementById(indexKey + "2").value = "";
-		}
-		setCourseListTwo(
-			courseListTwo.concat(
-				<div key={val + "2"} id={val + "2"} style={chip}>
-					<p style={chipText}>{val}</p>
+	const TermTwoComponent = ({ data }) => (
+		data.map((course, index) => (
+				<div key={course + "2"} id={course + "2"} style={chip}>
+					<p style={chipText}>{course}</p>
 					<CancelIcon
 						style={chipIcon}
-						onClick={() => removeCourse(val, "2")}
+						onClick={() => {
+							removeCourse("2", index)
+						}}
 					></CancelIcon>
 				</div>
-			)
-		);
-		setShowInputTwo(false);
-		setShowAddTwo(true);
-	};
+			))
+	)
+
+	const initTermOne = () => {
+		return <TermOneComponent data={termOneList}></TermOneComponent>
+	}
+
+	const initTermTwo = () => {
+		return <TermTwoComponent data={termTwoList}></TermTwoComponent>
+	}
+
 
 	const handleEnter = (e, term) => {
 		if (e.key === "Enter") {
 			let val = document.getElementById(indexKey + term).value;
-			term === "1" ? addCourseListOne(val) : addCourseListTwo(val);
 
 			let newCourses = data.courses[indexKey][term].push(val);
 
@@ -114,64 +65,39 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 	};
 
 	const removeCourse = (term, courseIndex) => {
-		let newCourses = data.courses[indexKey][term].filter((_, i) => i !== courseIndex);
+		let updatedCourses = [...data.courses];
+		updatedCourses[indexKey][term] = updatedCourses[indexKey][term].filter((_, i) => i !== courseIndex);
 
-		setData((prev) => ({
-			data: {
-				...prev.data,
-				courses: newCourses
-			},
-		}));
+		let newObject = {
+			...data,
+			courses: updatedCourses
+		}
+
+		setData(newObject);
 
 		if (term === "1") {
-			let tempCourseListOne = [];
-			for (let i = 0; i < newCourses.length; i++) {
-				let val = newCourses[i];
-
-				tempCourseListOne.push(
-					<div key={val + "1"} id={val + "1"} style={chip}>
-						<p style={chipText}>{val}</p>
-						<CancelIcon
-							style={chipIcon}
-							onClick={() => removeCourse("1", i)}
-						></CancelIcon>
-					</div>
-				);
-			}
-			setCourseListOne(tempCourseListOne);
+			setTermOneList(updatedCourses[indexKey][term]);
 		} else {
-			let tempCourseListTwo = [];
-			for (let i = 0; i < newCourses.length; i++) {
-				let val = newCourses[i];
+			setTermTwoList(updatedCourses[indexKey][term]);
+		}
 
-				tempCourseListTwo.push(
-					<div key={val + "1"} id={val + "1"} style={chip}>
-						<p style={chipText}>{val}</p>
-						<CancelIcon
-							style={chipIcon}
-							onClick={() => removeCourse("2", i)}
-						></CancelIcon>
-					</div>
-				);
-			}
-			setCourseListTwo(tempCourseListTwo);
-		}	
 	};
 
-	if (courseListOne.length === 0 && courseListTwo.length === 0) {
-		initCourseList();
-	}
 
 	return (
 		<div style={container}>
+
 			<div style={year}>
 				<p style={{ ...subHeading, ...{ marginBottom: 0 } }}>
 					Year {Number(indexKey)}
 				</p>
 			</div>
+
 			<hr style={divider} />
+
 			<div style={term}>
 				<p style={subHeading}>Term 1</p>
+
 				<div style={courses}>
 					{showInputOne && (
 						<input
@@ -181,7 +107,9 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 							onKeyDown={(e) => handleEnter(e, "1")}
 						></input>
 					)}
-					{courseListOne}
+
+					{initTermOne()}
+
 					{showAddOne && (
 						<button
 							style={addButton}
@@ -198,6 +126,7 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 
 			<div style={term}>
 				<p style={subHeading}>Term 2</p>
+
 				<div style={courses}>
 					{showInputTwo && (
 						<input
@@ -207,7 +136,9 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 							onKeyDown={(e) => handleEnter(e, "2")}
 						></input>
 					)}
-					{courseListTwo}
+
+					{initTermTwo()}
+
 					{showAddTwo && (
 						<button
 							style={addButton}
