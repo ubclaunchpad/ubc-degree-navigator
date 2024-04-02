@@ -12,18 +12,35 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 	const init = () => {
 		if (years.length == 0) {
 			let tempYear = [];
-			for (let i = 1; i < data.courses.length; i++) {
+
+			if (data.courses.length === 0) {
+				// case: user manually inputs course history from start
+
 				tempYear.push(
 					<CourseComponent
-						key={i}
-						indexKey={i}
+						key={1}
+						indexKey={1}
 						data={data}
 						setData={setData}
 					>
-					</CourseComponent>
-				)
-			}
+					</CourseComponent>)
 
+			} else {
+				// case: user uploads transcript screenshot
+				
+				for (let i = 1; i < data.courses.length; i++) {
+					tempYear.push(
+						<CourseComponent
+							key={i}
+							indexKey={i}
+							data={data}
+							setData={setData}
+						>
+						</CourseComponent>
+					)
+				}
+			}
+			
 			setYears(tempYear);
 		}
 		return years;
@@ -33,9 +50,9 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 		setYears(
 			years.concat(
 				<CourseComponent
-					key={years.length}
-					indexKey={years.length}
-					data={[]}
+					key={years.length + 1}
+					indexKey={years.length + 1}
+					data={data}
 					setData={setData}
 				></CourseComponent>
 			)
