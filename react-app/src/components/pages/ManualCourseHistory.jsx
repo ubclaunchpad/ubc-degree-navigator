@@ -20,6 +20,7 @@ function ManualCourseHistory({
     };
 
     const nextButtonClick = () => {
+        // post request data object to db here
         navigate('/transferCredit');
         setEnableButton(false);
     };
