@@ -59,7 +59,7 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 						acc[year][term] = [];
 					}
 	
-					acc[year][term].push(key);
+					acc[year][term].push({ [key]: parseInt(value["Credits Earned"]) });
 				}
 
 				return acc;
@@ -67,7 +67,6 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 
 			let temp = data;
 			temp.courses = courses;
-			console.log(temp)
 			setData(temp);
 			setIsUploaded(true);
 			setEnableButton(true);

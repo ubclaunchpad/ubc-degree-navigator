@@ -5,6 +5,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 const CourseComponent = ({ data, setData, indexKey }) => {
 	// indexKey = academic year
 	// data.courses[indexKey] = [[], [courses taken term 1], [courses taken term 2]]
+	// each array entry is an object with { courseName: credits }
 
 	if (data.courses.length === 0) {
 		// case: user manually inputs course history from start
@@ -26,8 +27,8 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 
 	const TermOneComponent = ({ data }) => (
 		data.map((course, index) => (
-			<div key={course + "1"} id={course + "1"} style={chip}>
-				<p style={chipText}>{course}</p>
+			<div key={Object.keys(course)[0] + "1"} id={Object.keys(course)[0] + "1"} style={chip}>
+				<p style={chipText}>{Object.keys(course)[0]}</p>
 				<CancelIcon
 					style={chipIcon}
 					onClick={() => {
@@ -40,8 +41,8 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 
 	const TermTwoComponent = ({ data }) => (
 		data.map((course, index) => (
-			<div key={course + "2"} id={course + "2"} style={chip}>
-				<p style={chipText}>{course}</p>
+			<div key={Object.keys(course)[0] + "2"} id={Object.keys(course)[0] + "2"} style={chip}>
+				<p style={chipText}>{Object.keys(course)[0]}</p>
 				<CancelIcon
 					style={chipIcon}
 					onClick={() => {
@@ -58,15 +59,17 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 
 			let updatedCourses;
 
+			// courses inputted manually have a hard-coded number of credits = 3
+
 			if (term === "1") {
 				updatedCourses = [...termOneList];
-				updatedCourses.push(val);
+				updatedCourses.push({ [val] : 3 });
 				setTermOneList(updatedCourses);
 				setShowInputOne(false);
 				setShowAddOne(true);
 			} else {
 				updatedCourses = [...termTwoList];
-				updatedCourses.push(val);
+				updatedCourses.push({ [val] : 3 });
 				setTermTwoList(updatedCourses);
 				setShowInputTwo(false);
 				setShowAddTwo(true);
@@ -99,7 +102,7 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		}
 
 		setData(newObject);
-		
+
 	}, [termOneList, termTwoList]);
 	
 

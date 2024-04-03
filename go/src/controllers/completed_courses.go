@@ -8,15 +8,19 @@ import (
 	// ORM package for Go
 )
 
-func AddCompletedCourse(c *gin.Context) {
-	var cc models.CompletedCourses
-	if err := c.ShouldBindJSON(&cc); err != nil {
+func AddCompletedCourses(c *gin.Context) {
+	var courses []models.CompletedCourses
+	if err := c.ShouldBindJSON(&courses); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	models.LoadCompletedCourseToDB(&cc)
-	c.JSON(http.StatusOK, cc)
+	for _, course := range courses {
+		models.LoadCompletedCourseToDB(&course)
+	}
+	c.JSON(http.StatusOK, courses)
 }
+
+/*
 
 func UpdateCompleteCourse(c *gin.Context) {
 	var cc models.CompletedCourses
@@ -31,3 +35,4 @@ func UpdateCompleteCourse(c *gin.Context) {
 		c.JSON(http.StatusOK, updatedCC)
 	}
 }
+*/

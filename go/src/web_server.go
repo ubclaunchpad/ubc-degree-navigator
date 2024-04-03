@@ -20,24 +20,30 @@ func main() {
 	r.Use(cors.Default())
 
 	models.ConnectDatabase()
+
 	// scripts.LoadAllCourses()
 	scripts.InitializeCoursesOnDB("vancouver")
 	scripts.InitializeFacultyRequirementsOnDB()
 
-	r.POST("/api/user/cc", controllers.AddCompletedCourse)
-	r.PATCH("/api/user/cc", controllers.UpdateCompleteCourse)
-	r.PUT("/api/user/additional_info", controllers.AddAdditionalInfo)
-	r.POST("/api/user/upload", controllers.UploadTranscript)
-
 	// r.GET("/user/:id", controllers.GetUserInfo)
+
+	r.POST("/api/user/cc", controllers.AddCompletedCourses)
+	// r.PATCH("/api/user/cc", controllers.UpdateCompleteCourse)
+
+	r.PUT("/api/user/additional_info", controllers.AddAdditionalInfo)
+
+	r.POST("/api/user/upload", controllers.UploadTranscript)
 	r.POST("/api/user/transfer", controllers.UploadTransferCredits)
 	r.Run() // By default, isten and serve on http://localhost:8080
 }
 
-// r.GET("/", func(c *gin.Context) { // Creates route for root(/), second argument is function to execute
-// 	var u User
-// 	dbReturn(&u) // get first user's id
-// 	c.JSON(200, gin.H{
-// 		"UserID": u.UserID,
-// 	})
-// })
+/*
+r.GET("/", func(c *gin.Context) {
+	// Creates route for root(/), second argument is function to execute
+	var u User
+ 	dbReturn(&u) // get first user's id
+ 	c.JSON(200, gin.H{
+		"UserID": u.UserID,
+ 	})
+})
+*/
