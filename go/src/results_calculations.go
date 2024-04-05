@@ -6,7 +6,7 @@ import (
 	//"github.com/michelleykim/ubc-degree-navigator/models"
 )
 
-type FacultyRequirements map[string]int 
+type FacultyRequirements map[string]int
 type ProgramRequirements map[string]int
 
 type CompletedCourses struct {
@@ -21,8 +21,6 @@ var facultyRequirements FacultyRequirements
 var programRequirements ProgramRequirements
 var facultyTable map[string]map[string]int
 
-
-
 func createCommTable() map[string]int {
 	commTable := map[string]int{
 		"WRDS 150": 3,
@@ -32,7 +30,7 @@ func createCommTable() map[string]int {
 		"SCIE 300": 3,
 		"CHEM 300": 3,
 		"APSC 176": 3,
-		"LFS 150": 3,
+		"LFS 150":  3,
 		"FRST 150": 3,
 		"ASTU 100": 3,
 		"ASTU 101": 3,
@@ -73,6 +71,7 @@ func createLowerTable() map[string]int {
 	}
 	return commTable
 }
+
 /*
  * Stores the scraped requirements into two hashtables
  * Faculty and program requirements have separate tables
@@ -100,44 +99,44 @@ func createHashTable() int {
 func checkFacultyRequirements(courses []CompletedCourses, faculty string) FacultyRequirements {
 	// TODO: Implement functionality
 	//check communication requirements
-	commCredits := 0;
-	breadthCredits := 0;
-	artsCredits := 0;
-	lowerCredits := 0;
-	for _, course := range(courses){
+	commCredits := 0
+	breadthCredits := 0
+	artsCredits := 0
+	lowerCredits := 0
+	for _, course := range courses {
 		courseString := "WRDS 150B" // implement function to get courseString from course
 		//courseString = getCourseString(course)
-		if (commCredits < 6) {
+		if commCredits < 6 {
 			credits, exists := facultyTable["comm"][courseString]
-			if(exists){
-				commCredits += credits;
-				continue // communications credits cannot count for anything other faculty requirements 
-			} 
-		}
-		if (breadthCredits < 18) {
-			credits, exists := facultyTable["breadth"][courseString]
-			if(exists){
-				breadthCredits += credits;
+			if exists {
+				commCredits += credits
+				continue // communications credits cannot count for anything other faculty requirements
 			}
 		}
-		
-		if (artsCredits < 12 && course["faculty"] == "Arts") {
+		if breadthCredits < 18 {
+			credits, exists := facultyTable["breadth"][courseString]
+			if exists {
+				breadthCredits += credits
+			}
+		}
+
+		if artsCredits < 12 && course["faculty"] == "Arts" {
 			artsCredits += facultyTable["comm"][courseString]
 		}
 
-		if (lowerCredits < 3) {
+		if lowerCredits < 3 {
 			credits, exists := facultyTable["lower"][courseString]
-			if(exists){
-				lowerCredits += credits;
+			if exists {
+				lowerCredits += credits
 			}
 		}
-	};
+	}
 
 	return FacultyRequirements{
-		"comm": commCredits,
+		"comm":    commCredits,
 		"breadth": breadthCredits,
-		"arts": artsCredits,
-		"lower": lowerCredits,
+		"arts":    artsCredits,
+		"lower":   lowerCredits,
 	}
 }
 
@@ -148,8 +147,101 @@ func checkFacultyRequirements(courses []CompletedCourses, faculty string) Facult
  */
 func checkProgramRequirements(courses []CompletedCourses, program string) ProgramRequirements {
 	// TODO: Implement functionality
-	return ProgramRequirements{}
+	// TODO: Implement functionality
+	firstYear := 0
+	secondYear := 0
+	upperYear := 0
+
+	tmpTable := map[string]map[string]int{
+		"firstYearReq":  make(map[string]int),
+		"secondYearReq": make(map[string]int),
+		"upperYearReq":  make(map[string]int),
+	}
+
+	for _, course := range courses {
+		courseString := "WRDS 150B" // implement function to get courseString from course
+		// courseString = getCourseString(course)
+
+		// ASSUMING EXISTENCE OF FirstYearReq Program Table as shown
+		// https://vancouver.calendar.ubc.ca/faculties-colleges-and-schools/faculty-science/bachelor-science/computer-science
+		credits, exists := tmpTable["firstYearReq"][courseString]
+		if exists {
+			firstYear += credits
+			continue
+		}
+
+		credits2, exists2 := tmpTable["secondYearReq"][courseString]
+		if exists {
+			secondYear += credits
+		}
+
+		credits3, exists3 := tmpTable["upperYearReq"][courseString]
+		if exists {
+			upperYear += credits
+		}
+	}
+
+	return ProgramRequirements{
+		"1st":   firstYear,
+		"2nd":   secondYear,
+		"Upper": upperYear,
+	}
 }
+
+// BELOW COMMENTED IS AN ALTERNATIVE VERSION SINCE
+
+// func stringInList(a string, list []string) bool {
+// 	for _, b := range list {
+// 		if b == a {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
+
+// // HARD CODED VERSION, Since I'm not sure how the Program Table looks like.
+// func checkProgramRequirements(courses []CompletedCourses, program string) ProgramRequirements {
+// 	// TODO: Implement functionality
+// 	// TODO: Implement functionality
+// 	firstYear := 0
+// 	secondYear := 0
+// 	upperYear := 0
+
+// 	firstYearCourses := []strin{"CPSC 110", "CPSC 121", "MATH 100", "MATH 101",
+// 		"MATH 102", "MATH 104", "MATH 180", "MATH 184", "MATH 120", "MATH 110",
+// 		"MATH 103", "MATH 105", "MATH 121", "CPSC 103", "CPSC 107"}
+
+// 	secondYearCourses := []strin{"CPSC 210", "CPSC 213", "CPSC 221", "MATH 200", "MATH 221", "STAT 251", "STAT 241", "STAT 200". "STAT 302"}
+
+// 	// I can't really hard code these ones specifically.
+// 	upperYearCourses := []strin{"CPSC 310", "CPSC 313", "CPSC 320"}
+
+// 	for _, course := range courses {
+// 		courseString = getCourseString(course)
+
+// 		// Check First Year Requirements.
+// 		if stringInList(courseString, firstYearCourses) {
+// 			firstYear += course.creditCounted
+// 		}
+
+// 		// Check First Year Requirements.
+// 		if stringInList(courseString, secondYearCourses) {
+// 			secondYear += course.creditCounted
+// 		}
+
+// 		// Check First Year Requirements.
+// 		if stringInList(courseString, upperYearCourses) {
+// 			upperYear += course.creditCounted
+// 		}
+
+// 	}
+
+// 	return ProgramRequirements{
+// 		"1st":  firstYear,
+// 		"2nd": secondYear,
+// 		"Upper":  upperYear,
+// 	}
+// }
 
 /*
  * Calculates total number of credits taken and total number of elective credits taken, compiles it into
