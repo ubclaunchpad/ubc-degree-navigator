@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  react-frontend:
+    build: ./react-app
+    ports:
+      - "3000:3000"
+  
+  go-backend:
+    build: ./go
+    ports:
+      - "8080:8080"
+      

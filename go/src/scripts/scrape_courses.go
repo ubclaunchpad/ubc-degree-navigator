@@ -17,9 +17,9 @@ import (
 var db *gorm.DB
 var dbMutex sync.Mutex
 var subjectURLQueue *queue.Queue
+var facultyRequirementsURLQueue *queue.Queue
 
 func InitializeCoursesOnDB(campus string) {
-	models.ConnectDatabase()
 	db = models.DB
 
 	subjectURLQueue, _ = queue.New(
@@ -29,6 +29,31 @@ func InitializeCoursesOnDB(campus string) {
 
 	scrapeAndEnqueueSubjectURLs("vancouver")
 	scrapeAndLoadCoursesToDB()
+}
+
+func InitializeFacultyRequirementsOnDB() {
+	db = models.DB
+	facultyRequirementsURLQueue, _ = queue.New(
+		2, // Number of consumer threads
+		&queue.InMemoryQueueStorage{MaxSize: 10000}, // Use default queue storage
+	)
+
+	scrapeAndEnqueueFacultyRequirementsURLs("vancouver")
+	scrapeAndLoadFacultyRequirementsToDB()
+}
+
+func scrapeAndEnqueueFacultyRequirementsURLs(campus string) {
+	var facultyRequirementsURL string = fmt.Sprintf("https://%s.calendar.ubc.ca/faculties-colleges-and-schools/faculty-science/bachelor-science/general-degree-requirements", campus)
+
+	facultyRequirementsCollector := colly.NewCollector()
+
+	facultyRequirementsCollector.OnError(func(r *colly.Response, err error) {
+		fmt.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
+	})
+
+	facultyRequirementsURLQueue.AddURL(facultyRequirementsURL)
+
+	facultyRequirementsCollector.Visit(facultyRequirementsURL)
 }
 
 // campus is "vancouver" or "okanagan"
@@ -48,6 +73,57 @@ func scrapeAndEnqueueSubjectURLs(campus string) {
 	})
 
 	subjectsCollector.Visit(subjectsURL)
+}
+
+func scrapeAndLoadFacultyRequirementsToDB() {
+	var requirementsSelector string = "tr td:nth-of-type(1)"
+	var requirementsCreditSelector string = "tr td:nth-of-type(2)"
+	var requirements []string
+	var credits []string
+
+	requirementsCollector := colly.NewCollector(colly.MaxDepth(1), colly.DetectCharset(), colly.Async(true), colly.AllowURLRevisit())
+	requirementsCollector.SetRequestTimeout(120 * time.Second)
+
+	requirementsCollector.Limit(&colly.LimitRule{
+		DomainGlob:  "*",
+		Parallelism: 8,
+	})
+
+	requirementsCollector.OnRequest(func(r *colly.Request) {
+		r.Headers.Set("User-Agent", randStringBytes(12))
+	})
+
+	requirementsCollector.OnError(func(r *colly.Response, err error) {
+		fmt.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
+
+		if r.StatusCode == 429 {
+			retryAfterHeader := r.Headers.Get("Retry-After") + "s"
+			retryAfterDuration, err := time.ParseDuration(retryAfterHeader)
+			if err != nil {
+				fmt.Println("Failed to parse 'Retry-After' header:", err)
+				return
+			}
+
+			time.Sleep(retryAfterDuration)
+		} else {
+			time.Sleep(5 * time.Second)
+		}
+		r.Request.Retry()
+	})
+
+	requirementsCollector.OnHTML(requirementsSelector, func(e *colly.HTMLElement) {
+		requirements = append(requirements, e.Text)
+	})
+
+	requirementsCollector.OnHTML(requirementsCreditSelector, func(e *colly.HTMLElement) {
+		credits = append(credits, e.Text)
+	})
+
+	facultyRequirementsURLQueue.Run(requirementsCollector)
+
+	requirementsCollector.Wait()
+
+	loadRequirementsToDB(requirements, credits)
 }
 
 func scrapeAndLoadCoursesToDB() {
@@ -91,6 +167,27 @@ func scrapeAndLoadCoursesToDB() {
 	subjectURLQueue.Run(coursesCollector)
 
 	coursesCollector.Wait()
+}
+
+func loadRequirementsToDB(requirements []string, credits []string) {
+	for i := 0; i < len(requirements); i++ {
+		var requirement = requirements[i]
+		var credit int
+		if strings.ToLower(requirements[i][:1]) == requirements[i][:1] {
+			requirement = requirements[i-1] + " " + requirement
+		}
+		if credits[i] == "-" {
+			credit = 0
+		} else {
+			credit, _ = strconv.Atoi(credits[i])
+		}
+
+		fullRequirement := models.NewRequirement(requirement, uint(credit))
+
+		dbMutex.Lock()
+		db.Create(&fullRequirement)
+		dbMutex.Unlock()
+	}
 }
 
 func loadCourseToDB(courseText string) {
