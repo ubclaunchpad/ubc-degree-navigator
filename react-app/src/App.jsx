@@ -21,12 +21,7 @@ import ResultsPage from "./components/pages/ResultsPage.jsx";
 
 function App() {
 	const [data, setData] = useState({
-		courses: [
-			["CPSC 110", "CPSC 121", "PHYS 101", "MATH 100"],
-			["MATH 100", "ENGL 110", "CPSC 210", "ASTR 101"],
-			["CPSC 221", "MATH 200", "STAT 200", "WRDS 150"],
-			["CPSC 213", "DSCI 100", "MATH 221", "MATH 302"],
-		],
+		courses: [],
 		transferCredits: [{ "BIOL 1**": 3 }, { "CHIN 241": 3 }],
 		program: "Bachelor of Computer Science",
 		major: "Computer Science",

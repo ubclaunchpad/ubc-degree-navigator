@@ -19,23 +19,62 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 	};
 
 	const [isHover1, handleMouseEnter1, handleMouseLeave1] = useHover();
-
-	const method = {
-		display: "flex",
-		flexDirection: "row",
-		marginBottom: 24,
-		padding: 39,
-		borderRadius: 10,
-		borderColor: theme.colors.primaryDark,
-	};
-
 	const [isUploaded, setIsUploaded] = useState(false);
 
-	/* TODO: Uncomment after implementing file upload
-  if (isUploaded) {
-    setEnableButton(true);
-  }
-  */
+	const sendFile = async (formData) => {
+		try {
+			const response = await fetch("http://localhost:8080/api/user/upload", {
+				mode: "cors",
+				method: "POST",
+				body: formData
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to send file");
+			}
+
+			return await response.json();
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
+	const handleUpload = async (e) => {
+		let file = e.target.files[0];
+		let formData = new FormData();
+		formData.append('file', file);
+
+		try {
+			const tableMap = await sendFile(formData);
+			const courses = Object.entries(tableMap).reduce((acc, [key, value]) => {
+				const year = parseInt(value.Year);
+				const term = parseInt(value.Term);
+				
+				if (!isNaN(year) && !isNaN(term)) {
+					if (!acc[year]) {
+						acc[year] = [];
+					}
+	
+					if (!acc[year][term]) {
+						acc[year][term] = [];
+					}
+	
+					acc[year][term].push({ [key]: parseInt(value["Credits Earned"]) });
+				}
+
+				return acc;
+			}, []);
+
+			let temp = data;
+			temp.courses = courses;
+			setData(temp);
+			setIsUploaded(true);
+			setEnableButton(true);
+
+		} catch (error) {
+			console.error("Failed to send file:", error);
+		}
+	};
 
 	return (
 		<div className="container" style={container}>
@@ -69,9 +108,6 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 					}}
 					onMouseEnter={handleMouseEnter1}
 					onMouseLeave={handleMouseLeave1}
-					onClick={() => {
-						setEnableButton(true);
-					}}
 				>
 					<div style={icon}>
 						<img src={UploadIcon} alt="upload icon" />
@@ -89,12 +125,15 @@ const UploadTranscript = ({ data, setData, setEnableButton }) => {
 				</div>
 			</label>
 
-			<input
-				type="file"
-				id="actual-btn"
-				style={{ display: "none", pointerEvents: "none" }}
-				onChange={() => setIsUploaded(true)}
-			/>
+			<form>
+				<input
+					type="file"
+					id="actual-btn"
+					style={{ display: "none", pointerEvents: "none" }}
+					onChange={handleUpload}
+				/>
+			</form>
+
 		</div>
 	);
 };
@@ -162,4 +201,14 @@ const subSub = {
 	fontSize: 16,
 	marginBottom: 0,
 };
+
+const method = {
+	display: "flex",
+	flexDirection: "row",
+	marginBottom: 24,
+	padding: 39,
+	borderRadius: 10,
+	borderColor: theme.colors.primaryDark,
+};
+
 export default UploadTranscript;

@@ -2,30 +2,27 @@ package models
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/jinzhu/gorm" // ORM package for Go
 )
 
 type User struct {
-	ID                      uint     `gorm:"primaryKey"`
-	Email                   string   `json:"email"`
-	Username                string   `json:"username"`
-	PrimaryMajor            uint     `json:"primaryMajor"` // id of primary major
-	SecondaryMajor          uint     `json:"secondaryMajor"` // id of secondary   major
-	Minor                   uint     `json:"minor"` // id of minor
-	PrimarySpecialization   uint     `json:"primarySpecialization"` // id of primary specialization
-	SecondarySpecialization uint     `json:"secondarySpecialization"` // id of secondary specialization
-	Concentration           uint     `json:"concentration"` // id of concentration
-	Faculty                 uint     `json:"faculty"` // id of faculty
+	ID       uint      `gorm:"primaryKey"`
+	Email    string    `json:"email"`
+	Username string    `json:"username"`
+	Programs []Program `gorm:"foreignKey:ID"` // ids of programs
+	Faculty  uint      `json:"faculty"`       // id of faculty
 }
 
 type CompletedCourses struct {
-	UserID           uint `json:"userid"`
-	YearCompleted    uint `json:"yearCompleted"`    //
-	SessionCompleted uint `json:"sessionCompleted"` // 0 is Summer, 1 is W1, 2 is W2
-	CourseID         uint `json:"courseid"`
-	CreditCounted    uint `json:"creditCounted"`
+	UserID           uint   `json:"userid"`
+	YearCompleted    uint   `json:"yearCompleted"`    //
+	SessionCompleted uint   `json:"sessionCompleted"` // 0 is Summer, 1 is W1, 2 is W2
+	Faculty          string `json:"faculty"`          // courses w/o level are non-specific
+	DigitOne         uint   `json:"digitOne"`         // first digit
+	DigitTwo         uint   `json:"digitTwo"`         // second digit
+	DigitThree       uint   `json:"digitThree"`       // third digit
+	CreditCounted    uint   `json:"creditCounted"`
 }
 
 func (u *User) SaveUser() (*User, error) {
@@ -57,6 +54,7 @@ func LoadCompletedCourseToDB(cc *CompletedCourses) {
 	}
 }
 
+/*
 func UpdateCompletedCourseInDB(cc *CompletedCourses) (CompletedCourses, error) {
 	db, err := gorm.Open("sqlite3", "./gorm.db")
 	if err != nil {
@@ -71,6 +69,7 @@ func UpdateCompletedCourseInDB(cc *CompletedCourses) (CompletedCourses, error) {
 	getErr := db.Where("user_id = ? AND course_id = ?", cc.UserID, cc.CourseID).First(&completedCourse).Error
 	return completedCourse, getErr
 }
+*/
 
 func GetCompletedCoursesInDB(user *User) {
 	db, err := gorm.Open("sqlite3", "./gorm.db")

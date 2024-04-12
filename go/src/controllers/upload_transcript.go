@@ -12,10 +12,16 @@ import (
 )
 
 func UploadTranscript(c *gin.Context) {
+	file, uploadErr := c.FormFile("file")
 
-	file, _ := c.FormFile("file")
+	if uploadErr != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": uploadErr.Error()})
+		return
+	}
+
 	src, _ := file.Open()
 	defer src.Close()
+
 	//encode image as bytes for Textract parse
 	buf := bytes.NewBuffer(nil)
 	if _, err := io.Copy(buf, src); err != nil {

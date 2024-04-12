@@ -10,29 +10,39 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 	const [years, setYears] = useState([]);
 
 	const init = () => {
-		if (years.length !== 0) {
-			return years;
+		if (years.length == 0) {
+			let tempYear = [];
+
+			if (data.courses.length === 0) {
+				// case: user manually inputs course history from start
+
+				tempYear.push(
+					<CourseComponent
+						key={1}
+						indexKey={1}
+						data={data}
+						setData={setData}
+					>
+					</CourseComponent>)
+
+			} else {
+				// case: user uploads transcript screenshot
+				
+				for (let i = 1; i < data.courses.length; i++) {
+					tempYear.push(
+						<CourseComponent
+							key={i}
+							indexKey={i}
+							data={data}
+							setData={setData}
+						>
+						</CourseComponent>
+					)
+				}
+			}
+			
+			setYears(tempYear);
 		}
-
-		let split = data.courses.reduce(function (result, value, index, array) {
-			if (index % 2 === 0) result.push(array.slice(index, index + 2));
-			return result;
-		}, []);
-
-		let tempYear = [];
-		split.forEach((year, i) => {
-			tempYear.push(
-				<CourseComponent
-					key={`${split.indexOf(year)}`}
-					data={year}
-					setData={setData}
-					indexKey={`${split.indexOf(year)}`}
-				></CourseComponent>
-			);
-		});
-
-		setYears(tempYear);
-
 		return years;
 	};
 
@@ -40,10 +50,10 @@ const EditCourseHistory = ({ data, setData, setEnableButton }) => {
 		setYears(
 			years.concat(
 				<CourseComponent
-					key={years.length}
-					data={[]}
+					key={years.length + 1}
+					indexKey={years.length + 1}
+					data={data}
 					setData={setData}
-					indexKey={years.length}
 				></CourseComponent>
 			)
 		);
@@ -122,3 +132,24 @@ const button = {
 };
 
 export default EditCourseHistory;
+
+/*
+let split = data.courses.reduce(function (result, value, index, array) {
+			if (index % 2 === 0) result.push(array.slice(index, index + 2));
+			return result;
+		}, []);
+
+		let tempYear = [];
+		split.forEach((year, i) => {
+			tempYear.push(
+				<CourseComponent
+					key={`${split.indexOf(year)}`}
+					data={year}
+					setData={setData}
+					indexKey={`${split.indexOf(year)}`}
+				></CourseComponent>
+			);
+		});
+
+		setYears(tempYear);
+ */
