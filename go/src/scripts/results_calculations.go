@@ -47,9 +47,16 @@ func createCommTable() map[string]int {
 
 func createBreadthTable() map[string]int {
 	breadthTable := map[string]int{
+		"ASTR": 3,
+		"ATSC": 3,
+		"ENVR": 3,
 		"CHEM": 3,
 		"BIOL": 3,
+		"MICB": 3,
 		"EOSC": 3,
+		"GEOS": 3,
+		"GEOB": 3,
+		"DSCI 100": 3,
 		"CPCS": 3,
 		"MATH": 3,
 		"PHYS": 3,
