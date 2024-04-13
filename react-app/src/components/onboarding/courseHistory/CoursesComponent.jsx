@@ -11,7 +11,6 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 		// case: user manually inputs course history from start
 
 		data.courses[1] = [[], [], []];
-
 	} else if (indexKey >= data.courses.length) {
 		// case: user clicks on "add year" button
 
@@ -25,33 +24,39 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 	const [termOneList, setTermOneList] = useState(data.courses[indexKey][1]);
 	const [termTwoList, setTermTwoList] = useState(data.courses[indexKey][2]);
 
-	const TermOneComponent = ({ data }) => (
-		data.map((course, index) => (
-			<div key={Object.keys(course)[0] + "1"} id={Object.keys(course)[0] + "1"} style={chip}>
+	const TermOneComponent = ({ data }) =>
+		data?.map((course, index) => (
+			<div
+				key={Object.keys(course)[0] + "1"}
+				id={Object.keys(course)[0] + "1"}
+				style={chip}
+			>
 				<p style={chipText}>{Object.keys(course)[0]}</p>
 				<CancelIcon
 					style={chipIcon}
 					onClick={() => {
-						removeCourse("1", index)
+						removeCourse("1", index);
 					}}
 				></CancelIcon>
 			</div>
-		))
-	)
+		));
 
-	const TermTwoComponent = ({ data }) => (
-		data.map((course, index) => (
-			<div key={Object.keys(course)[0] + "2"} id={Object.keys(course)[0] + "2"} style={chip}>
+	const TermTwoComponent = ({ data }) =>
+		data?.map((course, index) => (
+			<div
+				key={Object.keys(course)[0] + "2"}
+				id={Object.keys(course)[0] + "2"}
+				style={chip}
+			>
 				<p style={chipText}>{Object.keys(course)[0]}</p>
 				<CancelIcon
 					style={chipIcon}
 					onClick={() => {
-						removeCourse("2", index)
+						removeCourse("2", index);
 					}}
 				></CancelIcon>
 			</div>
-		))
-	)
+		));
 
 	const handleEnter = (e, term) => {
 		if (e.key === "Enter") {
@@ -63,13 +68,13 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 
 			if (term === "1") {
 				updatedCourses = [...termOneList];
-				updatedCourses.push({ [val] : 3 });
+				updatedCourses.push({ [val]: 3 });
 				setTermOneList(updatedCourses);
 				setShowInputOne(false);
 				setShowAddOne(true);
 			} else {
 				updatedCourses = [...termTwoList];
-				updatedCourses.push({ [val] : 3 });
+				updatedCourses.push({ [val]: 3 });
 				setTermTwoList(updatedCourses);
 				setShowInputTwo(false);
 				setShowAddTwo(true);
@@ -98,17 +103,14 @@ const CourseComponent = ({ data, setData, indexKey }) => {
 
 		let newObject = {
 			...data,
-			courses: dataCourses
-		}
+			courses: dataCourses,
+		};
 
 		setData(newObject);
-
 	}, [termOneList, termTwoList]);
-	
 
 	return (
 		<div style={container}>
-
 			<div style={year}>
 				<p style={{ ...subHeading, ...{ marginBottom: 0 } }}>
 					Year {Number(indexKey)}
