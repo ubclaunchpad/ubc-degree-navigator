@@ -28,12 +28,12 @@ func main() {
 	// r.GET("/user/:id", controllers.GetUserInfo)
 
 	r.POST("/api/user/cc", controllers.AddCompletedCourses)
+	r.GET("/api/user/cc", controllers.GetCompletedCourses)
 	// r.PATCH("/api/user/cc", controllers.UpdateCompleteCourse)
 
   // >>>>>>>>> main
 	// r.POST("/api/user/cc", controllers.AddCompletedCourse)
 	// r.PATCH("/api/user/cc", controllers.UpdateCompleteCourse)
-	// r.GET("/api/user/cc", controllers.GetCompletedCourses)
 
 	r.PUT("/api/user/additional_info", controllers.AddAdditionalInfo)
 

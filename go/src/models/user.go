@@ -3,7 +3,7 @@ package models
 import (
 	"errors"
 	"fmt"
-	
+
 	"github.com/jinzhu/gorm" // ORM package for Go
 )
 
@@ -72,7 +72,7 @@ func UpdateCompletedCourseInDB(cc *CompletedCourses) (CompletedCourses, error) {
 }
 */
 
-func GetCompletedCoursesInDB(user *User) {
+func GetCompletedCoursesInDB(user *User) []CompletedCourses {
 	db, err := gorm.Open("sqlite3", "./gorm.db")
 	var completedCourses []CompletedCourses
 	if err != nil {
@@ -80,7 +80,8 @@ func GetCompletedCoursesInDB(user *User) {
 	}
 	e := db.Model(CompletedCourses{}).Where("user_id = ?", user.ID).Find(&completedCourses).Error;
 	if e != nil {
-		panic("Could not create entry in database")
+		panic("Could not find entry in database")
 	}
 	fmt.Println(completedCourses);
+	return completedCourses;
 }

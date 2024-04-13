@@ -43,6 +43,6 @@ func GetCompletedCourses(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	models.GetCompletedCoursesInDB(&user)
-	c.JSON(http.StatusOK, user)
+	completedCourses := models.GetCompletedCoursesInDB(&user)
+	c.JSON(http.StatusOK, completedCourses)
 }

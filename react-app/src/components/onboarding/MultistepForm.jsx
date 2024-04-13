@@ -18,13 +18,8 @@ import NavIllustration from "../../assets/navIllustration.svg";
 const MultistepForm = () => {
 	const [step, setStep] = useState("course history"); // TODO: edit this back to "course history"
 	const [data, setData] = useState({
-		courses: [
-			["CPSC 110", "CPSC 121", "PHYS 101", "MATH 100"],
-			["MATH 100", "ENGL 110", "CPSC 210", "ASTR 101"],
-			["CPSC 221", "MATH 200", "STAT 200", "WRDS 150"],
-			["CPSC 213", "DSCI 100", "MATH 221", "MATH 302"],
-		],
-		transferCredits: [{ "BIOL 1**": 3 }, { "CHIN 241": 3 }],
+		courses: [],
+		transferCredits: [],
 		program: "Bachelor of Computer Science",
 		major: "Computer Science",
 	});
@@ -129,7 +124,7 @@ const MultistepForm = () => {
 					/>
 				);
 			case "results":
-				return <Results data={data} setData={setData} />;
+				return <Results data={data} />;
 			default:
 				return;
 		}
