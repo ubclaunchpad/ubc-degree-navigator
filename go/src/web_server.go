@@ -29,6 +29,7 @@ func main() {
 
 	r.POST("/api/user/cc", controllers.AddCompletedCourses)
 	r.GET("/api/user/cc", controllers.GetCompletedCourses)
+	r.GET("/api/user/results", controllers.GetResults)
 	// r.PATCH("/api/user/cc", controllers.UpdateCompleteCourse)
 
   // >>>>>>>>> main

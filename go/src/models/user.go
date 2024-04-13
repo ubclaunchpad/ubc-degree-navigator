@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-
 	"github.com/jinzhu/gorm" // ORM package for Go
 )
 

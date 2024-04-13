@@ -1,10 +1,8 @@
-package main
+package scripts
 
 import (
 	"encoding/json"
 	"fmt"
-	//"github.com/michelleykim/ubc-degree-navigator/controllers"
-	//"github.com/michelleykim/ubc-degree-navigator/models"
 )
 
 type FacultyRequirements map[string]int
@@ -264,7 +262,7 @@ func checkProgramRequirements(courses []CompletedCourses, program string) Progra
  */
 
 // Note: implemented with the struct CompletedCourses as defined in completed_courses.go
-func calculateTotalCredits(courses []CompletedCourses, faculty string, program string) (string, error) {
+func CalculateTotalCredits(courses []CompletedCourses, faculty string, program string) (string, error) {
 	totalCreds := 0
 	for _, course := range courses {
 		totalCreds += int(course.CreditCounted)
