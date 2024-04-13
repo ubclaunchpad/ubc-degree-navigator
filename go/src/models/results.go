@@ -68,7 +68,7 @@ func createLowerTable() map[string]int {
  * Stores the scraped requirements into two hashtables
  * Faculty and program requirements have separate tables
  */
-func createHashTable() int {
+func createHashTable() map[string]map[string]int{
 	// TODO: Implement functionality
 	commTable := createCommTable()
 	breadthTable := createBreadthTable()
@@ -80,7 +80,7 @@ func createHashTable() int {
 	}
 	facultyTable = reqTable
 	//create program table
-	return 0
+	return reqTable
 }
 
 /*
@@ -91,34 +91,34 @@ func createHashTable() int {
 func checkFacultyRequirements(courses []CompletedCourses, faculty string) FacultyRequirements {
 	// TODO: Implement functionality
 	//check communication requirements
-	createHashTable()
+	reqTable := createHashTable()
 	commCredits := 0
 	breadthCredits := 0
 	artsCredits := 0
 	lowerCredits := 0
 	for _, course := range courses {
-		courseString := "WRDS 150B" // implement function to get courseString from course
+		courseString := getCourseString(course)
 		//courseString = getCourseString(course)
 		if commCredits < 6 {
-			credits, exists := facultyTable["comm"][courseString]
+			credits, exists := reqTable["comm"][courseString]
 			if exists {
 				commCredits += credits
 				continue // communications credits cannot count for anything other faculty requirements
 			}
 		}
 		if breadthCredits < 18 {
-			credits, exists := facultyTable["breadth"][courseString]
+			credits, exists := reqTable["breadth"][courseString]
 			if exists {
 				breadthCredits += credits
 			}
 		}
 
 		if artsCredits < 12 && course.Faculty == "Arts" {
-			artsCredits += facultyTable["comm"][courseString]
+			artsCredits += reqTable["comm"][courseString]
 		}
 
 		if lowerCredits < 3 {
-			credits, exists := facultyTable["lower"][courseString]
+			credits, exists := reqTable["lower"][courseString]
 			if exists {
 				lowerCredits += credits
 			}
