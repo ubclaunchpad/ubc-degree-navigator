@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	//"github.com/michelleykim/ubc-degree-navigator/controllers"
 	//"github.com/michelleykim/ubc-degree-navigator/models"
 )
@@ -10,16 +11,24 @@ type FacultyRequirements map[string]int
 type ProgramRequirements map[string]int
 
 type CompletedCourses struct {
-	UserID           uint `json:"userid"`
-	YearCompleted    uint `json:"yearCompleted"`    //
-	SessionCompleted uint `json:"sessionCompleted"` // 0 is Summer, 1 is W1, 2 is W2
-	CourseID         uint `json:"courseid"`
-	CreditCounted    uint `json:"creditCounted"`
+	UserID           uint   `json:"userid"`
+	YearCompleted    uint   `json:"yearCompleted"`    //
+	SessionCompleted uint   `json:"sessionCompleted"` // 0 is Summer, 1 is W1, 2 is W2
+	Faculty          string `json:"faculty"`          // courses w/o level are non-specific
+	DigitOne         uint   `json:"digitOne"`         // first digit
+	DigitTwo         uint   `json:"digitTwo"`         // second digit
+	DigitThree       uint   `json:"digitThree"`       // third digit
+	CreditCounted    uint   `json:"creditCounted"`
 }
 
 var facultyRequirements FacultyRequirements
 var programRequirements ProgramRequirements
 var facultyTable map[string]map[string]int
+
+
+func getCourseString(course CompletedCourses) string {
+	return course.Faculty + " " + fmt.Sprint(course.DigitOne) + fmt.Sprint(course.DigitTwo) + fmt.Sprint(course.DigitThree)
+}
 
 func createCommTable() map[string]int {
 	commTable := map[string]int{
@@ -120,7 +129,7 @@ func checkFacultyRequirements(courses []CompletedCourses, faculty string) Facult
 			}
 		}
 
-		if artsCredits < 12 && course["faculty"] == "Arts" {
+		if artsCredits < 12 && course.Faculty == "Arts" {
 			artsCredits += facultyTable["comm"][courseString]
 		}
 
@@ -139,67 +148,11 @@ func checkFacultyRequirements(courses []CompletedCourses, faculty string) Facult
 		"lower":   lowerCredits,
 	}
 }
-
 /*
  * Takes in user's courses and checks which of the program requirements they satisfy
  * Returns Program object, with year level and number of credits earned in each year level
  * Check 'Figma review' google doc for more details
  */
-func checkProgramRequirements(courses []CompletedCourses, program string) ProgramRequirements {
-	// TODO: Implement functionality
-	// TODO: Implement functionality
-	firstYear := 0
-	secondYear := 0
-	upperYear := 0
-
-	tmpTable := map[string]map[string]int{
-		"firstYearReq":  make(map[string]int),
-		"secondYearReq": make(map[string]int),
-		"upperYearReq":  make(map[string]int),
-	}
-
-	for _, course := range courses {
-		courseString := "WRDS 150B" // implement function to get courseString from course
-		// courseString = getCourseString(course)
-
-		// ASSUMING EXISTENCE OF FirstYearReq Program Table as shown
-		// https://vancouver.calendar.ubc.ca/faculties-colleges-and-schools/faculty-science/bachelor-science/computer-science
-		credits, exists := tmpTable["firstYearReq"][courseString]
-		if exists {
-			firstYear += credits
-			continue
-		}
-
-		credits2, exists2 := tmpTable["secondYearReq"][courseString]
-		if exists {
-			secondYear += credits
-		}
-
-		credits3, exists3 := tmpTable["upperYearReq"][courseString]
-		if exists {
-			upperYear += credits
-		}
-	}
-
-	return ProgramRequirements{
-		"1st":   firstYear,
-		"2nd":   secondYear,
-		"Upper": upperYear,
-	}
-}
-
-// BELOW COMMENTED IS AN ALTERNATIVE VERSION SINCE
-
-// func stringInList(a string, list []string) bool {
-// 	for _, b := range list {
-// 		if b == a {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
-
-// // HARD CODED VERSION, Since I'm not sure how the Program Table looks like.
 // func checkProgramRequirements(courses []CompletedCourses, program string) ProgramRequirements {
 // 	// TODO: Implement functionality
 // 	// TODO: Implement functionality
@@ -207,41 +160,102 @@ func checkProgramRequirements(courses []CompletedCourses, program string) Progra
 // 	secondYear := 0
 // 	upperYear := 0
 
-// 	firstYearCourses := []strin{"CPSC 110", "CPSC 121", "MATH 100", "MATH 101",
-// 		"MATH 102", "MATH 104", "MATH 180", "MATH 184", "MATH 120", "MATH 110",
-// 		"MATH 103", "MATH 105", "MATH 121", "CPSC 103", "CPSC 107"}
-
-// 	secondYearCourses := []strin{"CPSC 210", "CPSC 213", "CPSC 221", "MATH 200", "MATH 221", "STAT 251", "STAT 241", "STAT 200". "STAT 302"}
-
-// 	// I can't really hard code these ones specifically.
-// 	upperYearCourses := []strin{"CPSC 310", "CPSC 313", "CPSC 320"}
+// 	tmpTable := map[string]map[string]int{
+// 		"firstYearReq":  make(map[string]int),
+// 		"secondYearReq": make(map[string]int),
+// 		"upperYearReq":  make(map[string]int),
+// 	}
 
 // 	for _, course := range courses {
-// 		courseString = getCourseString(course)
+// 		courseString := getCourseString(course)
+// 		// courseString = getCourseString(course)
 
-// 		// Check First Year Requirements.
-// 		if stringInList(courseString, firstYearCourses) {
-// 			firstYear += course.creditCounted
+// 		// ASSUMING EXISTENCE OF FirstYearReq Program Table as shown
+// 		// https://vancouver.calendar.ubc.ca/faculties-colleges-and-schools/faculty-science/bachelor-science/computer-science
+// 		credits, exists := tmpTable["firstYearReq"][courseString]
+// 		if exists {
+// 			firstYear += credits
+// 			continue
 // 		}
 
-// 		// Check First Year Requirements.
-// 		if stringInList(courseString, secondYearCourses) {
-// 			secondYear += course.creditCounted
+// 		credits2, exists2 := tmpTable["secondYearReq"][courseString]
+// 		if exists2 {
+// 			secondYear += credits2
 // 		}
 
-// 		// Check First Year Requirements.
-// 		if stringInList(courseString, upperYearCourses) {
-// 			upperYear += course.creditCounted
+// 		credits3, exists3 := tmpTable["upperYearReq"][courseString]
+// 		if exists3 {
+// 			upperYear += credits3
 // 		}
-
 // 	}
 
 // 	return ProgramRequirements{
-// 		"1st":  firstYear,
-// 		"2nd": secondYear,
-// 		"Upper":  upperYear,
+// 		"1st":   firstYear,
+// 		"2nd":   secondYear,
+// 		"Upper": upperYear,
 // 	}
 // }
+
+// BELOW COMMENTED IS AN ALTERNATIVE VERSION SINCE
+
+func stringInList(a string, list []string) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
+}
+
+// HARD CODED VERSION, Since I'm not sure how the Program Table looks like.
+func checkProgramRequirements(courses []CompletedCourses, program string) ProgramRequirements {
+	firstYear := 0
+	secondYear := 0
+	upperYear := 0
+	thirdYearElective := 0
+	fourthYearElective := 0
+
+	firstYearCourses := []string{"CPSC 110", "CPSC 121", "MATH 100", "MATH 101",
+		"MATH 102", "MATH 104", "MATH 180", "MATH 184", "MATH 120", "MATH 110",
+		"MATH 103", "MATH 105", "MATH 121", "CPSC 103", "CPSC 107"}
+
+	secondYearCourses := []string{"CPSC 210", "CPSC 213", "CPSC 221", "MATH 200", "MATH 221", "STAT 251", "STAT 241", "STAT 200", "STAT 302"}
+
+	// I can't really hard code these ones specifically.
+	upperYearCourses := []string{"CPSC 310", "CPSC 313", "CPSC 320"}
+
+	for _, course := range courses {
+		courseString := getCourseString(course)
+
+		// Check First Year Requirements.
+		if stringInList(courseString, firstYearCourses) {
+			firstYear += int(course.CreditCounted)
+		}
+
+		// Check 2nd Year Requirements.
+		if stringInList(courseString, secondYearCourses) {
+			secondYear += int(course.CreditCounted)
+		}
+
+		// Check 3rd Year Requirements, and upper year electives
+		if stringInList(courseString, upperYearCourses) {
+			upperYear += int(course.CreditCounted)
+		} else if course.DigitOne >= 4 && fourthYearElective < 9 {
+			fourthYearElective += int(course.CreditCounted)
+		} else if course.DigitOne >= 3 && thirdYearElective < 9 {
+			thirdYearElective += int(course.CreditCounted)
+		}
+
+	}
+
+	return ProgramRequirements{
+		"1st":  firstYear,
+		"2nd": secondYear,
+		"Upper year core":  upperYear,
+		"Third year electives": thirdYearElective,
+		"Fourth year electives": fourthYearElective,
+	}
+}
 
 /*
  * Calculates total number of credits taken and total number of elective credits taken, compiles it into
@@ -253,7 +267,7 @@ func checkProgramRequirements(courses []CompletedCourses, program string) Progra
 func calculateTotalCredits(courses []CompletedCourses, faculty string, program string) (string, error) {
 	totalCreds := 0
 	for _, course := range courses {
-		totalCreds += course.CreditCounted
+		totalCreds += int(course.CreditCounted)
 	}
 
 	facultyBuckets := checkFacultyRequirements(courses, faculty)
